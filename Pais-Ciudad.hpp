@@ -296,8 +296,8 @@ void listaDC::llenarListaCiudad() {
         getline(archivo, texto);
         int posPC = texto.find(";");
         int codPais = atoi(texto.substr(0, posPC).c_str());
-        pnodo puntero = primero; bool flag = false;
-        while (puntero->siguiente != primero) {
+        pnodo puntero = primero->siguiente; bool flag = false;
+        while (puntero!= primero) {
             if (puntero->valor == codPais) {
                 flag = true;
                 break;
@@ -331,7 +331,7 @@ void listaDC::llenarListaCiudad() {
                 nuevo->ciudad=auxiliar;
             }
             else {
-            	pnodo nuevo = new nodo(codCiudad,nomCiudad);
+            	pnodo nuevo = new nodo(codCiudad,nomCiudad); 
             	pnodo recorrer = auxiliar->ciudad;
             	while(recorrer->ciudad!=auxiliar){
             		cout<<"Ciudad ya agregada: "<<recorrer->pais<<endl;
@@ -485,8 +485,8 @@ void listaDC::ConsultarCiudades() {
     int codPais;
     cout << "Ingrese el codigo del pais: ";
     cin >> codPais;
-    pnodo puntero = primero; bool flag = false;
-    while (puntero->siguiente != primero) {
+    pnodo puntero = primero->siguiente; bool flag = false;
+    while (puntero!= primero) {
         if (puntero->valor == codPais) {
             flag = true;
             break;
@@ -495,7 +495,11 @@ void listaDC::ConsultarCiudades() {
             puntero = puntero->siguiente;
         }
     }
-    cout << puntero->pais<< endl;
+    if(puntero->valor==codPais){
+    	cout<<"Prueba: "<<puntero->ciudad->pais<<endl;
+    	flag=true;
+	}
+    cout <<"Pais: "<<puntero->pais<< endl;
     if (flag) {
         pnodo ciudades = puntero->ciudad; bool flag2 = false;
         while (ciudades->ciudad != puntero) {

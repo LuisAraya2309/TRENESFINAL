@@ -16,3 +16,5 @@
 37;654;SanPetesburgo
 21;895;Amsterdan
 21;643;Haarlem
+77;423;Odense
+77;333;Copenhage

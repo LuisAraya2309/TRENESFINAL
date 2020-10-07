@@ -45,9 +45,11 @@ int main() {
     cout << "Lista despues de aplicar ciudades: " << endl;
     paises.ConsultarPaises();
     cout<<endl;
+    cout<<"Paises . mostrar()"<<endl;
+    paises.Mostrar();
     cout<<"Consultar PAIS"<<endl;
-    paises.ConsultarCiudades();
-    /*S
+    paises.ConsultarCiudades();	
+    /*
     paises.ConsultarCiudades();
     cout << "Conexiones: " << endl;
     paises.llenarListaConexiones();
