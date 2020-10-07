@@ -274,6 +274,9 @@ void listaDC::llenarListaPais() {
             if (flag) {
                 InsertarFinal(codPais, nomPais);
             }
+            else{
+            	continue;
+			}
             
         }
         
@@ -311,33 +314,42 @@ void listaDC::llenarListaCiudad() {
             string nomCiudad = CiudadTotal.substr(auxPC+1, CiudadTotal.length());
             pnodo auxiliar = primero;
             while (auxiliar->siguiente != primero) {
-                if (auxiliar->valor != codPais) {
-                    cout << "Pais: " << auxiliar->pais << endl;
-                    cout << endl;
+                if (auxiliar->valor == codPais) {
                     break;
                 }
                 else {
                     auxiliar = auxiliar->siguiente;
                 }
             }
-            if ((puntero->ciudad==NULL)) {
-                //cout << "Primera Ciudad: "<<nomCiudad<< endl;
-                pnodo nuevo = new nodo(codCiudad, nomCiudad);
-                nuevo->anterior = puntero;
-                puntero->ciudad = nuevo;
-                /*cout << "Nombre: " << nuevo->pais << endl;
-                cout << "Codigo: " << nuevo->valor << endl;
-                cout << endl;*/
+            cout<<"Pais: "<<auxiliar->pais<<endl;
+            cout<<"Agregando la ciudad: "<<nomCiudad<<endl;
+            if ((auxiliar->ciudad==NULL)) {
+            	cout<<"Se agrega de primero!"<<endl;
+                pnodo nuevo = new nodo(codCiudad,nomCiudad);
+                auxiliar->ciudad = nuevo;
+                nuevo->anterior=auxiliar;
+                nuevo->ciudad=auxiliar;
             }
             else {
-
+            	pnodo nuevo = new nodo(codCiudad,nomCiudad);
+            	pnodo recorrer = auxiliar->ciudad;
+            	while(recorrer->ciudad!=auxiliar){
+            		cout<<"Ciudad ya agregada: "<<recorrer->pais<<endl;
+            		recorrer=recorrer->ciudad;
+				}
+				cout<<"Agregada de ultimo! "<<endl;
+				recorrer->ciudad=nuevo;
+				nuevo->anterior=recorrer;
+				nuevo->ciudad=auxiliar;
+				}
+				cout<<"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x"<<endl;
+				cout<<endl;
             }
-        }
-        else {
-            continue;
-        }
+            else {
+            	continue;
+        	}
+        }	
     }
-}
 void listaDC::llenarListaConexiones() {
     ifstream archivo;
     string texto;
@@ -471,7 +483,7 @@ void listaDC::ConsultarPaises() {
 
 void listaDC::ConsultarCiudades() {
     int codPais;
-    cout << "Ingrese el codigo del pais: " << endl;
+    cout << "Ingrese el codigo del pais: ";
     cin >> codPais;
     pnodo puntero = primero; bool flag = false;
     while (puntero->siguiente != primero) {
@@ -485,10 +497,10 @@ void listaDC::ConsultarCiudades() {
     }
     cout << puntero->pais<< endl;
     if (flag) {
-        pnodo ciudades = puntero; bool flag2 = false;
-        while (ciudades->siguiente != puntero) {
+        pnodo ciudades = puntero->ciudad; bool flag2 = false;
+        while (ciudades->ciudad != puntero) {
             cout << ciudades->pais << "  Codigo: " << ciudades->valor << endl;
-            ciudades = ciudades->siguiente;
+            ciudades = ciudades->ciudad;
         }
         cout << ciudades->pais << "  Codigo: " << ciudades->valor << endl;
         cout << endl;
