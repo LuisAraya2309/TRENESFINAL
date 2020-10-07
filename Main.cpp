@@ -47,12 +47,11 @@ int main() {
     cout<<endl;
     cout<<"Paises . mostrar()"<<endl;
     paises.Mostrar();
-    cout<<"Consultar PAIS"<<endl;
-    paises.ConsultarCiudades();	
-    /*
+    cout<<"Consultar Pais"<<endl;
     paises.ConsultarCiudades();
     cout << "Conexiones: " << endl;
     paises.llenarListaConexiones();
+    /*
     cout << "Rutas: " << endl;
     rutas.llenarListaRutas();
     cout << "Administradores: " << endl;

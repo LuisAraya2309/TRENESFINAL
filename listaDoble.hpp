@@ -32,6 +32,7 @@ private:
     nodoDoble* anterior;
 
     friend class listaD;
+    friend class listaDC;
 };
 
 typedef nodoDoble* pnodoDoble;

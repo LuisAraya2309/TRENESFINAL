@@ -30,6 +30,7 @@ private:
     nodo* siguiente;
     nodo* anterior;
     friend class listaDC;
+    friend class nodoDoble;
 };
 typedef nodo* pnodo;
 
@@ -296,8 +297,8 @@ void listaDC::llenarListaCiudad() {
         getline(archivo, texto);
         int posPC = texto.find(";");
         int codPais = atoi(texto.substr(0, posPC).c_str());
-        pnodo puntero = primero->siguiente; bool flag = false;
-        while (puntero!= primero) {
+        pnodo puntero = primero; bool flag = false;
+        while (puntero->siguiente!= primero) {
             if (puntero->valor == codPais) {
                 flag = true;
                 break;
@@ -306,7 +307,9 @@ void listaDC::llenarListaCiudad() {
                 puntero = puntero->siguiente;
             }
         }
-        
+        if(puntero->valor==codPais){
+        	flag=true;
+		}
         if (flag) {
             string CiudadTotal = texto.substr(posPC + 1, texto.length());
             int auxPC = CiudadTotal.find(";");
@@ -391,9 +394,7 @@ void listaDC::llenarListaConexiones() {
                 }
             }
             if (flag2) {
-
-                //cout << "Estoy entrando a la ciudad: " << ciudades->pais << endl;
-
+            	
                 string Conexion = ConexionTotal.substr(posPC2 + 1, ConexionTotal.length());
                 int posPC3 = Conexion.find(";");
                 int codConexion = atoi((Conexion.substr(0, posPC3).c_str()));
@@ -437,18 +438,15 @@ void listaDC::llenarListaConexiones() {
                         else {
                             ciudadesAux = ciudadesAux->siguiente;
                         }
-
                     }
                     if (banderix) {
-                        /*
-                        pnodoDoble aux = ciudadesAux;
+                        /*pnodo aux = ciudadesAux;
                         while (aux->siguiente != NULL) {
                             aux = aux->siguiente;
                         }
-                        pnodoDoble nuevo = new nodoDoble(codConexion, codPais, codCiudad, codTiempo);
+                        pnodo nuevo = new nodoDoble.nodoDoble(codConexion, codPais, codCiudad, codTiempo);
                         aux->siguiente = nuevo;
-                        nuevo->anterior = aux;
-                        */
+                        nuevo->anterior = aux;*/
                     }
                     else {
                         continue;
@@ -496,10 +494,10 @@ void listaDC::ConsultarCiudades() {
         }
     }
     if(puntero->valor==codPais){
-    	cout<<"Prueba: "<<puntero->ciudad->pais<<endl;
+    	//cout<<"Prueba: "<<puntero->ciudad->pais<<endl;
     	flag=true;
 	}
-    cout <<"Pais: "<<puntero->pais<< endl;
+    //cout <<"Pais: "<<puntero->pais<< endl;
     if (flag) {
         pnodo ciudades = puntero->ciudad; bool flag2 = false;
         while (ciudades->ciudad != puntero) {
