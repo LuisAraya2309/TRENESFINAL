@@ -45,6 +45,7 @@ public:
     void borrarPosicion(int pos);
     int largoLista();
     void llenarListaAdmin();
+    bool VerificarAdmin(int codAdmin);
 
 private:
     pnodoCir2 primero;
@@ -277,4 +278,20 @@ void listaC2::llenarListaAdmin() {
         }
     }
     archivo2.close();
+}
+
+bool listaC2::VerificarAdmin(int codAdmin){
+	pnodoCir2 puntero=primero;
+	bool flag= false;
+	while(puntero->siguiente != primero){
+		if (puntero->valor==codAdmin){
+			flag=true;
+			break;
+		}else{
+			puntero=puntero->siguiente;
+		}
+	}
+	if(flag){
+		return true;
+	}
 }

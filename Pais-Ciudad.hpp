@@ -52,6 +52,8 @@ public:
     void llenarListaConexiones();
     void ConsultarPaises();
     void ConsultarCiudades();
+    bool InsertarPais(int v, string pais);
+    bool InsertarCiudades (int codPais,int codCiudad, string nomCiudad);
 
 private:
     pnodo primero;
@@ -324,35 +326,34 @@ void listaDC::llenarListaCiudad() {
                     auxiliar = auxiliar->siguiente;
                 }
             }
-            cout<<"Pais: "<<auxiliar->pais<<endl;
-            cout<<"Agregando la ciudad: "<<nomCiudad<<endl;
             if ((auxiliar->ciudad==NULL)) {
-            	cout<<"Se agrega de primero!"<<endl;
                 pnodo nuevo = new nodo(codCiudad,nomCiudad);
                 auxiliar->ciudad = nuevo;
                 nuevo->anterior=auxiliar;
                 nuevo->ciudad=auxiliar;
             }
             else {
+            	bool bandera= false;
             	pnodo nuevo = new nodo(codCiudad,nomCiudad); 
             	pnodo recorrer = auxiliar->ciudad;
             	while(recorrer->ciudad!=auxiliar){
-            		cout<<"Ciudad ya agregada: "<<recorrer->pais<<endl;
-            		recorrer=recorrer->ciudad;
+            		if(recorrer->valor==codCiudad){
+            			bandera=true;
+            			break;
+					}else{
+						recorrer=recorrer->ciudad;
+					}
+				}if(bandera){
+					
+				}else{
+					recorrer->ciudad=nuevo;
+					nuevo->anterior=recorrer;
+					nuevo->ciudad=auxiliar;
 				}
-				cout<<"Agregada de ultimo! "<<endl;
-				recorrer->ciudad=nuevo;
-				nuevo->anterior=recorrer;
-				nuevo->ciudad=auxiliar;
-				}
-				cout<<"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x"<<endl;
-				cout<<endl;
-            }
-            else {
-            	continue;
-        	}
+			}
         }	
     }
+}
 void listaDC::llenarListaConexiones() {
     ifstream archivo;
     string texto;
@@ -483,6 +484,7 @@ void listaDC::ConsultarCiudades() {
     int codPais;
     cout << "Ingrese el codigo del pais: ";
     cin >> codPais;
+    cout<<endl;
     pnodo puntero = primero->siguiente; bool flag = false;
     while (puntero!= primero) {
         if (puntero->valor == codPais) {
@@ -511,3 +513,80 @@ void listaDC::ConsultarCiudades() {
         cout << "El codigo ingresado no existe" << endl;
     }
 }
+
+bool listaDC::InsertarPais(int v, string pais){
+	if (ListaVacia()) {
+	            InsertarFinal(v, pais);
+	        }
+	        else {
+	            pnodo puntero = primero; bool flag = true;
+	            while (puntero->siguiente != primero) {
+	                if (puntero->valor == v) {
+	                    flag = false;
+	                    return false;
+	                    break;
+	                }
+	                else {
+	                    puntero = puntero->siguiente;
+	                }
+	            }
+	            if (flag) {
+	                InsertarFinal(v, pais);
+	            }
+			}
+	    }
+	    
+bool listaDC::InsertarCiudades(int codPais, int codCiudad, string nomCiudad){
+	pnodo puntero = primero; bool flag = false;
+        while (puntero->siguiente!= primero) {
+            if (puntero->valor == codPais) {
+                flag = true;
+                break;
+            }
+            else {
+                puntero = puntero->siguiente;
+            }
+        }
+        if(puntero->valor==codPais){
+        	flag=true;
+		}
+        if (flag) {
+            
+            pnodo auxiliar = primero;
+            while (auxiliar->siguiente != primero) {
+                if (auxiliar->valor == codPais) {
+                    break;
+                }
+                else {
+                    auxiliar = auxiliar->siguiente;
+                }
+            }
+            if ((auxiliar->ciudad==NULL)) {
+                pnodo nuevo = new nodo(codCiudad,nomCiudad);
+                auxiliar->ciudad = nuevo;
+                nuevo->anterior=auxiliar;
+                nuevo->ciudad=auxiliar;
+            }
+            else {
+            	bool bandera= false;
+            	pnodo nuevo = new nodo(codCiudad,nomCiudad); 
+            	pnodo recorrer = auxiliar->ciudad;
+            	while(recorrer->ciudad!=auxiliar){
+            		if(recorrer->valor==codCiudad){
+            			bandera=true;
+            			return true;
+            			break;
+					}else{
+						recorrer=recorrer->ciudad;
+					}
+				}if(bandera){
+					
+				}else{
+					recorrer->ciudad=nuevo;
+					nuevo->anterior=recorrer;
+					nuevo->ciudad=auxiliar;
+				}
+			
+				}
+            }
+        }
