@@ -185,7 +185,12 @@ int main() {
 									        
 									        switch (opcion2) {
 									            case 1:
-									            	
+									            	cout<<"Digite el codigo del pais que desea eliminar: "; cin>> codPais; cout<<endl;
+									            	if(paises.EliminarPais(codPais,paises)){
+									            		cout<<"El pais se elimino con exito"<<endl;
+													}else{
+														cout<<"El codigo del pais no se encontro"<<endl;
+													}
 									                system("pause>nul"); // Pausa
 									                break;
 									                

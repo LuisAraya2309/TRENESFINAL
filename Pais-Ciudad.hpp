@@ -54,6 +54,8 @@ public:
     void ConsultarCiudades();
     bool InsertarPais(int v, string pais);
     bool InsertarCiudades (int codPais,int codCiudad, string nomCiudad);
+    bool EliminarPais(int codPais,listaDC paises);
+    bool EliminarCiudad(int codPais, int CodCiudad,listaDC paises);
 
 private:
     pnodo primero;
@@ -583,3 +585,29 @@ bool listaDC::InsertarCiudades(int codPais, int codCiudad, string nomCiudad){
 			}
     }
 }
+
+
+bool listaDC::EliminarPais(int codPais,listaDC paises){
+	pnodo puntero = primero; bool flag = false; int cont=1;
+        while (puntero->siguiente != primero) {
+		    if (puntero->valor == codPais) {
+		    	cout<<"lo encontre: "<<puntero->valor<<endl;
+		    	paises.BorrarPosicion(cont);
+	            return true;
+	        }else {
+	        	puntero = puntero->siguiente;
+	        	cont++;
+	        }
+	    }if (puntero->valor==codPais) {
+	    		cout<<"lo encontre: "<<puntero->valor<<endl;
+	    		paises.BorrarPosicion(cont);
+	    		return true;
+	    	}else{
+	    		return false;
+		}
+	}
+
+
+
+
+

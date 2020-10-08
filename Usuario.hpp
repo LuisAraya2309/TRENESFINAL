@@ -44,9 +44,9 @@ class listaDCUsuario {
 public:
     listaDCUsuario() { primero = NULL; }
 
-    void InsertarInicio(int v, string pais);
-    void InsertarFinal(int v, string pais);
-    void InsertarPos(int v, string pais, int pos);
+    void InsertarInicio(int codPais, int codCiudad,int usuario,string nombre,int migracion);
+    void InsertarFinal(int codPais, int codCiudad,int usuario,string nombre,int migracion);
+    void InsertarPos(int codPais, int codCiudad,int usuario,string nombre,int migracion, int pos);
     bool ListaVacia() { return primero == NULL; }
     void Mostrar();
     void BorrarFinal();
@@ -82,18 +82,18 @@ int listaDCUsuario::largoLista()
 
 }
 
-void listaDCUsuario::InsertarInicio(int v, string pais)
+void listaDCUsuario::InsertarInicio(int codPais, int codCiudad,int usuario,string nombre,int migracion)
 {
 
     if (ListaVacia())
     {
-        primero = new nodoUsuario(v, pais);
+        primero = new nodoUsuario( codPais,  codCiudad, usuario, nombre, migracion);
         primero->anterior = primero;
         primero->siguiente = primero;
     }
     else
     {
-        pnodoUsuario nuevo = new nodoUsuario(v, pais);
+        pnodoUsuario nuevo = new nodoUsuario( codPais,  codCiudad, usuario, nombre, migracion);
         nuevo->siguiente = primero;
         nuevo->anterior = primero->anterior;
         primero->anterior->siguiente = nuevo;
@@ -102,17 +102,17 @@ void listaDCUsuario::InsertarInicio(int v, string pais)
     }
 }
 
-void listaDCUsuario::InsertarFinal(int v, string pais)
+void listaDCUsuario::InsertarFinal(int codPais, int codCiudad,int usuario,string nombre,int migracion)
 {
     if (ListaVacia())
     {
-        primero = new nodoUsuario(v, pais);
+        primero = new nodoUsuario( codPais,  codCiudad, usuario, nombre, migracion);
         primero->anterior = primero;
         primero->siguiente = primero;
     }
     else
     {
-        pnodoUsuario nuevo = new nodoUsuario(v, pais);
+        pnodoUsuario nuevo = new nodoUsuario( codPais,  codCiudad, usuario, nombre, migracion);
         nuevo->anterior = primero->anterior;
         nuevo->siguiente = primero->anterior->siguiente;
         primero->anterior->siguiente = nuevo;
@@ -121,22 +121,22 @@ void listaDCUsuario::InsertarFinal(int v, string pais)
 }
 
 
-void listaDCUsuario::InsertarPos(int v, string pais, int pos)
+void listaDCUsuario::InsertarPos(int codPais, int codCiudad,int usuario,string nombre,int migracion, int pos)
 {
     if (ListaVacia())
     {
-        primero = new nodoUsuario(v, pais);
+        primero = new nodoUsuario( codPais,  codCiudad, usuario, nombre, migracion);
         primero->anterior = primero;
         primero->siguiente = primero;
     }
     else
     {
         if (pos <= 1)
-            InsertarInicio(v, pais);
+            InsertarInicio( codPais,  codCiudad, usuario, nombre, migracion);
         else
         {
             if (pos == largoLista())
-                InsertarFinal(v, pais);
+                InsertarFinal( codPais,  codCiudad, usuario, nombre, migracion);
             else
             {
                 pnodoUsuario aux = primero;
@@ -146,7 +146,7 @@ void listaDCUsuario::InsertarPos(int v, string pais, int pos)
                     i++;
                     aux = aux->siguiente;
                 }
-                pnodoUsuario nuevo = new nodoUsuario(v, pais);
+                pnodoUsuario nuevo = new nodoUsuario( codPais,  codCiudad, usuario, nombre, migracion);
                 nuevo->siguiente = aux->siguiente;
                 aux->siguiente = nuevo;
                 aux->siguiente->anterior = aux;
@@ -238,14 +238,7 @@ void listaDCUsuario::BorrarPosicion(int pos)
 void listaDCUsuario::Mostrar()
 {
     pnodoUsuario aux = primero;
-    while (aux->siguiente != primero)
-    {
-
-        cout << aux->valor << "-" << aux->pais << "->";
-        aux = aux->siguiente;
-    }
-    cout << aux->valor << "-" << aux->pais << "->";
-    cout << endl;
+   
 }
 
 void listaDCUsuario::llenarListaUsuario(){
