@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include<string>
+#include "listaDoble.hpp"
 using namespace std;
 
 class nodo {

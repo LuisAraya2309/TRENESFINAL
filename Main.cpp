@@ -34,21 +34,27 @@ int main() {
     listaC rutas;
     listaC2 admin;
 	listaDCUsuario usuario;
+	listaTrenes trenes;
+	listaDT tipoTren;
+	lista codigoRuta;
     paises.llenarListaPais();
     paises.llenarListaCiudad();
     //paises.llenarListaConexiones();
     //rutas.llenarListaRutas();
-    //admin.llenarListaAdmin();
-    //admin.Mostrar();
+    admin.llenarListaAdmin();
+	//admin.Mostrar();
     cout<<endl;
-    usuario.llenarListaUsuario(paises); 
+    usuario.llenarListaUsuario(paises);
+    trenes.llenarListaTrenes();
+	tipoTren.llenarListaTipotrenes();
+	codigoRuta.llenarlistaCodigosR();
+	/*
     //Inicializar Variables--------------------------------------------------------------------------------
 	int opcion;
 	int codPais;
 	string nomPais;
 	int codCiudad;
 	string nomCiudad;
-	/*
 	//------------------------------------------------------------------------------------------------------
     do {
         system("cls");      // Para limpiar la pantalla
@@ -385,7 +391,6 @@ int main() {
                 system("pause>nul"); // Pausa
                 break;          
     	} 		
-	}while (opcion != 3);
-	*/
+	}while (opcion != 3);*/
     	return 0;
 }

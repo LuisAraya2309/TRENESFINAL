@@ -82,44 +82,40 @@ int listaC2::largoLista() {
     }
 }
 
-void listaC2::InsertarInicio(int v, string nombre)
+void listaC2::InsertarInicio(int v,string nombre)
 {
-    if (ListaVacia())
-    {
-        pnodoCir2 nuevo = new nodoCir2(v, nombre);
-        primero = nuevo;
-        nuevo->siguiente = primero;
+   if (ListaVacia()){
+    primero = new nodoCir2(v,nombre);
+    primero->siguiente=primero;
     }
-    else
-    {
-        pnodoCir2 nuevo = new nodoCir2(v, nombre);
-        pnodoCir2 aux = primero;
-        while (aux->siguiente != primero)
-            aux = aux->siguiente;
-        nuevo->siguiente = primero;
-        aux->siguiente = nuevo;
-        primero = nuevo;
-    }
+   else{ // La funcionalidad de esta parte es que crea un nuevo nodo con el valor asignado y la direccion de primero, luego crea un aux con el valor de primero
+   // Al entrar al while con el parametro actualizado encontraremos el valor del aux que necesitamos para enlazar el nodo con la dirrecion anterior
+   // y posterior por lo que no se hara basura.
+       pnodoCir2 nuevo=new nodoCir2(v,nombre,primero);
+       pnodoCir2 aux=primero;
+       while(aux->siguiente!=primero){
+           aux=aux->siguiente;
+       }
+       aux->siguiente=nuevo;
+       primero=nuevo;
+   }
 }
 
-void listaC2::InsertarFinal(int v, string nombre)
-{
-    if (ListaVacia())
-    {
-        pnodoCir2 nuevo = new nodoCir2(v, nombre);
-        primero = nuevo;
-        nuevo->siguiente = primero;
-    }
-    else
-    {
-        pnodoCir2 nuevo = new nodoCir2(v, nombre);
-        pnodoCir2 aux = primero;
-        while (aux->siguiente != primero)
-            aux = aux->siguiente;
-        nuevo->siguiente = primero;
-        aux->siguiente = nuevo;
-
-    }
+void listaC2::InsertarFinal(int v,string nombre){
+	if (ListaVacia()){
+	 primero = new nodoCir2(v,nombre);
+	 primero->siguiente=primero;
+	}
+   else{ 
+   pnodoCir2 aux = primero;
+   pnodoCir2 aux2=primero;
+    while ( aux->siguiente != primero){
+    	aux=aux->siguiente;
+	}
+	pnodoCir2 nuevo= new nodoCir2(v,nombre);
+	aux->siguiente=nuevo;
+	nuevo->siguiente=aux2;
+    } 
 }
 
 
@@ -230,7 +226,6 @@ void listaC2::borrarPosicion(int pos)
         }
     }
 }
-
 void listaC2::Mostrar()
 {
     pnodoCir2 aux = primero;
@@ -258,23 +253,35 @@ void listaC2::llenarListaAdmin() {
         int codAdmin = atoi(texto.substr(0, posPC).c_str());
         string nomAdmin = texto.substr(posPC + 1, texto.length());
         if (ListaVacia()) {
-            InsertarFinal(codAdmin, nomAdmin);
+        	cout<<"Entra al inicio: "<<endl;
+        	cout<<"codAdmin: "<<codAdmin<<endl; cout<<"nomAdmin: "<<nomAdmin<<endl; cout<<endl; cout<<endl;
+        	pnodoCir2 nuevo= new nodoCir2(codAdmin,nomAdmin);
+        	primero=nuevo;
+        	nuevo->siguiente=nuevo;
         }
         else {
-            pnodoCir2 puntero = primero; bool flag = true;
-            while (puntero->siguiente != primero) {
-                if (puntero->valor == codAdmin) {
-                    flag = false;
-                    break;
-                }
-                else {
-                    puntero = puntero->siguiente;
-                }
-            }
-            if (flag) {
-                InsertarFinal(codAdmin, nomAdmin);
-            }
-
+        	pnodoCir2 puntero=primero->siguiente; bool flag=true;
+        	while(puntero!=primero){
+        		if (puntero->valor==codAdmin){
+        			cout<<"El codigo se repite"<<endl;
+        			cout<<endl;
+        			cout<<endl;
+        			flag=false;
+        			break;
+				}else{
+					puntero=puntero->siguiente;
+				}
+			}if (flag){
+				if (puntero->valor==codAdmin){
+					cout<<"El codigo se repite"<<endl;
+					cout<<endl;
+        			cout<<endl;
+				}else{
+					cout<<"Entra al final:"<<endl;
+					cout<<"codAdmin: "<<codAdmin<<endl; cout<<"nomAdmin: "<<nomAdmin<<endl; cout<<endl; cout<<endl;
+					InsertarFinal(codAdmin,nomAdmin);
+				}
+			}
         }
     }
     archivo2.close();

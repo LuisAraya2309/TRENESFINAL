@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <stdlib.h>
+#include<string>
 using namespace std;
 //TDA Tipo abstractos de Datos, no pertenece al lenguaje, sin embargo, cuando el programador lo define se puede empezar a utilizar
 
@@ -48,6 +51,7 @@ public:
     void BorrarInicio();
     void borrarPosicion(int pos);
     int largoLista();
+    void llenarlistaCodigosR();
 
 private:
     pnodoSimp primero; // nodo *primero; tipo nodo tiene derechoi direccionar un nodo
@@ -234,5 +238,27 @@ void lista::Mostrar()
         }
         cout << endl;
     }
+}
+
+void lista::llenarlistaCodigosR(){
+	ifstream archivoR;
+    string texto;
+    archivoR.open("Rutas.txt", ios::in);
+    if (archivoR.fail()) {
+        cout << "No se pudo abrir el archivo";
+        exit(1);
+    }
+    while (!archivoR.eof()) {
+        getline(archivoR, texto);
+        
+        int posPC = texto.find(";");
+        string Todo = texto.substr(posPC + 1, texto.length());
+        int posPC2 = Todo.find(";");
+        string Todo2 = Todo.substr(posPC2 + 1, Todo.length());
+        int posPC3 = Todo2.find(";");
+        int codRuta = atoi((Todo2.substr(0, posPC3).c_str()));
+        cout << "Codigo Ruta: " << codRuta << endl;
+	}
+	archivoR.close();
 }
 

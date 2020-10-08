@@ -4,30 +4,24 @@ using namespace std;
 
 class nodoDobleT {
 public:
-    nodoDobleT(int codConexion, int codPais, int codCiudad, int tiempo)
+    nodoDobleT(int codTipo, string nombre)
     {
-        codConexion = codConexion;
-        codPais = codPais;
-        codCiudad = codCiudad;
-        tiempo = tiempo;
+        codTipo= codTipo;
+        nombre= nombre;
         siguiente = NULL;
         anterior = NULL;
     }
 
-    nodoDobleT(int codConexion, int codPais, int codCiudad, int tiempo, nodoDobleT* signodoDoble, nodoDobleT* sigantDoble)
+    nodoDobleT(int codTipo,string nombre, nodoDobleT* signodoDoble, nodoDobleT* sigantDoble)
     {
-        codConexion = codConexion;
-        codPais = codPais;
-        codCiudad = codCiudad;
-        tiempo = tiempo;
+        codTipo= codTipo;
+        nombre= nombre;
         siguiente = signodoDoble;
         anterior = sigantDoble;
     }
 private:
-    int codConexion;
-    int codPais;
-    int codCiudad;
-    int tiempo;
+	int codTipo;
+	string nombre;
     nodoDobleT* siguiente;
     nodoDobleT* anterior;
 
@@ -41,11 +35,12 @@ public:
     listaDT() { primero = NULL; }
     ~listaDT();
 
-    void InsertarInicio(int codConexion, int codPais, int codCiudad, int tiempo);
-    void InsertarFinal(int codConexion, int codPais, int codCiudad, int tiempo);
+    void InsertarInicio(int codTipo, string nombre);
+    void InsertarFinal(int codTipo, string nombre);
     bool ListaVacia() { return primero == NULL; }
     void Mostrar();
     int largoLista();
+    void llenarListaTipotrenes();
     pnodoDobleT primero;
 
 };
@@ -80,24 +75,24 @@ int listaDT::largoLista() {
 
 }
 
-void listaDT::InsertarInicio(int codConexion, int codPais, int codCiudad, int tiempo)
+void listaDT::InsertarInicio(int codTipo, string nombre)
 {
     if (ListaVacia()) {
-        primero = new nodoDobleT(codConexion, codPais, codCiudad, tiempo);
+        primero = new nodoDobleT(codTipo, nombre);
     }
     else
     {
         pnodoDobleT aux = primero;
-        primero = new nodoDobleT(codConexion, codPais, codCiudad, tiempo);
+        primero = new nodoDobleT( codTipo,  nombre);
         aux->anterior = primero;
     }
 
 }
 
-void listaDT::InsertarFinal(int codConexion, int codPais, int codCiudad, int tiempo)
+void listaDT::InsertarFinal(int codTipo, string nombre)
 {
     if (ListaVacia()) {
-        primero = new nodoDobleT(codConexion, codPais, codCiudad, tiempo);
+        primero = new nodoDobleT( codTipo,  nombre);
     }
     else
     {
@@ -105,7 +100,7 @@ void listaDT::InsertarFinal(int codConexion, int codPais, int codCiudad, int tie
         while (aux->siguiente != NULL) {
             aux = aux->siguiente;
         }
-        pnodoDobleT nuevo = new nodoDobleT(codConexion, codPais, codCiudad, tiempo);
+        pnodoDobleT nuevo = new nodoDobleT( codTipo,  nombre);
         aux->siguiente = nuevo;
         nuevo->anterior = aux;
 
@@ -117,9 +112,32 @@ void listaDT::Mostrar()
 
     aux = primero;
     while (aux) {
-        cout << aux->codConexion << "-" << aux->codPais << "-" << aux->codCiudad << aux->tiempo << "->";
         aux = aux->siguiente;
     }
     cout << endl;
+}
+
+void listaDT::llenarListaTipotrenes(){
+	ifstream archivoT;
+    string texto;
+    archivoT.open("TipoTren.txt", ios::in);
+    if (archivoT.fail()) {
+        cout << "No se pudo abrir el archivo";
+        exit(1);
+    }
+    while (!archivoT.eof()) {
+        getline(archivoT, texto);
+        
+        int posPC = texto.find(";");
+        int codTipTren = atoi(texto.substr(0, posPC).c_str());
+        cout << "Tipo Tren: " << codTipTren << endl;
+        
+        string Todo = texto.substr(posPC + 1, texto.length());
+        int posPC2 = Todo.find(";");
+        string nombre = (Todo.substr(0, posPC2));
+        cout << "Codigo Tren: " << nombre << endl;
+        
+	}
+	archivoT.close();
 }
 
