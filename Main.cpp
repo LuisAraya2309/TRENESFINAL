@@ -36,17 +36,19 @@ int main() {
 	listaDCUsuario usuario;
     paises.llenarListaPais();
     paises.llenarListaCiudad();
-    paises.llenarListaConexiones();
-    rutas.llenarListaRutas();
-    admin.llenarListaAdmin();
-    admin.Mostrar();
-    usuario.llenarListaUsuario();
+    //paises.llenarListaConexiones();
+    //rutas.llenarListaRutas();
+    //admin.llenarListaAdmin();
+    //admin.Mostrar();
+    cout<<endl;
+    usuario.llenarListaUsuario(paises); 
     //Inicializar Variables--------------------------------------------------------------------------------
 	int opcion;
 	int codPais;
 	string nomPais;
 	int codCiudad;
 	string nomCiudad;
+	/*
 	//------------------------------------------------------------------------------------------------------
     do {
         system("cls");      // Para limpiar la pantalla
@@ -384,5 +386,6 @@ int main() {
                 break;          
     	} 		
 	}while (opcion != 3);
-    	return 0;   
+	*/
+    	return 0;
 }

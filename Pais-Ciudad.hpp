@@ -23,7 +23,7 @@ public:
         ciudad = sigCiudad;
     }
 
-private:
+public:
     int valor;
     string pais;
     nodo* ciudad;
@@ -57,7 +57,7 @@ public:
     bool EliminarPais(int codPais,listaDC paises);
     bool EliminarCiudad(int codPais, int CodCiudad,listaDC paises);
 
-private:
+public:
     pnodo primero;
 
 };

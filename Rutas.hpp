@@ -290,6 +290,7 @@ void listaC::llenarListaRutas() {
         int posPC8 = Todo7.find(";");
         int codPrecio = atoi((Todo7.substr(0, posPC8).c_str()));
         //cout << "Precio: " << codPrecio << endl;
+        
 
     }
     archivo2.close();

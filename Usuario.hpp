@@ -53,7 +53,7 @@ public:
     void BorrarInicio();
     void BorrarPosicion(int pos);
     int largoLista();
-    void llenarListaUsuario();
+    void llenarListaUsuario(listaDC paises);
     bool VerificarUsuario(int codUsuario);
 
 private:
@@ -237,11 +237,11 @@ void listaDCUsuario::BorrarPosicion(int pos)
 
 void listaDCUsuario::Mostrar()
 {
-    pnodoUsuario aux = primero;
+   pnodoUsuario aux = primero->siguiente;
    
 }
 
-void listaDCUsuario::llenarListaUsuario(){
+void listaDCUsuario::llenarListaUsuario(listaDC paises){
     ifstream archivo2;
     string texto;
     archivo2.open("Usuarios.txt", ios::in);
@@ -275,6 +275,45 @@ void listaDCUsuario::llenarListaUsuario(){
         int posPC5 = Todo4.find(";");
         int estMigracion = atoi((Todo4.substr(0, posPC5).c_str()));
         cout << "Migración: " << estMigracion << endl;
+        
+        //Encontramos que el pais exista
+        pnodo buscarPais = paises.primero;bool banderaPais = false;
+        while(buscarPais->siguiente!=paises.primero){
+        	if(buscarPais->valor==codPais){
+        		cout<<"Pais encontrado: "<<buscarPais->pais<<endl;
+        		banderaPais=true;
+        		break;
+			}
+			else{
+				buscarPais=buscarPais->siguiente;
+			}
+		}
+		if(banderaPais){
+		//Encontramos la ciudad que exista
+			pnodo buscarCiudad = buscarPais->ciudad;bool banderaCiudad = false;
+			while(buscarCiudad->ciudad!=buscarPais){
+				if(buscarCiudad->valor==codCiudad){
+					cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
+					banderaCiudad=true;
+					break;
+				}
+				else{
+					buscarCiudad=buscarCiudad->ciudad;
+				}
+			}
+			if(banderaCiudad){
+				InsertarFinal(codPais,codCiudad,codPasaporte,nombre,estMigracion);
+				cout<<"Insertado"<<endl;
+			}
+			else{
+				cout<<"La ciudad no existe"<<endl;
+			}
+		}
+		else{
+			cout<<"El pais no existe"<<endl;
+		}
+		cout<<"Completado"<<endl;
+		cout<<endl;
     }
     archivo2.close();
 }
