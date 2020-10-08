@@ -285,13 +285,13 @@ bool listaC2::VerificarAdmin(int codAdmin){
 	bool flag= false;
 	while(puntero->siguiente != primero){
 		if (puntero->valor==codAdmin){
-			flag=true;
-			break;
+			return true;
 		}else{
 			puntero=puntero->siguiente;
 		}
-	}
-	if(flag){
+	}if (puntero->valor==codAdmin){
 		return true;
+	}else{
+		return false;	
 	}
 }

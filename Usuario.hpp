@@ -6,27 +6,34 @@ using namespace std;
 
 class nodoUsuario {
 public:
-    nodoUsuario(int v, string cpais)
+    nodoUsuario(int codPais, int codCiudad,int usuario,string nombre,int migracion)
     {
-        valor = v;
-        pais = cpais;
+        codPais = codPais;
+        codCiudad = codCiudad;
+        usuario = usuario;
+        nombre = nombre;
+        migracion = migracion;
         siguiente = NULL;
         anterior = NULL;
-        ciudad = NULL;
     }
 
-    nodoUsuario(int v, string cpais, nodoUsuario* signodo, nodoUsuario* sigCiudad)
+    nodoUsuario(int codPais, int codCiudad, int usuario , string nombre , int migracion , nodoUsuario* signodo, nodoUsuario* anteriornodo)
     {
-        valor = v;
-        pais = cpais;
+        codPais = codPais;
+        codCiudad = codCiudad;
+        usuario = usuario;
+        nombre = nombre;
+        migracion = migracion;
         siguiente = signodo;
-        ciudad = sigCiudad;
+        anterior = anteriornodo;
     }
 
 private:
-    int valor;
-    string pais;
-    nodoUsuario* ciudad;
+    int codPais;
+    int codCiudad;
+    int usuario;
+    int migracion;
+    string nombre;
     nodoUsuario* siguiente;
     nodoUsuario* anterior;
     friend class listaDCUsuario;
@@ -46,10 +53,8 @@ public:
     void BorrarInicio();
     void BorrarPosicion(int pos);
     int largoLista();
-    void llenarListaPais();
-    void llenarListaCiudad();
-    void llenarListaConexiones();
     void llenarListaUsuario();
+    bool VerificarUsuario(int codUsuario);
 
 private:
     pnodoUsuario primero;
@@ -280,3 +285,20 @@ void listaDCUsuario::llenarListaUsuario(){
     }
     archivo2.close();
 }
+
+bool listaDCUsuario::VerificarUsuario(int codUsuario){
+	pnodoUsuario puntero=primero;
+	while(puntero->siguiente!=primero){
+		if (puntero->usuario==codUsuario){
+			return true;
+		}else{
+			puntero=puntero->siguiente;
+		}
+	}if(puntero->usuario==codUsuario){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+

@@ -343,9 +343,7 @@ void listaDC::llenarListaCiudad() {
 					}else{
 						recorrer=recorrer->ciudad;
 					}
-				}if(bandera){
-					
-				}else{
+				}if(!bandera){
 					recorrer->ciudad=nuevo;
 					nuevo->anterior=recorrer;
 					nuevo->ciudad=auxiliar;
@@ -573,20 +571,15 @@ bool listaDC::InsertarCiudades(int codPais, int codCiudad, string nomCiudad){
             	pnodo recorrer = auxiliar->ciudad;
             	while(recorrer->ciudad!=auxiliar){
             		if(recorrer->valor==codCiudad){
-            			bandera=true;
             			return true;
-            			break;
 					}else{
 						recorrer=recorrer->ciudad;
 					}
-				}if(bandera){
-					
-				}else{
+				}if(!bandera){
 					recorrer->ciudad=nuevo;
 					nuevo->anterior=recorrer;
 					nuevo->ciudad=auxiliar;
 				}
-			
-				}
-            }
-        }
+			}
+    }
+}

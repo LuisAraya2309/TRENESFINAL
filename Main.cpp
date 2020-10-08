@@ -39,6 +39,7 @@ int main() {
     paises.llenarListaConexiones();
     rutas.llenarListaRutas();
     admin.llenarListaAdmin();
+    admin.Mostrar();
     usuario.llenarListaUsuario();
     //Inicializar Variables--------------------------------------------------------------------------------
 	int opcion;
@@ -78,7 +79,7 @@ int main() {
 					        
 					        cout << "\n\nSistema de Trenes" << endl;
 					        cout << "\n\nMenu del Administrador" << endl;
-					        cout << "1. Isertar" << endl;
+					        cout << "1. Insertar" << endl;
 					        cout << "2. Eliminar" << endl;
 					        cout << "3. Modificar" << endl;
 					        cout << "4. Consultar paises" << endl;
@@ -119,7 +120,7 @@ int main() {
 									            	cout<<"Digite el codigo del pais a ingresar: "; cin>> codPais;cout<<endl;
 									            	cout<<"Digite el nombre del pais a ingresar: "; cin>> nomPais;cout<<endl;
 									            	if(paises.InsertarPais(codPais,nomPais)){
-									            		cout<<"Pais ingresada con exito"<<endl;
+									            		cout<<"Pais ingresado con exito"<<endl;
 													}else{
 														cout<<"El codigo del pais ya existe"<<endl;
 													}
@@ -352,7 +353,7 @@ int main() {
 					                system("pause>nul"); // Pausa
 					                break;                    
 					    	 	case 4:
-					                paises.ConsultarPaises();           
+					                paises.ConsultarPaises();          
 					                
 					                system("pause>nul"); // Pausa
 					                break;
@@ -378,5 +379,5 @@ int main() {
                 break;          
     	} 		
 	}while (opcion != 3);
-    		return 0;   
+    	return 0;   
 }
