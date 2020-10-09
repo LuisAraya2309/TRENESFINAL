@@ -240,51 +240,45 @@ void listaC2::Mostrar()
 }
 
 void listaC2::llenarListaAdmin() {
-    ifstream archivo2;
+	ifstream archivo;
     string texto;
-    archivo2.open("Administradores.txt", ios::in);
-    if (archivo2.fail()) {
+    archivo.open("Administradores.txt", ios::in);
+    if (archivo.fail()) {
         cout << "No se pudo abrir el archivo";
         exit(1);
-    }
-    while (!archivo2.eof()) {
-        getline(archivo2, texto);
-        int posPC = texto.find(";");
-        int codAdmin = atoi(texto.substr(0, posPC).c_str());
-        string nomAdmin = texto.substr(posPC + 1, texto.length());
-        if (ListaVacia()) {
-        	cout<<"Entra al inicio: "<<endl;
-        	cout<<"codAdmin: "<<codAdmin<<endl; cout<<"nomAdmin: "<<nomAdmin<<endl; cout<<endl; cout<<endl;
-        	pnodoCir2 nuevo= new nodoCir2(codAdmin,nomAdmin);
-        	primero=nuevo;
-        	nuevo->siguiente=nuevo;
-        }
-        else {
-        	pnodoCir2 puntero=primero->siguiente; bool flag=true;
-        	while(puntero!=primero){
-        		if (puntero->valor==codAdmin){
-        			cout<<"El codigo se repite"<<endl;
-        			cout<<endl;
-        			cout<<endl;
-        			flag=false;
-        			break;
+    }else{
+    	while (!archivo.eof()) {
+	    	getline(archivo, texto);
+	    	int posC= texto.find(";");
+	    	int codAdmin=atoi(texto.substr(0, posC).c_str());
+	    	string nombreAdmin= texto.substr(posC+1, texto.length());
+	    	cout<<codAdmin;cout<<nombreAdmin<<endl;
+	    	if (ListaVacia()){
+	    		cout<<"La lista esta vacia"<<endl; 
+	    		//InsertarInicio(codAdmin,nombreAdmin);
+	    		primero= new nodoCir2(codAdmin,nombreAdmin);
+	    		primero->siguiente=primero;
+			}else{
+				pnodoCir2 recorrer=primero->siguiente; bool bandera=true;
+				while(recorrer!=primero){
+					if (recorrer->valor==codAdmin){
+						cout<<"Encontre un repetido"<<recorrer->nombre<<endl;
+						bandera=false;
+						break;
+					}else{
+						recorrer=recorrer->siguiente;
+					}
+				}if (bandera){
+					if(recorrer->valor!=codAdmin){
+						cout<<"No estoy repetido voy a entrar"<<endl;
+						//InsertarFinal(codAdmin,nombreAdmin);
+					}
 				}else{
-					puntero=puntero->siguiente;
-				}
-			}if (flag){
-				if (puntero->valor==codAdmin){
-					cout<<"El codigo se repite"<<endl;
-					cout<<endl;
-        			cout<<endl;
-				}else{
-					cout<<"Entra al final:"<<endl;
-					cout<<"codAdmin: "<<codAdmin<<endl; cout<<"nomAdmin: "<<nomAdmin<<endl; cout<<endl; cout<<endl;
-					InsertarFinal(codAdmin,nomAdmin);
+					continue;
 				}
 			}
-        }
-    }
-    archivo2.close();
+		}archivo.close();
+	}	
 }
 
 bool listaC2::VerificarAdmin(int codAdmin){
