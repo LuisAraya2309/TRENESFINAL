@@ -1,7 +1,7 @@
 
 #include <iostream>
 using namespace std;
-
+#include "Trenes.hpp"
 class nodoDobleT {
 public:
     nodoDobleT(int codTipo, string nombre)
@@ -10,6 +10,7 @@ public:
         nombre= nombre;
         siguiente = NULL;
         anterior = NULL;
+        listaDeTrenes = listaTrenes();
     }
 
     nodoDobleT(int codTipo,string nombre, nodoDobleT* signodoDoble, nodoDobleT* sigantDoble)
@@ -24,7 +25,7 @@ private:
 	string nombre;
     nodoDobleT* siguiente;
     nodoDobleT* anterior;
-
+    listaTrenes listaDeTrenes;
     friend class listaDT;
 };
 
@@ -35,9 +36,9 @@ public:
     listaDT() { primero = NULL; }
     ~listaDT();
 
-    void InsertarInicio(int codTipo, string nombre);
-    void InsertarFinal(int codTipo, string nombre);
-    bool ListaVacia() { return primero == NULL; }
+    void InsertarInicioDT(int codTipo, string nombre);
+    void InsertarFinalDT(int codTipo, string nombre);
+    bool ListaVaciaDT() { return primero == NULL; }
     void Mostrar();
     int largoLista();
     void llenarListaTipotrenes();
@@ -62,7 +63,7 @@ int listaDT::largoLista() {
 
     pnodoDobleT aux;
     aux = primero;
-    if (ListaVacia()) {
+    if (ListaVaciaDT()) {
         return cont;
     }
     else {
@@ -75,23 +76,23 @@ int listaDT::largoLista() {
 
 }
 
-void listaDT::InsertarInicio(int codTipo, string nombre)
+void listaDT::InsertarInicioDT(int codTipo, string nombre)
 {
-    if (ListaVacia()) {
+    if (ListaVaciaDT()) {
         primero = new nodoDobleT(codTipo, nombre);
+        primero->anterior=NULL;
     }
     else
     {
-        pnodoDobleT aux = primero;
         primero = new nodoDobleT( codTipo,  nombre);
-        aux->anterior = primero;
+        primero->siguiente->anterior=primero;
     }
 
 }
 
-void listaDT::InsertarFinal(int codTipo, string nombre)
+void listaDT::InsertarFinalDT(int codTipo, string nombre)
 {
-    if (ListaVacia()) {
+    if (ListaVaciaDT()) {
         primero = new nodoDobleT( codTipo,  nombre);
     }
     else
@@ -111,7 +112,9 @@ void listaDT::Mostrar()
     nodoDobleT* aux;
 
     aux = primero;
-    while (aux) {
+    while (aux!=NULL) {
+    	cout<<"CodTipTren : "<<aux->codTipo;
+    	cout<<"Nombre de Tren : "<<aux->nombre;
         aux = aux->siguiente;
     }
     cout << endl;
@@ -130,12 +133,48 @@ void listaDT::llenarListaTipotrenes(){
         
         int posPC = texto.find(";");
         int codTipTren = atoi(texto.substr(0, posPC).c_str());
-        cout << "Tipo Tren: " << codTipTren << endl;
+        //cout << "Tipo Tren: " << codTipTren << endl;
         
         string Todo = texto.substr(posPC + 1, texto.length());
         int posPC2 = Todo.find(";");
         string nombre = (Todo.substr(0, posPC2));
-        cout << "Codigo Tren: " << nombre << endl;
+        //cout << "Nombre de Tren: " << nombre << endl;
+        
+        if(ListaVaciaDT()){
+        	cout<<"Lista Vacia"<<endl;
+        	InsertarInicioDT(codTipTren,nombre);
+		}
+		else{
+			pnodoDobleT trenAux = primero;bool existeTren = false;
+			while(trenAux!=NULL){
+				//cout<<"Codigo Tren: "<<trenAux->codTipo<<endl;
+				//cout<<"Nombre Tren: "<<trenAux->nombre<<endl;
+				
+				if(trenAux->codTipo==codTipTren){
+					cout<<"Repetido"<<endl;
+					existeTren=true;
+					break;
+				}
+				else{
+					trenAux=trenAux->siguiente; 
+				}
+			} 
+				if(trenAux->codTipo==codTipTren){
+					cout<<"Repetido"<<endl;
+					existeTren=true;
+					
+					if(!existeTren){
+					InsertarFinalDT(codTipTren,nombre);	
+					}
+					else{
+						continue;
+					}
+				}
+				else{
+					continue;
+				}
+				
+		}
         
 	}
 	archivoT.close();

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include<string>
+#include "listaDoble.hpp"
 using namespace std;
 
 class nodo {
@@ -13,6 +14,8 @@ public:
         siguiente = NULL;
         anterior = NULL;
         ciudad = NULL;
+        listaConexiones = listaD();
+        primeraConexion = listaConexiones.primero;
     }
 
     nodo(int v, string cpais, nodo* signodo, nodo* sigCiudad)
@@ -29,8 +32,11 @@ public:
     nodo* ciudad;
     nodo* siguiente;
     nodo* anterior;
+    listaD listaConexiones;
+    nodoDoble *primeraConexion;
     friend class listaDC;
     friend class nodoDoble;
+    friend class listaD;
 };
 typedef nodo* pnodo;
 
@@ -367,7 +373,7 @@ void listaDC::llenarListaConexiones() {
         int posPC = texto.find(";");
         int codPais = atoi(texto.substr(0, posPC).c_str());
         pnodo puntero = primero; bool flag = false;
-        while (puntero->siguiente != primero) {
+        while (puntero->siguiente!= primero) {
             if (puntero->valor == codPais) {
                 flag = true;
                 break;
@@ -385,7 +391,7 @@ void listaDC::llenarListaConexiones() {
             int codCiudad = atoi((ConexionTotal.substr(0, posPC2).c_str()));
 
             pnodo ciudades = puntero->ciudad; bool flag2=false; 
-            while (ciudades->siguiente != puntero) {
+            while (ciudades!= puntero) {
                 if (ciudades->valor == codCiudad) {
                     flag2 = true;
                     break;
@@ -411,51 +417,49 @@ void listaDC::llenarListaConexiones() {
                 string Tiempo = ConexionCiudad.substr(posPC5 + 1, ConexionCiudad.length());
                 int posPC6 = Tiempo.find(";");
                 int codTiempo = atoi((Tiempo.substr(0, posPC6).c_str()));
-                /*
+                
                 cout << "Codigo conexion: "<<codConexion << endl;
                 cout << "Codigo de Pais: "<<codPais << endl;
                 cout << "Codigo Ciudad: "<<codCiudad << endl;
                 cout << "Tiempo: "<<codTiempo << endl;
-                */
-
-                pnodo paisesAux = primero; bool bandera = false;
-                while (paisesAux->siguiente!=primero) {
-                    if (paisesAux->valor==codPais) {
-                        bandera = true;
-                        break;
-                    }
-                    else {
-                        paisesAux = paisesAux->siguiente;
-                    }
-
-                }
-                if (bandera) {
-                    pnodo ciudadesAux = paisesAux->ciudad; bool banderix = false;
-                    while (ciudadesAux->siguiente!=paisesAux) {
-                        if (ciudadesAux->valor==codCiudad) {
-                            banderix = true;
-                            break;
-                        }
-                        else {
-                            ciudadesAux = ciudadesAux->siguiente;
-                        }
-                    }
-                    if (banderix) {
-                        /*pnodo aux = ciudadesAux;
-                        while (aux->siguiente != NULL) {
-                            aux = aux->siguiente;
-                        }
-                        pnodo nuevo = new nodoDoble.nodoDoble(codConexion, codPais, codCiudad, codTiempo);
-                        aux->siguiente = nuevo;
-                        nuevo->anterior = aux;*/
-                    }
-                    else {
-                        continue;
-                    }
-                }
-                else {
-                    continue;
-                }
+                
+				//Vamos a buscar que la conexion si se pueda realizar
+				//Tiene que pasar 2 filtros
+				
+				bool existePais = false;bool existeCiudad = false;
+				pnodo buscarPais = primero;
+				while(buscarPais->siguiente!=primero){
+					if(buscarPais->valor==codPais){
+						existePais=true;
+						break;
+					}
+					else{
+						buscarPais = buscarPais->siguiente;
+					}
+				}
+				if(existePais){
+					pnodo buscarCiudad = buscarPais->ciudad;
+					while(buscarCiudad->siguiente!=buscarPais){
+						if(buscarCiudad->valor==codCiudad){
+							existeCiudad=true;
+							break;
+						}
+						else{
+							buscarCiudad=buscarCiudad->siguiente;
+						}
+					}
+					if(existeCiudad){
+						cout<<"Holis"<<endl<<endl;
+						buscarCiudad->listaConexiones.InsertarFinalD(codConexion,codPais,codCiudad,codTiempo);	
+					}
+					else{
+						continue;
+					}
+				}
+				else{
+				continue;
+				}
+               
             }
             else {
                 continue;

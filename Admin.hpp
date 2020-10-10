@@ -91,8 +91,8 @@ void listaC2::InsertarInicio(int v,string nombre)
    else{ // La funcionalidad de esta parte es que crea un nuevo nodo con el valor asignado y la direccion de primero, luego crea un aux con el valor de primero
    // Al entrar al while con el parametro actualizado encontraremos el valor del aux que necesitamos para enlazar el nodo con la dirrecion anterior
    // y posterior por lo que no se hara basura.
-       pnodoCir2 nuevo=new nodoCir2(v,nombre,primero);
-       pnodoCir2 aux=primero;
+       pnodoCir2 nuevo = new nodoCir2(v,nombre);
+       pnodoCir2 aux = primero;
        while(aux->siguiente!=primero){
            aux=aux->siguiente;
        }
@@ -108,13 +108,12 @@ void listaC2::InsertarFinal(int v,string nombre){
 	}
    else{ 
    pnodoCir2 aux = primero;
-   pnodoCir2 aux2=primero;
     while ( aux->siguiente != primero){
     	aux=aux->siguiente;
 	}
 	pnodoCir2 nuevo= new nodoCir2(v,nombre);
 	aux->siguiente=nuevo;
-	nuevo->siguiente=aux2;
+	nuevo->siguiente=primero;
     } 
 }
 
@@ -253,14 +252,14 @@ void listaC2::llenarListaAdmin() {
 	    	int codAdmin=atoi(texto.substr(0, posC).c_str());
 	    	string nombreAdmin= texto.substr(posC+1, texto.length());
 	    	cout<<codAdmin;cout<<nombreAdmin<<endl;
-	    	if (ListaVacia()){
+	    	if (primero==NULL){
 	    		cout<<"La lista esta vacia"<<endl; 
 	    		//InsertarInicio(codAdmin,nombreAdmin);
 	    		primero= new nodoCir2(codAdmin,nombreAdmin);
 	    		primero->siguiente=primero;
 			}else{
-				pnodoCir2 recorrer=primero->siguiente; bool bandera=true;
-				while(recorrer!=primero){
+				pnodoCir2 recorrer=primero; bool bandera=true;
+				while(recorrer->siguiente!=primero){
 					if (recorrer->valor==codAdmin){
 						cout<<"Encontre un repetido"<<recorrer->nombre<<endl;
 						bandera=false;
@@ -271,7 +270,7 @@ void listaC2::llenarListaAdmin() {
 				}if (bandera){
 					if(recorrer->valor!=codAdmin){
 						cout<<"No estoy repetido voy a entrar"<<endl;
-						//InsertarFinal(codAdmin,nombreAdmin);
+						InsertarFinal(codAdmin,nombreAdmin);
 					}
 				}else{
 					continue;

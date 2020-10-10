@@ -1,6 +1,7 @@
 
 #include <iostream>
 using namespace std;
+#pragma once
 
 class nodoDoble {
 public:
@@ -42,12 +43,16 @@ public:
     listaD() { primero = NULL; }
     ~listaD();
 
-    void InsertarInicio(int codConexion, int codPais, int codCiudad, int tiempo);
-    void InsertarFinal(int codConexion, int codPais, int codCiudad, int tiempo);
+    void InsertarInicioD(int codConexion, int codPais, int codCiudad, int tiempo);
+    void InsertarFinalD(int codConexion, int codPais, int codCiudad, int tiempo);
     bool ListaVacia() { return primero == NULL; }
     void Mostrar();
     int largoLista();
+    
+public:
     pnodoDoble primero;
+    
+    friend class listaDC;
 
 };
 
@@ -81,7 +86,7 @@ int listaD::largoLista() {
 
 }
 
-void listaD::InsertarInicio(int codConexion, int codPais, int codCiudad, int tiempo)
+void listaD::InsertarInicioD(int codConexion, int codPais, int codCiudad, int tiempo)
 {
     if (ListaVacia()) {
         primero = new nodoDoble(codConexion, codPais, codCiudad, tiempo);
@@ -95,7 +100,7 @@ void listaD::InsertarInicio(int codConexion, int codPais, int codCiudad, int tie
 
 }
 
-void listaD::InsertarFinal(int codConexion, int codPais, int codCiudad, int tiempo)
+void listaD::InsertarFinalD(int codConexion, int codPais, int codCiudad, int tiempo)
 {
     if (ListaVacia()) {
         primero = new nodoDoble(codConexion, codPais, codCiudad, tiempo);
@@ -117,7 +122,7 @@ void listaD::Mostrar()
     nodoDoble* aux;
 
     aux = primero;
-    while (aux) {
+    while (aux!=NULL) {
         cout << aux->codConexion << "-" << aux->codPais << "-" << aux->codCiudad << aux->tiempo << "->";
         aux = aux->siguiente;
     }

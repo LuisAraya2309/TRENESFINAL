@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 //TDA Tipo abstractos de Datos, no pertenece al lenguaje, sin embargo, cuando el programador lo define se puede empezar a utilizar
-
+#pragma once
 class nodoSimpTrenes { //clase NODO
 
 public:
@@ -13,6 +13,7 @@ public:
         numAsientos= numAsientos;
         rutasP= rutasP;
         siguiente = NULL;
+        listaRutas= lista();
     }
 
     nodoSimpTrenes(int codTipo, int codTren, string nomTren,int numAsientos, int rutasP, nodoSimpTrenes* signodo) // 2 dirprimero direccion de memoria
@@ -25,12 +26,13 @@ public:
         siguiente = signodo;//primero
     }
 
-private: // atributos
+public: // atributos
     int codTipo; // tipo entero. Ej clase estudiante nombre,dir,tel,siguente
     int codTren;
     string nombre;
     int numAsientos;
     int rutasP;
+    lista listaRutas;
 	nodoSimpTrenes* siguiente; // tipo de la clase, clase autoreferencia. Direccion 
 
     friend class listaTrenes; // telefono, son amigas lista con la clase. Solo los metodos, constructores

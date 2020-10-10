@@ -37,17 +37,20 @@ int main() {
 	listaTrenes trenes;
 	listaDT tipoTren;
 	lista codigoRuta;
-    //paises.llenarListaPais();
-    //paises.llenarListaCiudad();
+    paises.llenarListaPais();
+    paises.llenarListaCiudad();
     //paises.llenarListaConexiones();
+    
     //rutas.llenarListaRutas();
-    admin.llenarListaAdmin();
-	admin.Mostrar();
+    //admin.llenarListaAdmin();
+	//admin.Mostrar();
     cout<<endl;
-    /*usuario.llenarListaUsuario(paises);
-    trenes.llenarListaTrenes();
+    //usuario.llenarListaUsuario(paises);
+    //trenes.llenarListaTrenes();
+    cout<<"Lista ya llena de de trenes :"<<endl;
 	tipoTren.llenarListaTipotrenes();
-	codigoRuta.llenarlistaCodigosR();*/
+	//tipoTren.Mostrar();
+	//codigoRuta.llenarlistaCodigosR();
 	/*
     //Inicializar Variables--------------------------------------------------------------------------------
 	int opcion;
