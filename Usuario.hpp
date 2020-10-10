@@ -6,24 +6,24 @@ using namespace std;
 
 class nodoUsuario {
 public:
-    nodoUsuario(int codPais, int codCiudad,int usuario,string nombre,int migracion)
+    nodoUsuario(int cPais, int cCiudad,int cusuario,string cnombre,int cmigracion)
     {
-        codPais = codPais;
-        codCiudad = codCiudad;
-        usuario = usuario;
-        nombre = nombre;
-        migracion = migracion;
+        codPais = cPais;
+        codCiudad = cCiudad;
+        usuario = cusuario;
+        nombre = cnombre;
+        migracion = cmigracion;
         siguiente = NULL;
         anterior = NULL;
     }
 
-    nodoUsuario(int codPais, int codCiudad, int usuario , string nombre , int migracion , nodoUsuario* signodo, nodoUsuario* anteriornodo)
+    nodoUsuario(int cPais, int cCiudad, int cusuario , string cnombre , int cmigracion , nodoUsuario* signodo, nodoUsuario* anteriornodo)
     {
-        codPais = codPais;
-        codCiudad = codCiudad;
-        usuario = usuario;
-        nombre = nombre;
-        migracion = migracion;
+        codPais = cPais;
+        codCiudad = cCiudad;
+        usuario = cusuario;
+        nombre = cnombre;
+        migracion = cmigracion;
         siguiente = signodo;
         anterior = anteriornodo;
     }
@@ -237,8 +237,7 @@ void listaDCUsuario::BorrarPosicion(int pos)
 
 void listaDCUsuario::Mostrar()
 {
-   pnodoUsuario aux = primero->siguiente;
-   
+ 
 }
 
 void listaDCUsuario::llenarListaUsuario(listaDC paises){

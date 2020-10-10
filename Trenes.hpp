@@ -5,24 +5,24 @@ using namespace std;
 class nodoSimpTrenes { //clase NODO
 
 public:
-    nodoSimpTrenes(int codTipo, int codTren, string nomTren,int numAsientos, int rutasP) // 20 Tiene diferente cantidad de parametros, diferente tipos. Mismo nombre de la clase
+    nodoSimpTrenes(int cTipo, int cTren, string cnomTren,int cnumAsientos, int crutasP) // 20 Tiene diferente cantidad de parametros, diferente tipos. Mismo nombre de la clase
     {
-        codTipo=codTipo;//20
-        codTren=codTren;
-        nombre= nombre;
-        numAsientos= numAsientos;
-        rutasP= rutasP;
+        codTipo=cTipo;//20
+        codTren=cTren;
+        nombre= cnomTren;
+        numAsientos= cnumAsientos;
+        rutasP= crutasP;
         siguiente = NULL;
         listaRutas= lista();
     }
 
-    nodoSimpTrenes(int codTipo, int codTren, string nomTren,int numAsientos, int rutasP, nodoSimpTrenes* signodo) // 2 dirprimero direccion de memoria
+    nodoSimpTrenes(int cTipo, int cTren, string cnomTren,int cnumAsientos, int crutasP, nodoSimpTrenes* signodo) // 2 dirprimero direccion de memoria
     {
-        codTipo=codTipo;//20
-        codTren=codTren;
-        nombre= nombre;
-        numAsientos= numAsientos;
-        rutasP= rutasP;
+        codTipo=cTipo;//20
+        codTren=cTren;
+        nombre= cnomTren;
+        numAsientos= cnumAsientos;
+        rutasP= crutasP;
         siguiente = signodo;//primero
     }
 

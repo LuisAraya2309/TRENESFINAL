@@ -6,7 +6,7 @@
 #include "CodigosRuta.hpp"
 #include "Rutas.hpp"
 #include "Pais-Ciudad.hpp"
-#include "listaDoble.hpp"
+#include "Conexiones.hpp"
 #include "Admin.hpp"
 #include "Usuario.hpp"
 #include"Tipo-Tren.hpp"
@@ -30,6 +30,7 @@ using namespace std;
 //Funcion main
 
 int main() {
+	//------------------------------------------------------------Creación de listas-------------------------------------------
 	listaDC paises;
     listaC rutas;
     listaC2 admin;
@@ -37,28 +38,28 @@ int main() {
 	listaTrenes trenes;
 	listaDT tipoTren;
 	lista codigoRuta;
-    paises.llenarListaPais();
-    paises.llenarListaCiudad();
-    //paises.llenarListaConexiones();
+	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------
     
-    //rutas.llenarListaRutas();
-    //admin.llenarListaAdmin();
-	//admin.Mostrar();
-    cout<<endl;
-    //usuario.llenarListaUsuario(paises);
-    //trenes.llenarListaTrenes();
-    cout<<"Lista ya llena de de trenes :"<<endl;
-	tipoTren.llenarListaTipotrenes();
-	//tipoTren.Mostrar();
-	//codigoRuta.llenarlistaCodigosR();
-	/*
-    //Inicializar Variables--------------------------------------------------------------------------------
-	int opcion;
+	//PRIMERA ESTRUCTURA PAIS-CIUDAD-CONEXION
+	paises.llenarListaPais();
+    paises.llenarListaCiudad();
+    paises.llenarListaConexiones();
+    //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS
+    /*tipoTren.llenarListaTipotrenes();
+    trenes.llenarListaTrenes();
+    codigoRuta.llenarlistaCodigosR();*/
+    //TERCERA USUARIO ADMINISTRADOR RUTAS
+	/*usuario.llenarListaUsuario(paises);
+	rutas.llenarListaRutas();
+    admin.llenarListaAdmin();*/
+    
+    //------------------------------------------------------Inicializar Variables----------------------------------------------
+	/*int opcion;
 	int codPais;
 	string nomPais;
 	int codCiudad;
 	string nomCiudad;
-	//------------------------------------------------------------------------------------------------------
+	//---------------------------------------------------------Menu Principal-------------------------------------------------
     do {
         system("cls");      // Para limpiar la pantalla
         

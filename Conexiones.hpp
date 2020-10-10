@@ -5,22 +5,22 @@ using namespace std;
 
 class nodoDoble {
 public:
-    nodoDoble(int codConexion,int codPais,int codCiudad,int tiempo)
+    nodoDoble(int Conexionc,int Paisc,int Ciudadc,int tiempoc)
     {
-        codConexion = codConexion;
-        codPais = codPais;
-        codCiudad = codCiudad;
-        tiempo = tiempo;
+        codConexion = Conexionc;
+        codPais = Paisc;
+        codCiudad = Ciudadc;
+        tiempo = tiempoc;
         siguiente = NULL;
         anterior = NULL;
     }
 
-    nodoDoble(int codConexion, int codPais, int codCiudad, int tiempo, nodoDoble* signodoDoble, nodoDoble* sigantDoble)
+    nodoDoble(int Conexionc, int Paisc, int Ciudadc, int tiempoc, nodoDoble* signodoDoble, nodoDoble* sigantDoble)
     {
-        codConexion = codConexion;
-        codPais = codPais;
-        codCiudad = codCiudad;
-        tiempo = tiempo;
+        codConexion = Conexionc;
+        codPais = Paisc;
+        codCiudad = Ciudadc;
+        tiempo = tiempoc;
         siguiente = signodoDoble;
         anterior = sigantDoble;
     }
@@ -123,7 +123,7 @@ void listaD::Mostrar()
 
     aux = primero;
     while (aux!=NULL) {
-        cout << aux->codConexion << "-" << aux->codPais << "-" << aux->codCiudad << aux->tiempo << "->";
+        cout << aux->codConexion << "-" << aux->codPais << "-" << aux->codCiudad <<"-"<< aux->tiempo << "->";
         aux = aux->siguiente;
     }
     cout << endl;

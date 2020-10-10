@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include<string>
-#include "listaDoble.hpp"
+#include "Conexiones.hpp"
 using namespace std;
 
 class nodo {
@@ -449,8 +449,12 @@ void listaDC::llenarListaConexiones() {
 						}
 					}
 					if(existeCiudad){
-						cout<<"Holis"<<endl<<endl;
-						buscarCiudad->listaConexiones.InsertarFinalD(codConexion,codPais,codCiudad,codTiempo);	
+						//cout<<"Holis"<<endl<<endl;
+						//cout<<codConexion<<endl<<codPais<<endl<<codCiudad<<endl<<codTiempo<<endl;
+						buscarCiudad->listaConexiones.InsertarFinalD(codConexion,codPais,codCiudad,codTiempo);
+						buscarCiudad->listaConexiones.Mostrar();
+						cout<<endl;
+						cout<<endl;	
 					}
 					else{
 						continue;

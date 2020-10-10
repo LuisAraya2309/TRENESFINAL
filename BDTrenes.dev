@@ -131,7 +131,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=listaDoble.hpp
+FileName=Conexiones.hpp
 CompileCpp=1
 Folder=
 Compile=1
