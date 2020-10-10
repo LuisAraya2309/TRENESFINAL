@@ -429,6 +429,7 @@ void listaDC::llenarListaConexiones() {
 				bool existePais = false;bool existeCiudad = false;
 				pnodo buscarPais = primero;
 				while(buscarPais->siguiente!=primero){
+					cout<<buscarPais->valor<<"=="<<codPais<<endl;
 					if(buscarPais->valor==codPais){
 						existePais=true;
 						break;
@@ -448,13 +449,33 @@ void listaDC::llenarListaConexiones() {
 							buscarCiudad=buscarCiudad->siguiente;
 						}
 					}
+					bool conexionRepetida = false;
 					if(existeCiudad){
-						//cout<<"Holis"<<endl<<endl;
-						//cout<<codConexion<<endl<<codPais<<endl<<codCiudad<<endl<<codTiempo<<endl;
+						pnodo paisesG = primero; 
+						while(paisesG->siguiente!=primero){
+							pnodo ciudadesG = paisesG->ciudad;
+							while(ciudadesG->ciudad!=paisesG){
+								pnodoDoble conexionesG = ciudadesG->primeraConexion;
+								while(conexionesG!=NULL){
+									if(conexionesG->codConexion==codConexion){
+										conexionRepetida=true;
+										break;
+									}
+									else{
+										conexionesG=conexionesG->siguiente;
+									}
+								}
+								ciudadesG=ciudadesG->ciudad;
+							}
+							paisesG=paisesG->siguiente;
+						}	
+					}
+					if(!conexionRepetida){
 						buscarCiudad->listaConexiones.InsertarFinalD(codConexion,codPais,codCiudad,codTiempo);
 						buscarCiudad->listaConexiones.Mostrar();
 						cout<<endl;
-						cout<<endl;	
+						cout<<endl;
+						continue;
 					}
 					else{
 						continue;
