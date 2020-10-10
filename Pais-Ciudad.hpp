@@ -404,7 +404,7 @@ void listaDC::llenarListaConexiones() {
             	
                 string Conexion = ConexionTotal.substr(posPC2 + 1, ConexionTotal.length());
                 int posPC3 = Conexion.find(";");
-                int codConexion = atoi((Conexion.substr(0, posPC3).c_str()));
+                int codConexionAux = atoi((Conexion.substr(0, posPC3).c_str()));
 
                 string ConexionPais = Conexion.substr(posPC3 + 1, Conexion.length());
                 int posPC4 = ConexionPais.find(";");
@@ -418,84 +418,86 @@ void listaDC::llenarListaConexiones() {
                 int posPC6 = Tiempo.find(";");
                 int codTiempo = atoi((Tiempo.substr(0, posPC6).c_str()));
                 
-                cout << "Codigo conexion: "<<codConexion << endl;
+                cout << "Codigo conexion: "<<codConexionAux << endl;
                 cout << "Codigo de Pais: "<<codPais << endl;
                 cout << "Codigo Ciudad: "<<codCiudad << endl;
                 cout << "Tiempo: "<<codTiempo << endl;
                 
-				//Vamos a buscar que la conexion si se pueda realizar
-				//Tiene que pasar 2 filtros
-				
-				bool existePais = false;bool existeCiudad = false;
-				pnodo buscarPais = primero;
-				while(buscarPais->siguiente!=primero){
-					cout<<buscarPais->valor<<"=="<<codPais<<endl;
-					if(buscarPais->valor==codPais){
-						existePais=true;
-						break;
+                //Vamos a verificar de que exista el pais
+                pnodo buscarPais = primero->siguiente;bool existePais = false;
+                while(buscarPais!=primero){
+                	if(buscarPais->valor==codPais){
+                		existePais=true;
+                		break;
 					}
 					else{
-						buscarPais = buscarPais->siguiente;
+						buscarPais=buscarPais->siguiente;
 					}
 				}
 				if(existePais){
-					pnodo buscarCiudad = buscarPais->ciudad;
-					while(buscarCiudad->siguiente!=buscarPais){
+					pnodo buscarCiudad = buscarPais->ciudad; bool existeCiudad = false;
+					while(buscarCiudad!=buscarPais){
 						if(buscarCiudad->valor==codCiudad){
-							existeCiudad=true;
+							existeCiudad = true;
 							break;
 						}
 						else{
-							buscarCiudad=buscarCiudad->siguiente;
+							buscarCiudad=buscarCiudad->ciudad;
 						}
 					}
-					bool conexionRepetida = false;
 					if(existeCiudad){
-						pnodo paisesG = primero; 
-						while(paisesG->siguiente!=primero){
+						//Ahora vamos a ver que no se repita la conexionS
+						bool conexionRepetida = false;
+						pnodo paisesG = primero->siguiente;
+						while(paisesG!=primero){
 							pnodo ciudadesG = paisesG->ciudad;
-							while(ciudadesG->ciudad!=paisesG){
-								pnodoDoble conexionesG = ciudadesG->primeraConexion;
-								while(conexionesG!=NULL){
-									if(conexionesG->codConexion==codConexion){
-										conexionRepetida=true;
+							while(ciudadesG!=paisesG){
+								pnodoDoble conexionG = ciudadesG->listaConexiones.primero;
+								while(conexionG!=NULL){
+									if(conexionG->codConexion==codConexionAux){
+										conexionRepetida = true;
 										break;
 									}
 									else{
-										conexionesG=conexionesG->siguiente;
+										conexionG = conexionG->siguiente;
 									}
 								}
-								ciudadesG=ciudadesG->ciudad;
+								ciudadesG = ciudadesG->ciudad;
 							}
 							paisesG=paisesG->siguiente;
-						}	
-					}
-					if(!conexionRepetida){
-						buscarCiudad->listaConexiones.InsertarFinalD(codConexion,codPais,codCiudad,codTiempo);
-						buscarCiudad->listaConexiones.Mostrar();
-						cout<<endl;
-						cout<<endl;
-						continue;
+						}
+						if(!conexionRepetida){
+							buscarCiudad->listaConexiones.InsertarFinalD(codConexionAux,codPais,codCiudad,codTiempo);
+							cout<<"Lista Conexiones: "<<endl;
+							buscarCiudad->listaConexiones.Mostrar();
+							cout<<endl;
+							continue;
+						}
+						else{
+							// por si la conexion estaba repetida
+							cout<<"Lista Conexiones: "<<endl;
+							buscarCiudad->listaConexiones.Mostrar();
+							cout<<endl;
+							continue;
+						}
+						
+						
 					}
 					else{
+						//este else es de si no existe la ciudad
 						continue;
 					}
+					
 				}
 				else{
-				continue;
+					//Este else es de si no existe el pais
+					continue;
 				}
-               
-            }
-            else {
-                continue;
-            }
-        }
-        else {
-            continue;
-        }
-    }
+//No tocar estas llaves
+        	}
+    	}
+	}
 }
-
 void listaDC::ConsultarPaises() {
     pnodo aux = primero;
     cout << "Paises: " << endl;
