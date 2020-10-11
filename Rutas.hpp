@@ -18,7 +18,7 @@ public:
         siguiente = signodo;
     }
 
-private:
+public:
     int valor;
     nodoCir* siguiente;
 
@@ -42,9 +42,9 @@ public:
     void BorrarInicio();
     void borrarPosicion(int pos);
     int largoLista();
-    void llenarListaRutas();
+    void llenarListaRutas(listaDC paises, listaDT tipoTrenes);
 
-private:
+public:
     pnodoCir primero;
 
 };
@@ -241,7 +241,7 @@ void listaC::Mostrar()
     cout << endl;
 }
 
-void listaC::llenarListaRutas() {
+void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
     ifstream archivo2;
     string texto;
     archivo2.open("Rutas.txt", ios::in);
@@ -290,6 +290,108 @@ void listaC::llenarListaRutas() {
         int posPC8 = Todo7.find(";");
         int codPrecio = atoi((Todo7.substr(0, posPC8).c_str()));
         //cout << "Precio: " << codPrecio << endl;
+        
+        pnodo buscarPais = paises.primero->siguiente; bool existePais = false;
+        while(buscarPais!=paises.primero){
+        	if(buscarPais->valor==codPais){
+        		existePais = true;
+        		break;
+			}
+			else{
+				buscarPais=buscarPais->siguiente;
+			}
+		}
+		if(existePais){
+			pnodo buscarPais2 = paises.primero->siguiente; bool existePais2 = false;
+        	while(buscarPais2!=paises.primero){
+        		if(buscarPais2->valor==codPais2){
+        			existePais2 = true;
+        			break;
+				}
+				else{
+					buscarPais2=buscarPais2->siguiente;
+				}
+			}
+			if(existePais2){
+				pnodo buscarCiudad = buscarPais->ciudad;bool existeCiudad = false;
+				while(buscarCiudad!=buscarPais){
+					if(buscarCiudad->valor==codCiudad){
+						existeCiudad = true;
+						break;
+					}
+					else{
+						buscarCiudad=buscarCiudad->ciudad;
+					}
+				}
+				if(existeCiudad){
+					pnodo buscarCiudad2 = buscarPais2->ciudad;bool existeCiudad2 = false;
+					while(buscarCiudad2!=buscarPais2){
+						if(buscarCiudad2->valor==codCiudad2){
+							existeCiudad2 = true;
+							break;
+						}
+						else{
+							buscarCiudad2=buscarCiudad2->ciudad;
+						}
+						
+					}
+					if(existeCiudad2){
+						pnodoDobleT buscarTipTren = tipoTrenes.primero;bool existeTipTren = false;
+						while(buscarTipTren!=NULL){
+							if(buscarTipTren->codTren==codTipTren){
+								existeTipTren=true;
+								break;
+							}
+							else{
+								buscarTipTren=buscarTipTren->siguiente;
+							}
+						}
+						if(existeTipTren){
+							pnodoSimpTrenes buscarCodTren = buscarTipTren->listaDeTrenes.primero;bool existeCodTren = false;
+							while(buscarCodTren!=NULL){
+								if(buscarCodTren->codTren==codTren){
+									existeCodTren = true;
+									continue;
+								}
+								else{
+									buscarCodTren=buscarCodTren->siguiente;
+								}
+							}
+							if(existeCodTren){
+								if(ListaVacia()){
+									
+								}
+							}
+							else{
+								//por si no existe el tren
+								continue;
+							}
+						}
+						else{
+							// por si no existe el codTipotren
+							continue;
+						}
+						
+					}
+					else{
+						// por si no existe la ciudad 2
+						continue;
+					}		
+				}
+				else{
+					//por si no existe la ciudad 1
+					continue;
+				}
+			}
+			else{
+				//por si no existe el pais2
+				continue;
+			}
+		}
+		else{
+			// por si no existe el pais
+			continue;
+		}
         
 
     }

@@ -44,14 +44,16 @@ int main() {
 	paises.llenarListaPais();
     paises.llenarListaCiudad();
     paises.llenarListaConexiones();
+    cout<<endl;
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS
-    /*tipoTren.llenarListaTipotrenes();
-    trenes.llenarListaTrenes();
-    codigoRuta.llenarlistaCodigosR();*/
+    tipoTren.llenarListaTipotrenes();
+    //tipoTren.Mostrar();
+    tipoTren.llenarListaTrenes();
+    //codigoRuta.llenarlistaCodigosR();
     //TERCERA USUARIO ADMINISTRADOR RUTAS
-	/*usuario.llenarListaUsuario(paises);
-	rutas.llenarListaRutas();
-    admin.llenarListaAdmin();*/
+	usuario.llenarListaUsuario(paises);
+	rutas.llenarListaRutas(paises,tipoTren);
+    //admin.llenarListaAdmin();
     
     //------------------------------------------------------Inicializar Variables----------------------------------------------
 	/*int opcion;

@@ -22,12 +22,15 @@ public:
     }
 
 
-private: // atributos
+public: // atributos
     int valor; // tipo entero. Ej clase estudiante nombre,dir,tel,siguente
     nodoSimp* siguiente; // tipo de la clase, clase autoreferencia. Direccion 
 
 
     friend class lista; // telefono, son amigas lista con la clase. Solo los metodos, constructores
+    friend class listaDT;
+    friend class pnodoDobleT;
+    
 
 };
 typedef nodoSimp* pnodoSimp; //alias redefinir los punteros
@@ -51,7 +54,6 @@ public:
     void BorrarInicio();
     void borrarPosicion(int pos);
     int largoLista();
-    void llenarlistaCodigosR();
 
 private:
     pnodoSimp primero; // nodo *primero; tipo nodo tiene derechoi direccionar un nodo
@@ -240,25 +242,4 @@ void lista::Mostrar()
     }
 }
 
-void lista::llenarlistaCodigosR(){
-	ifstream archivoR;
-    string texto;
-    archivoR.open("Rutas.txt", ios::in);
-    if (archivoR.fail()) {
-        cout << "No se pudo abrir el archivo";
-        exit(1);
-    }
-    while (!archivoR.eof()) {
-        getline(archivoR, texto);
-        
-        int posPC = texto.find(";");
-        string Todo = texto.substr(posPC + 1, texto.length());
-        int posPC2 = Todo.find(";");
-        string Todo2 = Todo.substr(posPC2 + 1, Todo.length());
-        int posPC3 = Todo2.find(";");
-        int codRuta = atoi((Todo2.substr(0, posPC3).c_str()));
-        cout << "Codigo Ruta: " << codRuta << endl;
-	}
-	archivoR.close();
-}
 
