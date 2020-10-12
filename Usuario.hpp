@@ -55,6 +55,7 @@ public:
     int largoLista();
     void llenarListaUsuario(listaDC paises);
     bool VerificarUsuario(int codUsuario);
+    void ModificarEstadoMigratorio();
 
 private:
     pnodoUsuario primero;
@@ -332,4 +333,31 @@ bool listaDCUsuario::VerificarUsuario(int codUsuario){
 	}
 }
 
-
+void listaDCUsuario::ModificarEstadoMigratorio(){
+	int codUsuario;
+	int codMig;
+	cout<<"Ingrese la identificacion del usuario."<<endl;
+	cin>> codUsuario;
+	cout<<endl;
+	cout<<"Ingrese el nuevo estado migratorio."<<endl;
+	cin>> codMig;
+	cout<<endl;
+	pnodoUsuario puntero=primero; bool flag=true;
+	while(puntero->siguiente!=primero){
+		if (puntero->usuario==codUsuario){
+			puntero->migracion=codMig;
+			cout<<"El estado migratorio modificado es: "<<puntero->migracion<<endl;
+			flag=false;
+			break;
+		}else{
+			puntero=puntero->siguiente;
+		}
+	}if(flag){
+		if(puntero->usuario==codUsuario){
+			puntero->migracion=codMig;
+			cout<<"El estado migratorio modificado es: "<<puntero->migracion<<endl;
+		}else{
+			cout<<"La identificacion del usuario es invalida"<<endl;
+		}	
+	}	
+}

@@ -38,13 +38,13 @@ int main() {
 	listaDCUsuario usuario;
 	listaTrenes trenes;
 	lista codigoRuta;
+	listaDC actividadInsertP;
 	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------
     
 	//PRIMERA ESTRUCTURA PAIS-CIUDAD-CONEXION
 	paises.llenarListaPais();
     paises.llenarListaCiudad();
     paises.llenarListaConexiones();
-    cout<<endl;
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS
     tipoTren.llenarListaTipotrenes();
     tipoTren.llenarListaTrenes();
@@ -52,7 +52,7 @@ int main() {
     //TERCERA USUARIO ADMINISTRADOR RUTAS
 	usuario.llenarListaUsuario(paises);
 	//rutas.llenarListaRutas(paises,tipoTren);
-    //admin.llenarListaAdmin();
+    admin.llenarListaAdmin();
     //------------------------------------------------------Inicializar Variables----------------------------------------------
 	int opcion;
 	int codPais;
@@ -65,7 +65,7 @@ int main() {
 	int codTiempo;
 
 	//---------------------------------------------------------Menu Principal-------------------------------------------------
-    /*do {
+    do {
         system("cls");      // Para limpiar la pantalla
         
         // Texto del menú que se verá cada vez
@@ -100,13 +100,13 @@ int main() {
 					        cout << "2. Eliminar" << endl;
 					        cout << "3. Modificar" << endl;
 					        cout << "4. Consultar paises" << endl;
-					        cout << "5. Consultar conexiones de un pais" << endl;
+					        cout << "5. Consultar conexiones de una ciudad" << endl;
 					        cout << "6. Consultar ciudades de un pais" << endl;
 					        cout << "7. Consultar rutas de un tren" << endl;
 					        cout << "8. Consultar trenes de un tipo" << endl;
 					        cout << "9. Registrar trenes" << endl;
 					        cout << "10. Consultar Precio" << endl;
-					        cout << "10. Numero de asientos disponibles" << endl;
+					        cout << "11. Numero de asientos disponibles" << endl;
 					        cout << "12. Salir" << endl;
 					        cout << "\nIngrese una opcion: ";
 					        cin >> opcion;
@@ -134,49 +134,27 @@ int main() {
 									        switch (opcion) {
 									        	
 									            case 1:
-									            	cout<<"Digite el codigo del pais a ingresar: "; cin>> codPais;cout<<endl;
-									            	cout<<"Digite el nombre del pais a ingresar: "; cin>> nomPais;cout<<endl;
-									            	if(paises.InsertarPais(codPais,nomPais)){
-									            		cout<<"Pais ingresado con exito"<<endl;
-													}else{
-														cout<<"El codigo del pais ya existe"<<endl;
-													}
+									            	
+									            	paises.InsertarPais();
 													system("pause>nul");
 													break;
 													
 									            case 2:
-									            	cout<<"Digite el codigo de pais : "; cin>> codPais;cout<<endl;
-									            	cout<<"Digite el codigo de la ciudad a ingresar: "; cin>> codCiudad;cout<<endl;
-									            	cout<<"Digite el nombre de la ciudad a ingresar: "; cin>> nomCiudad;cout<<endl;
-									            	if(paises.InsertarCiudades(codPais,codCiudad,nomCiudad)== false){
-									            		cout<<"Ciudad ingresada con exito"<<endl;
-									            		
-													}else{
-														cout<<"El codigo de la ciudad ya existe"<<endl;
-													}
+									            	
+									            	paises.InsertarCiudades();
 									            	system("pause>nul");
 									                break;
 									                
 												case 3:
 													
-									                cout<<"Digite el codigo de pais de la conexion: "; cin>> codPais;cout<<endl;
-									            	cout<<"Digite el codigo de la ciudad de la conexion: "; cin>> codCiudad;cout<<endl;
-									            	cout<<"Digite el codigo de la conexion: "; cin>> codConexion;cout<<endl;
-									            	cout<<"Digite el codigo del pais destino: "; cin>> codPais2;cout<<endl;
-									            	cout<<"Digite el codigo de la ciudad destino: "; cin>> codCiudad2;cout<<endl;
-									            	cout<<"Digite el tiempo de la conexion: "; cin>> codTiempo;cout<<endl;
-									            	if(paises.InsertarConexion(codPais,codCiudad,codConexion,codPais2,codCiudad2,codTiempo)== true){
-									            		cout<<"Conexion ingresada con exito"<<endl;
-									            		
-													}else{
-														cout<<"La conexion no se inserto, por favor revisar los codigos, recuerde solo utilizar caracteres de tipo entero.  "<<endl;
-													}              
+									                
+									            	paises.InsertarConexion();
 									                
 									                system("pause>nul"); // Pausa
 									                break; 
 													                   
 									    	 	case 4:
-									    	 		
+									    	 		tipoTren.InsertarTipoTren();
 									                system("pause>nul"); // Pausa
 									                break;
 									                
@@ -186,7 +164,7 @@ int main() {
 									                break; 
 												
 												case 6:
- 
+													paises.MostrarActP();
 									                system("pause>nul"); // Pausa
 									                break;        
 											}
@@ -214,11 +192,6 @@ int main() {
 									        switch (opcion2) {
 									            case 1:
 									            	cout<<"Digite el codigo del pais que desea eliminar: "; cin>> codPais; cout<<endl;
-									            	if(paises.EliminarPais(codPais,paises)){
-									            		cout<<"El pais se elimino con exito"<<endl;
-													}else{
-														cout<<"El codigo del pais no se encontro"<<endl;
-													}
 									                system("pause>nul"); // Pausa
 									                break;
 									                
@@ -274,20 +247,19 @@ int main() {
 									            case 1:
 									            	
 									                system("pause>nul"); // Pausa
-									                break;
-									                
+									                break;									                
 									            case 2:
 									                // Lista de instrucciones de la opción 2                
-									                
+									                paises.ModificarTiempo();
 									                system("pause>nul"); // Pausa
 									                break;
 												case 3:
 									                // Lista de instrucciones de la opción 2                
-									                
+									                tipoTren.ModificarNumAsientos();
 									                system("pause>nul"); // Pausa
 									                break;                    
 									    	 	case 4:
- 
+									    	 		tipoTren.ModificarTren();
 									                system("pause>nul"); // Pausa
 									                break;
 									            case 5:
@@ -295,7 +267,7 @@ int main() {
 									                system("pause>nul"); // Pausa
 									                break;      
 												case 6:
- 
+													usuario.ModificarEstadoMigratorio();
 									                system("pause>nul"); // Pausa
 									                break;     
 											}
@@ -309,7 +281,7 @@ int main() {
 					                break;
 								case 5:
 					                // Lista de instrucciones de la opción 2                
-					                
+					                paises.ConsultarConexiones();
 					                system("pause>nul"); // Pausa
 					                break;
 								case 6:
@@ -319,17 +291,17 @@ int main() {
 					                break;
 								case 7:
 					                // Lista de instrucciones de la opción 2                
-					                
+					               
 					                system("pause>nul"); // Pausa
 					                break;
 								case 8:
 					                // Lista de instrucciones de la opción 2                
-					                
+					                tipoTren.MostrarUnTipoDeTren();
 					                system("pause>nul"); // Pausa
 					                break;                    
 					    	 	case 9:
 					                // Lista de instrucciones de la opción 2                
-					                
+					                tipoTren.RegistrarTren();
 					                system("pause>nul"); // Pausa
 					                break;
 								case 10:
@@ -338,10 +310,11 @@ int main() {
 					                system("pause>nul"); // Pausa
 					                break;
 								case 11:
+									tipoTren.ConsultarAsientos();
 					                // Lista de instrucciones de la opción 2                
 					                
 					                system("pause>nul"); // Pausa
-					                break;                               
+					                break;                      
 						}
 				}while (opcion != 12);
 				
@@ -411,6 +384,6 @@ int main() {
                 system("pause>nul"); // Pausa
                 break;          
     	} 		
-	}while (opcion != 3);*/
+	}while (opcion != 3);
     	return 0;
 }

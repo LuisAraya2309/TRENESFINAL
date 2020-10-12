@@ -54,6 +54,10 @@ public:
     void llenarListaCodRutas();
     void InsertarTipoTren();
     void MostrarUnTipoDeTren();
+    void ConsultarAsientos();
+    void ModificarNumAsientos();
+    void RegistrarTren();
+    void ModificarTren();
     pnodoDobleT primero;
 
 };
@@ -332,3 +336,182 @@ void listaDT::MostrarUnTipoDeTren(){
 		cout<<"El codigo ingresado no corresponde a ningun tipo de tren."<<endl;
 	}
 }
+
+void listaDT::ConsultarAsientos(){
+	int codTipTren;
+	int codTren;
+	cout<<"Ingrese el codigo del tipo de tren para mostrar los trenes de ese tipo."<<endl;
+	cin>>codTipTren;
+	cout<<"Ingrese el codigo del tren para mostrar los asientos disponibles."<<endl;
+	cin>>codTren;
+	pnodoDobleT mostrar = primero;bool existeTipTren = false;
+	while(mostrar!=NULL){
+		if(mostrar->codTren==codTipTren){
+			existeTipTren = true;
+			break;
+		}
+		else{
+			mostrar=mostrar->siguiente;
+		}
+	}
+	if(existeTipTren){	
+	pnodoSimpTrenes buscarCod = mostrar->listaDeTrenes.primero;bool codRepetido = false;
+		while(buscarCod!=NULL){
+			if(buscarCod->codTren==codTren){
+				cout<<"Se dispone de "<<buscarCod->numAsientos<<" asientos disponibles."<<endl;
+				codRepetido=true;
+				break;
+			}
+			else{
+				buscarCod=buscarCod->siguiente;
+			}
+		}if(!codRepetido){
+			cout<<"El codigo de Tren digitado es incorrecto"<<endl;
+		}
+	}else{
+		cout<<"El codigo del tipo de tren no existe"<<endl;
+	}
+}
+
+void listaDT::ModificarNumAsientos(){
+		int codTipTren;
+		int codTren;
+		int numAsientos;
+		cout<<"Ingrese el codigo del tipo de tren ."<<endl;
+		cin>>codTipTren;
+		cout<<"Ingrese el codigo de tren."<<endl;
+		cin>>codTren;
+		cout<<"Ingrese la nueva cantidad de asientos disponibles."<<endl;
+		cin>>numAsientos;
+		pnodoDobleT mostrar = primero;bool existeTipTren = false;
+		while(mostrar!=NULL){
+			if(mostrar->codTren==codTipTren){
+				existeTipTren = true;
+				break;
+			}
+			else{
+				mostrar=mostrar->siguiente;
+			}
+		}
+		if(existeTipTren){	
+		pnodoSimpTrenes buscarCod = mostrar->listaDeTrenes.primero;bool codRepetido = false;
+			while(buscarCod!=NULL){
+				if(buscarCod->codTren==codTren){
+					buscarCod->numAsientos=numAsientos;
+					cout<<"Se actualizaron la cantidad de trenes a "<<buscarCod->numAsientos<<" asientos disponibles."<<endl;
+					codRepetido=true;
+					break;
+				}
+				else{
+					buscarCod=buscarCod->siguiente;
+				}
+			}if(!codRepetido){
+				cout<<"El codigo de Tren digitado es incorrecto"<<endl;
+			}
+		}else{
+			cout<<"El codigo del tipo de tren no existe"<<endl;
+		}
+}
+
+void listaDT::RegistrarTren(){
+		int codTipTren;
+		int codTren;
+		string nomTren;
+		int numAsientos;
+		int ruta;
+		cout<<"Ingrese el codigo del tipo de tren ."<<endl;
+		cin>>codTipTren;
+		cout<<"Ingrese el codigo de tren."<<endl;
+		cin>>codTren;
+		cout<<"Ingrese el nombre del tren."<<endl;
+		cin>>nomTren;
+		cout<<"Ingrese la cantidad de asientos."<<endl;
+		cin>>numAsientos;
+		cout<<"Ingrese las posibles rutas."<<endl;
+		cin>>ruta;
+		pnodoDobleT tiposTrenes = primero;bool existeTipoTren = false;
+        while(tiposTrenes!=NULL){
+        	if(tiposTrenes->codTren==codTipTren){
+        		existeTipoTren = true;
+        		break;
+			}
+			else{
+				tiposTrenes=tiposTrenes->siguiente;
+			}
+		}
+		if(existeTipoTren){
+			if(tiposTrenes->listaDeTrenes.primero==NULL){
+				tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos,ruta);
+				cout<<"La lista de Trenes fue registrada con exito "<<endl;
+				cout<<endl;
+			}
+			else{
+				pnodoSimpTrenes buscarCod = tiposTrenes->listaDeTrenes.primero;bool codRepetido = false;
+				while(buscarCod!=NULL){
+					if(buscarCod->codTren==codTren){
+						codRepetido = true;
+						break;
+					}
+					else{
+						buscarCod=buscarCod->siguiente;
+					}
+				}
+				if(!codRepetido){
+					tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos,ruta);
+					cout<<"La lista de Trenes fue registrada con exito "<<endl;
+					cout<<endl;
+				}
+				else{
+					// por si el codigo esta repetido
+					cout<<"El codigo del tren ya existe"<<endl;
+				}
+			}
+		}
+		else{
+			cout<<"El codigo de tipo de tren no existe"<<endl;
+			// por si no existe el tipo de tren
+		}
+	}	
+
+void listaDT:: ModificarTren(){
+	int codTipTren;cout<<"Ingrese el codigo de tipo de tren: "; cin>>codTipTren; cout<<endl;
+	int codTren; cout<<"Ingrese el codigo de tren: "; cin>>codTren; cout<<endl;
+	string nuevoNomTren; cout<<"Ingrese el nuevo nombre de tren: "; cin>>nuevoNomTren; cout<<endl;
+	int nuevoAsientos; cout<<"Ingrese la nueva cantidad de asientos: "; cin>>nuevoAsientos; cout<<endl;
+	int rutas;cout<<"Ingrese la ruta del tren: "; cin>>rutas; cout<<endl;
+	pnodoDobleT tiposTrenes = primero;bool existeTipoTren = false;
+        while(tiposTrenes!=NULL){
+        	if(tiposTrenes->codTren==codTipTren){
+        		existeTipoTren = true;
+        		break;
+			}
+			else{
+				tiposTrenes=tiposTrenes->siguiente;
+			}
+		}
+		if(existeTipoTren){
+			pnodoSimpTrenes buscarCod = tiposTrenes->listaDeTrenes.primero;bool codRepetido = false;
+			while(buscarCod!=NULL){
+				if(buscarCod->codTren==codTren){
+					codRepetido = true;
+					break;
+				}else{
+					buscarCod=buscarCod->siguiente;
+				}
+			}if(buscarCod->codTren==codTren){
+				codRepetido= true;
+				if(codRepetido){
+					 buscarCod->nombre=nuevoNomTren;
+					 buscarCod->numAsientos= nuevoAsientos;
+					 buscarCod->rutasP= rutas;
+					 cout<<"El tren fue modificado correctamente"<<endl;	
+				}else{
+					cout<<"El codigo de tren no existe"<<endl;
+				}
+		}else{
+			cout<<"El codigo del tipo de tren ingresado no existe"<<endl;
+		}
+	}
+	
+
+

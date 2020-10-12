@@ -54,7 +54,6 @@ public:
     void BorrarInicio();
     void borrarPosicion(int pos);
     int largoLista();
-
 private:
     pnodoSimp primero; // nodo *primero; tipo nodo tiene derechoi direccionar un nodo
 
