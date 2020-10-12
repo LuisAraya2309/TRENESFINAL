@@ -52,6 +52,8 @@ public:
     void llenarListaTipotrenes();
     void llenarListaTrenes();
     void llenarListaCodRutas();
+    void InsertarTipoTren();
+    void MostrarUnTipoDeTren();
     pnodoDobleT primero;
 
 };
@@ -279,4 +281,54 @@ void listaDT::llenarListaCodRutas(){
 	}
 	archivoR.close();
 }
-
+void listaDT::InsertarTipoTren(){
+	int codNuevo;string nombreNuevo;
+	cout<<"Ingrese el codigo del nuevo tipo de tren: "<<endl;
+	cin>>codNuevo;
+	cout<<"Ingrese el nombre del nuevo tipo de tren: "<<endl;
+	cin>>nombreNuevo;
+	pnodoDobleT verificar = primero;bool codRepetido = false;
+	while(verificar!=NULL){
+		if(verificar->codTren==codNuevo){
+			codRepetido = true;
+			break;
+		}
+		else{
+			verificar=verificar->siguiente;
+		}
+	}
+	if(!codRepetido){
+		InsertarFinalDT(codNuevo,nombreNuevo);
+		cout<<"Nuevo tipo de tren agregado con exito."<<endl;
+	}
+	else{
+		cout<<"No se pudo ingresar el nuevo tipo de tren."<<endl;
+		cout<<"Este mismo se encuentra repetido. Recuerde usar caracteres numericos solamente."<<endl;
+	}
+}
+void listaDT::MostrarUnTipoDeTren(){
+	int codTipTren;
+	cout<<"Ingrese el codigo del tipo de tren para mostrar todos los trenes de ese tipo."<<endl;
+	cin>>codTipTren;
+	pnodoDobleT mostrar = primero;bool existeTipTren = false;
+	while(mostrar!=NULL){
+		if(mostrar->codTren==codTipTren){
+			existeTipTren = true;
+			break;
+		}
+		else{
+			mostrar=mostrar->siguiente;
+		}
+	}
+	if(existeTipTren){
+		if(mostrar->listaDeTrenes.ListaVacia()){
+			cout<<"No hay trenes registrados de ese tipo."<<endl;
+		}
+		else{
+			mostrar->listaDeTrenes.Mostrar();
+		}
+	}
+	else{
+		cout<<"El codigo ingresado no corresponde a ningun tipo de tren."<<endl;
+	}
+}

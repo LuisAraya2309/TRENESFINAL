@@ -53,7 +53,6 @@ int main() {
 	usuario.llenarListaUsuario(paises);
 	//rutas.llenarListaRutas(paises,tipoTren);
     //admin.llenarListaAdmin();
-    
     //------------------------------------------------------Inicializar Variables----------------------------------------------
 	int opcion;
 	int codPais;
