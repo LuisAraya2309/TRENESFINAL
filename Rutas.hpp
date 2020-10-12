@@ -2,28 +2,58 @@
 #include <iostream>
 #include <stdlib.h>
 #include<string>
+#include "Pais-Ciudad.hpp"
+#include "Tipo-Tren.hpp"
+#include "Conexiones.hpp"
+#include "Trenes.hpp"
+# pragma once
 using namespace std;
 
 class nodoCir {
 public:
-    nodoCir(int v)
+    nodoCir(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c, int precioc)
     {
-        valor = v;
+        codTipTren = v;
+        codTren= trenc;
+        codRutas = rutac;
+        codPais1 = paisc;
+        codCiudad1 = ciudadc;
+        codPais2 = pais2c;
+        codCiudad2 = ciudad2c;
+        precio = precioc;
         siguiente = NULL;
     }
 
-    nodoCir(int v, nodoCir* signodo)
+    nodoCir(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c,int precioc, nodoCir* signodo)
     {
-        valor = v;
+        codTipTren = v;
+        codTren= trenc;
+        codRutas = rutac;
+        codPais1 = paisc;
+        codCiudad1 = ciudadc;
+        codPais2 = pais2c;
+        codCiudad2 = ciudad2c;
+        precio = precioc;
         siguiente = signodo;
     }
 
 public:
-    int valor;
+    int codTipTren;
+    int codTren;
+    int codRutas ;
+    int codPais1 ;
+    int codCiudad1 ;
+    int codPais2 ;
+    int codCiudad2 ;
+    int precio;
     nodoCir* siguiente;
 
 
     friend class listaC;
+    friend class listaDC;
+    friend class listaDT;
+    friend class nodoDobleT;
+    friend class nodo;
 };
 
 typedef nodoCir* pnodoCir;
@@ -33,9 +63,9 @@ public:
     listaC() { primero = NULL; }
     ~listaC();
 
-    void InsertarInicio(int v);
-    void InsertarFinal(int v);
-    void InsertarPos(int v, int pos);
+    void InsertarInicio(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c,int precioc);
+    void InsertarFinal(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c,int precioc);
+    void InsertarPos(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c,int precioc, int pos);
     bool ListaVacia() { return primero == NULL; }
     void Mostrar();
     void BorrarFinal();
@@ -79,52 +109,51 @@ int listaC::largoLista() {
     }
 }
 
-void listaC::InsertarInicio(int v)
+void listaC::InsertarInicio(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c,int precioc)
+{
+     if (ListaVacia()){
+    primero = new nodoCir(v,  trenc,  rutac,  paisc,  ciudadc,  pais2c,  ciudad2c, precioc, primero);
+    primero->siguiente=primero;
+    }
+   else{ // La funcionalidad de esta parte es que crea un nuevo nodo con el valor asignado y la direccion de primero, luego crea un aux con el valor de primero
+   // Al entrar al while con el parametro actualizado encontraremos el valor del aux que necesitamos para enlazar el nodo con la dirrecion anterior
+   // y posterior por lo que no se hara basura.
+       pnodoCir nuevo = new nodoCir(v,  trenc,  rutac,  paisc,  ciudadc,  pais2c,  ciudad2c, precioc);
+       pnodoCir aux = primero;
+       while(aux->siguiente!=primero){
+           aux=aux->siguiente;
+       }
+       aux->siguiente=nuevo;
+       primero=nuevo;
+   }
+}
+
+void listaC::InsertarFinal(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c,int precioc)
 {
     if (ListaVacia())
     {
-        pnodoCir nuevo = new nodoCir(v);
-        primero = nuevo;
-        nuevo->siguiente = primero;
+    	cout<<"ListaVacia"<<endl;
+    	pnodoCir nuevo = new nodoCir(v,  trenc,  rutac,  paisc,  ciudadc,  pais2c,  ciudad2c, precioc);
+    	primero= nuevo;
+    	primero->siguiente=primero;
     }
     else
     {
-        pnodoCir nuevo = new nodoCir(v);
+        pnodoCir nuevo = new nodoCir( v,  trenc,  rutac,  paisc,  ciudadc,  pais2c,  ciudad2c, precioc);
         pnodoCir aux = primero;
-        while (aux->siguiente != primero)
-            aux = aux->siguiente;
-        nuevo->siguiente = primero;
-        aux->siguiente = nuevo;
-        primero = nuevo;
+        while (aux->siguiente != primero){
+        	aux = aux->siguiente;
+		}
+		aux->siguiente=nuevo;
+		nuevo->siguiente=primero;
     }
 }
 
-void listaC::InsertarFinal(int v)
+void listaC::InsertarPos(int v, int trenc, int rutac, int paisc, int ciudadc, int pais2c, int ciudad2c,int precioc ,int pos)
 {
     if (ListaVacia())
     {
-        pnodoCir nuevo = new nodoCir(v);
-        primero = nuevo;
-        nuevo->siguiente = primero;
-    }
-    else
-    {
-        pnodoCir nuevo = new nodoCir(v);
-        pnodoCir aux = primero;
-        while (aux->siguiente != primero)
-            aux = aux->siguiente;
-        nuevo->siguiente = primero;
-        aux->siguiente = nuevo;
-
-    }
-}
-
-
-void listaC::InsertarPos(int v, int pos)
-{
-    if (ListaVacia())
-    {
-        pnodoCir nuevo = new nodoCir(v);
+        pnodoCir nuevo = new nodoCir( v,  trenc,  rutac,  paisc,  ciudadc,  pais2c,  ciudad2c, precioc);
         primero = nuevo;
         nuevo->siguiente = primero;
     }
@@ -132,7 +161,7 @@ void listaC::InsertarPos(int v, int pos)
     {
         if (pos <= 1)
         {
-            InsertarInicio(v);
+            InsertarInicio(v,  trenc,  rutac,  paisc,  ciudadc,  pais2c,  ciudad2c, precioc);
         }
         else
         {
@@ -143,7 +172,7 @@ void listaC::InsertarPos(int v, int pos)
                 i++;
                 aux = aux->siguiente;
             }
-            pnodoCir nuevo = new nodoCir(v);
+            pnodoCir nuevo = new nodoCir(v,  trenc,  rutac,  paisc,  ciudadc,  pais2c,  ciudad2c, precioc);
             nuevo->siguiente = aux->siguiente;
             aux->siguiente = nuevo;
         }
@@ -233,11 +262,10 @@ void listaC::Mostrar()
     pnodoCir aux = primero;
     while (aux->siguiente != primero)
     {
-
-        cout << aux->valor << "-> ";
+        cout << aux->codTipTren << "-" << aux->codTren << "-" << aux->codRutas << "-" << aux->codPais1 << "-"<< aux->codCiudad1 << "-"<< aux->codPais2 << "-"<< aux->codCiudad2 <<"-"<< aux->precio << "-> ";
         aux = aux->siguiente;
     }
-    cout << aux->valor << "->";
+    cout << aux->codTipTren << "-" << aux->codTren << "-" << aux->codRutas << "-" << aux->codPais1 << "-"<< aux->codCiudad1 << "-"<< aux->codPais2 << "-"<< aux->codCiudad2 <<"-"<< aux->precio << "-> ";
     cout << endl;
 }
 
@@ -291,8 +319,9 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
         int codPrecio = atoi((Todo7.substr(0, posPC8).c_str()));
         //cout << "Precio: " << codPrecio << endl;
         
-        pnodo buscarPais = paises.primero->siguiente; bool existePais = false;
-        while(buscarPais!=paises.primero){
+        pnodo buscarPais = paises.primero; bool existePais = false;
+        while(buscarPais->siguiente!=paises.primero){
+        	cout<<buscarPais->valor<<"=="<<codPais<<endl;
         	if(buscarPais->valor==codPais){
         		existePais = true;
         		break;
@@ -302,8 +331,9 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 			}
 		}
 		if(existePais){
-			pnodo buscarPais2 = paises.primero->siguiente; bool existePais2 = false;
-        	while(buscarPais2!=paises.primero){
+			cout<<"Pase pais1"<<endl;
+			pnodo buscarPais2 = paises.primero; bool existePais2 = false;
+        	while(buscarPais2->siguiente!=paises.primero){	
         		if(buscarPais2->valor==codPais2){
         			existePais2 = true;
         			break;
@@ -313,6 +343,7 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 				}
 			}
 			if(existePais2){
+				cout<<"Pase pais2"<<endl;
 				pnodo buscarCiudad = buscarPais->ciudad;bool existeCiudad = false;
 				while(buscarCiudad!=buscarPais){
 					if(buscarCiudad->valor==codCiudad){
@@ -324,6 +355,7 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 					}
 				}
 				if(existeCiudad){
+					cout<<"Pase ciudad1"<<endl;
 					pnodo buscarCiudad2 = buscarPais2->ciudad;bool existeCiudad2 = false;
 					while(buscarCiudad2!=buscarPais2){
 						if(buscarCiudad2->valor==codCiudad2){
@@ -336,6 +368,7 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 						
 					}
 					if(existeCiudad2){
+						cout<<"Pase ciudad2"<<endl;
 						pnodoDobleT buscarTipTren = tipoTrenes.primero;bool existeTipTren = false;
 						while(buscarTipTren!=NULL){
 							if(buscarTipTren->codTren==codTipTren){
@@ -347,53 +380,78 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 							}
 						}
 						if(existeTipTren){
+							cout<<"Pase tipo de tren"<<endl;
 							pnodoSimpTrenes buscarCodTren = buscarTipTren->listaDeTrenes.primero;bool existeCodTren = false;
 							while(buscarCodTren!=NULL){
+								cout<<buscarCodTren->codTren<<"=="<<codTren<<endl;
 								if(buscarCodTren->codTren==codTren){
 									existeCodTren = true;
-									continue;
+									break;
 								}
 								else{
 									buscarCodTren=buscarCodTren->siguiente;
 								}
 							}
 							if(existeCodTren){
+								cout<<"Entre hasta el final"<<endl;
 								if(ListaVacia()){
-									
+									cout<<"if"<<endl;
+									InsertarInicio(codTipTren, codTren, codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio);
+								}else{
+									cout<<"else"<<endl;
+									pnodoCir buscarRepetidos = primero; bool repetido= false;
+									while(buscarRepetidos->siguiente!=primero){
+										if(buscarRepetidos->codRutas==codRuta){
+											repetido=true;
+											break;
+										}else{
+											buscarRepetidos=buscarRepetidos->siguiente;
+										}
+									}if(!repetido){
+										InsertarFinal(codTipTren, codTren, codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio);	
+									}else{
+										cout<<"ESTOY repetido"<<endl;
+										// por si esta repetido
+										continue;
+									}
 								}
 							}
 							else{
+								cout<<"No pase tren"<<endl;
 								//por si no existe el tren
 								continue;
 							}
 						}
 						else{
+							cout<<"NO Pase tipo de tren"<<endl;
 							// por si no existe el codTipotren
 							continue;
 						}
 						
 					}
 					else{
+						cout<<"NO Pase ciudad2"<<endl;
 						// por si no existe la ciudad 2
 						continue;
 					}		
 				}
 				else{
+					cout<<"NO Pase ciudad1"<<endl;
 					//por si no existe la ciudad 1
 					continue;
 				}
 			}
 			else{
+				cout<<"NO Pase pais2"<<endl;
 				//por si no existe el pais2
 				continue;
 			}
 		}
 		else{
+			cout<<"NO Pase pais1"<<endl;
 			// por si no existe el pais
 			continue;
 		}
-        
-
     }
     archivo2.close();
 }

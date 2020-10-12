@@ -32,11 +32,11 @@ using namespace std;
 int main() {
 	//------------------------------------------------------------Creación de listas-------------------------------------------
 	listaDC paises;
+	listaDT tipoTren;
     listaC rutas;
     listaC2 admin;
 	listaDCUsuario usuario;
 	listaTrenes trenes;
-	listaDT tipoTren;
 	lista codigoRuta;
 	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------
     
@@ -47,22 +47,26 @@ int main() {
     cout<<endl;
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS
     tipoTren.llenarListaTipotrenes();
-    //tipoTren.Mostrar();
     tipoTren.llenarListaTrenes();
     //codigoRuta.llenarlistaCodigosR();
     //TERCERA USUARIO ADMINISTRADOR RUTAS
 	usuario.llenarListaUsuario(paises);
-	rutas.llenarListaRutas(paises,tipoTren);
+	//rutas.llenarListaRutas(paises,tipoTren);
     //admin.llenarListaAdmin();
     
     //------------------------------------------------------Inicializar Variables----------------------------------------------
-	/*int opcion;
+	int opcion;
 	int codPais;
 	string nomPais;
 	int codCiudad;
 	string nomCiudad;
+	int codConexion;
+	int codPais2;
+	int codCiudad2;
+	int codTiempo;
+
 	//---------------------------------------------------------Menu Principal-------------------------------------------------
-    do {
+    /*do {
         system("cls");      // Para limpiar la pantalla
         
         // Texto del menú que se verá cada vez
@@ -142,7 +146,7 @@ int main() {
 													break;
 													
 									            case 2:
-									            	cout<<"Digite el codigo del pais a ingresar: "; cin>> codPais;cout<<endl;
+									            	cout<<"Digite el codigo de pais : "; cin>> codPais;cout<<endl;
 									            	cout<<"Digite el codigo de la ciudad a ingresar: "; cin>> codCiudad;cout<<endl;
 									            	cout<<"Digite el nombre de la ciudad a ingresar: "; cin>> nomCiudad;cout<<endl;
 									            	if(paises.InsertarCiudades(codPais,codCiudad,nomCiudad)== false){
@@ -156,7 +160,18 @@ int main() {
 									                
 												case 3:
 													
-									                // Lista de instrucciones de la opción 2                
+									                cout<<"Digite el codigo de pais de la conexion: "; cin>> codPais;cout<<endl;
+									            	cout<<"Digite el codigo de la ciudad de la conexion: "; cin>> codCiudad;cout<<endl;
+									            	cout<<"Digite el codigo de la conexion: "; cin>> codConexion;cout<<endl;
+									            	cout<<"Digite el codigo del pais destino: "; cin>> codPais2;cout<<endl;
+									            	cout<<"Digite el codigo de la ciudad destino: "; cin>> codCiudad2;cout<<endl;
+									            	cout<<"Digite el tiempo de la conexion: "; cin>> codTiempo;cout<<endl;
+									            	if(paises.InsertarConexion(codPais,codCiudad,codConexion,codPais2,codCiudad2,codTiempo)== true){
+									            		cout<<"Conexion ingresada con exito"<<endl;
+									            		
+													}else{
+														cout<<"La conexion no se inserto, por favor revisar los codigos, recuerde solo utilizar caracteres de tipo entero.  "<<endl;
+													}              
 									                
 									                system("pause>nul"); // Pausa
 									                break; 

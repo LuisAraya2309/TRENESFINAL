@@ -29,7 +29,7 @@ public: // atributos
 
     friend class lista; // telefono, son amigas lista con la clase. Solo los metodos, constructores
     friend class listaDT;
-    friend class pnodoDobleT;
+    friend class nodoDobleT;
     
 
 };
