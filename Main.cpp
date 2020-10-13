@@ -38,7 +38,9 @@ int main() {
 	listaDCUsuario usuario;
 	listaTrenes trenes;
 	lista codigoRuta;
+	
 	listaDC actividadInsertP;
+	listaDC actividadInsertC;
 	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------
     
 	//PRIMERA ESTRUCTURA PAIS-CIUDAD-CONEXION
@@ -48,14 +50,20 @@ int main() {
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS
     tipoTren.llenarListaTipotrenes();
     tipoTren.llenarListaTrenes();
+    paises.BorrarConexion();
+    paises.ConsultarConexiones(); VOY A IR A ALMORZAR
+    
+    
     
     //codigoRuta.llenarlistaCodigosR();
     //TERCERA USUARIO ADMINISTRADOR RUTAS
+    /*
 	usuario.llenarListaUsuario(paises);
 	rutas.llenarListaRutas(paises,tipoTren);
     //admin.llenarListaAdmin();
     cout<<endl;cout<<endl;cout<<endl;cout<<endl;
     rutas.InsertarRuta(paises,tipoTren);
+    */
     //rutas.Mostrar();
     //rutas.ConsultarPrecio(tipoTren);
     //------------------------------------------------------Inicializar Variables----------------------------------------------

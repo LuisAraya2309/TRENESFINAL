@@ -60,7 +60,7 @@ public:
     void ConsultarPaises();
     void ConsultarCiudades();
     void ConsultarConexiones();
-    void InsertarPais();
+    void InsertarPais(listaDC actividadInsertP);
     void InsertarCiudades ();
     void InsertarConexion();
     void EliminarPais();
@@ -69,10 +69,20 @@ public:
     void RegistroActividad();
     void MostrarActP();
     void MostrarActC();
+    void BorrarConexion();
 public:
     pnodo primero;
 
 };
+
+pnodo UltimoPais(listaDC paises){   
+	pnodo aux = paises.primero;
+	while(aux->siguiente!=paises.primero){
+		aux=aux->siguiente;
+	}
+	return aux;
+}
+
 
 int listaDC::largoLista()
 {
@@ -632,14 +642,15 @@ void listaDC::ConsultarConexiones(){
 	} 
 }
 	
-void listaDC::InsertarPais(){
+void listaDC::InsertarPais(listaDC actividadInsertP){
 	int codPais;
 	string nomPais;
 	cout<<"Digite el codigo del pais a ingresar: "; cin>> codPais;cout<<endl;
 	cout<<"Digite el nombre del pais a ingresar: "; cin>> nomPais;cout<<endl;
 	if (ListaVacia()) {
 	            InsertarFinal(codPais, nomPais);
-	            cout<<"Pais ingresado con excito"<<endl;
+	            actividadInsertP.InsertarInicio(codPais, nomPais);
+	            cout<<"Pais ingresado con exito"<<endl;
 	        }
 	        else {
 	            pnodo puntero = primero; bool flag = true;
@@ -656,7 +667,9 @@ void listaDC::InsertarPais(){
 	            }
 	            if (flag) {
 	                InsertarFinal(codPais, nomPais);
-	               	cout<<"Pais ingresado con excito"<<endl;
+	                actividadInsertP.InsertarInicio(codPais, nomPais);
+	                
+	               	cout<<"Pais ingresado con exito"<<endl;
 	           	}else{
 	           		cout<<"El codigo del pais ya existe"<<endl;
 				}
@@ -898,5 +911,65 @@ void listaDC::ModificarTiempo(){
 	        cout << "El codigo del pais no existe" << endl;
 	    }	
 }
-
+void listaDC::BorrarConexion(){
+	int codPais;
+	int codCiudad;
+	int codConexion;
+    cout << "Ingrese el codigo del pais: ";
+    cin >> codPais;
+    cout<<endl;
+    cout << "Ingrese el codigo de la ciudad: ";
+    cin >> codCiudad;
+    cout<<endl;
+    cout << "Ingrese el codigo de conexion: ";
+    cin >> codConexion;
+    cout<<endl;
+    pnodo puntero = primero->siguiente; bool flag = false;
+    while (puntero!= primero) {
+        if (puntero->valor == codPais) {
+            flag = true;
+            break;
+        }
+        else {
+            puntero = puntero->siguiente;
+        }
+    }
+    if(puntero->valor==codPais){
+    	flag=true;
+	}
+    	if (flag) {
+	        pnodo ciudades = puntero->ciudad; bool flag2 = false;
+	        while (ciudades->ciudad != puntero) {
+	        	if(ciudades->valor==codCiudad){
+	        		flag2=true;
+	        		break;
+				}else{
+					ciudades = ciudades->ciudad;
+				}   
+	        }if(ciudades->valor==codCiudad){
+	        	flag2=true;
+	        }
+	        	if(flag2){
+	        		pnodoDoble conexionG = ciudades->listaConexiones.primero; bool flag=false;
+					while(conexionG!=NULL){
+						if(conexionG->codConexion==codConexion){
+							pnodoDoble temp = conexionG->siguiente;
+			                conexionG->siguiente = conexionG->siguiente->siguiente;
+			                delete temp->siguiente;
+							flag=true;
+							break;
+						}else{
+							conexionG=conexionG->siguiente;
+						}	
+					}if(!flag){
+						cout<<"El codigo de conexion es incorrecto"<<endl;
+					}
+				}else {
+				cout<<"El codigo de ciudad no existe"<<endl;
+				}
+	    }
+	    else {
+	        cout << "El codigo del pais no existe" << endl;
+	    }
+}
 
