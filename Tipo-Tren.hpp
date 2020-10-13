@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "Trenes.hpp"
+#include "Rutas.hpp"
 #pragma once
 using namespace std;
 class nodoDobleT {
@@ -59,6 +60,7 @@ public:
     void ModificarNumAsientos();
     void RegistrarTren();
     void ModificarTren();
+    void llenarListaRutas(listaDC paises);
     pnodoDobleT primero;
 
 };
@@ -514,4 +516,191 @@ void listaDT:: ModificarTren(){
 		}
 	}
 }
-	
+
+void listaDT::llenarListaRutas(listaDC paises) {
+    ifstream archivo2;
+    string texto;
+    listaC listaRutas;
+    archivo2.open("Rutas.txt", ios::in);
+    if (archivo2.fail()) {
+        cout << "No se pudo abrir el archivo";
+        exit(1);
+    }
+    while (!archivo2.eof()) {
+    	
+        getline(archivo2, texto);
+        cout<<"TEXTO PUTO"<<texto<<endl;
+		
+        int posPC = texto.find(";");
+        int codTipTren = atoi(texto.substr(0, posPC).c_str());
+        //cout << "Tipo Tren: " << codTipTren << endl;
+        
+        string Todo = texto.substr(posPC + 1, texto.length());
+        int posPC2 = Todo.find(";");
+        int codTren = atoi(Todo.substr(0, posPC2).c_str());
+        //cout << "Codigo Tren: " << codTren << endl;
+
+        string Todo2 = Todo.substr(posPC2 + 1, Todo.length());
+        int posPC3 = Todo2.find(";");
+        int codRuta = atoi((Todo2.substr(0, posPC3).c_str()));
+        //cout << "Codigo Ruta: " << codRuta << endl;
+
+        string Todo3 = Todo2.substr(posPC3 + 1, Todo2.length());
+        int posPC4 = Todo3.find(";");
+        int codPais = atoi((Todo3.substr(0, posPC4).c_str()));
+        //cout << "Codigo Pais: " << codPais << endl;
+
+        string Todo4 = Todo3.substr(posPC4 + 1, Todo3.length());
+        int posPC5 = Todo4.find(";");
+        int codCiudad = atoi((Todo4.substr(0, posPC5).c_str()));
+        //cout << "Codigo Ciudad: " << codCiudad << endl;
+
+        string Todo5 = Todo4.substr(posPC5 + 1, Todo4.length());
+        int posPC6 = Todo5.find(";");
+        int codPais2 = atoi((Todo5.substr(0, posPC6).c_str()));
+        //cout << "Codigo Pais: " << codPais2 << endl;
+
+        string Todo6 = Todo5.substr(posPC6 + 1, Todo5.length());
+        int posPC7 = Todo6.find(";");
+        int codCiudad2 = atoi((Todo6.substr(0, posPC7).c_str()));
+       // cout << "Codigo Ciudad: " << codCiudad2 << endl;
+
+        string Todo7 = Todo6.substr(posPC7 + 1, Todo6.length());
+        int posPC8 = Todo7.find(";");
+        int codPrecio = atoi((Todo7.substr(0, posPC8).c_str()));
+        //cout << "Precio: " << codPrecio << endl;
+        
+        pnodoDobleT buscarTipTren =  primero;bool existeTipTren = false;
+        while(buscarTipTren!=NULL){
+        	if(buscarTipTren->codTren == codTipTren){
+        		existeTipTren = true;
+        		break;
+			}
+			else{
+				buscarTipTren = buscarTipTren->siguiente;
+			}
+		}
+		if(existeTipTren){
+			pnodoSimpTrenes buscarTren = buscarTipTren->listaDeTrenes.primero;bool existeTren = false;
+			while(buscarTren!=NULL){
+				if(buscarTren->codTren==codTren){
+					existeTren = true;
+					break;
+				}
+				else{
+					buscarTren = buscarTren->siguiente;
+				}
+			}
+			if(existeTren){
+				pnodo buscarPais = paises.primero; bool existePais1 = false;
+				while(buscarPais->siguiente != paises.primero ){
+					if(buscarPais->valor==codPais){
+						existePais1 = true;
+						break;
+					}
+					else{
+						buscarPais = buscarPais->siguiente;
+					}
+				}
+				if(buscarPais->valor == codPais){
+					existePais1 = true;
+				}
+				if(existePais1){
+					pnodo buscarCiudad1 = buscarPais->ciudad; bool existeCiudad1 = false;
+					while(buscarCiudad1->ciudad != buscarPais ){
+						if(buscarCiudad1->valor==codCiudad){
+							existeCiudad1 = true;
+							break;
+						}
+						else{
+							buscarCiudad1 = buscarCiudad1->ciudad;
+						}
+					}
+					if(buscarCiudad1->valor == codCiudad){
+						existeCiudad1 = true;
+					}
+					if(existeCiudad1){
+						pnodo buscarPais2 = paises.primero; bool existePais2 = false;
+						while(buscarPais2->siguiente != paises.primero ){
+							if(buscarPais2->valor==codPais2){
+								existePais2 = true;
+								break;
+							}
+							else{
+								buscarPais2 = buscarPais2->siguiente;
+							}
+						}
+						if(buscarPais2->valor == codPais){
+							existePais2 = true;
+						}
+						if(existePais2){
+							pnodo buscarCiudad2 = buscarPais2->ciudad; bool existeCiudad2 = false;
+							while(buscarCiudad2->ciudad != buscarPais2 ){
+								if(buscarCiudad2->valor==codCiudad2){
+									existeCiudad2 = true;
+									break;
+								}
+								else{
+									buscarCiudad2 = buscarCiudad2->ciudad;
+								}
+							}
+							if(buscarCiudad2->valor == codCiudad2){
+								existeCiudad2 = true;
+							}
+							if(existeCiudad2){
+								if(listaRutas.ListaVacia()){
+									listaRutas.InsertarInicio(codTipTren,codTren,codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio);
+									listaRutas.Mostrar();
+								}
+								else{
+									pnodoCir buscarRuta = listaRutas.primero;bool existeRuta = false;
+									while(buscarRuta->siguiente!=primero){
+										if(buscarRuta->codRutas==codRuta){
+											existeRuta = true;
+										}
+										else{
+											buscarRuta=buscarRuta->siguiente;
+										}
+									}
+									if(buscarRuta->codRutas==codRuta){
+										existeRuta = true;
+									}
+									if(!existeRuta){
+										listaRutas.InsertarFinal(codTipTren,codTren,codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio);
+										listaRutas.Mostrar();
+									}
+								}
+							}
+							else{
+								//por si no existe la ciudad 2
+								continue;
+							}
+						}
+						else{
+							//por si no existe el pais 2
+							continue;
+						}	
+					}
+					else{
+						//por si no existe ciudad 1
+						continue;
+					}
+				}
+				else{
+					//no existe Pais 1
+					continue;
+				}
+			}
+			else{
+				//por si no existe el tren
+				continue;
+			}
+		}
+		else{
+			//por si no existe el tipo de tren
+			continue;
+		}
+     
+    }
+    archivo2.close();
+}	

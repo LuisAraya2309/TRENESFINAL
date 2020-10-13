@@ -50,20 +50,20 @@ int main() {
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS
     tipoTren.llenarListaTipotrenes();
     tipoTren.llenarListaTrenes();
-    paises.BorrarConexion();
-    paises.ConsultarConexiones(); VOY A IR A ALMORZAR
+    //paises.BorrarConexion();
+    //paises.ConsultarConexiones();
     
     
     
     //codigoRuta.llenarlistaCodigosR();
     //TERCERA USUARIO ADMINISTRADOR RUTAS
-    /*
+    
 	usuario.llenarListaUsuario(paises);
-	rutas.llenarListaRutas(paises,tipoTren);
+	tipoTren.llenarListaRutas(paises);
     //admin.llenarListaAdmin();
     cout<<endl;cout<<endl;cout<<endl;cout<<endl;
-    rutas.InsertarRuta(paises,tipoTren);
-    */
+    //rutas.InsertarRuta(paises,tipoTren);
+    
     //rutas.Mostrar();
     //rutas.ConsultarPrecio(tipoTren);
     //------------------------------------------------------Inicializar Variables----------------------------------------------
