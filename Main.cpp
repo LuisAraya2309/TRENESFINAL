@@ -48,11 +48,16 @@ int main() {
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS
     tipoTren.llenarListaTipotrenes();
     tipoTren.llenarListaTrenes();
+    
     //codigoRuta.llenarlistaCodigosR();
     //TERCERA USUARIO ADMINISTRADOR RUTAS
 	usuario.llenarListaUsuario(paises);
-	//rutas.llenarListaRutas(paises,tipoTren);
-    admin.llenarListaAdmin();
+	rutas.llenarListaRutas(paises,tipoTren);
+    //admin.llenarListaAdmin();
+    cout<<endl;cout<<endl;cout<<endl;cout<<endl;
+    rutas.InsertarRuta(paises,tipoTren);
+    //rutas.Mostrar();
+    //rutas.ConsultarPrecio(tipoTren);
     //------------------------------------------------------Inicializar Variables----------------------------------------------
 	int opcion;
 	int codPais;
@@ -63,7 +68,7 @@ int main() {
 	int codPais2;
 	int codCiudad2;
 	int codTiempo;
-
+/*
 	//---------------------------------------------------------Menu Principal-------------------------------------------------
     do {
         system("cls");      // Para limpiar la pantalla
@@ -306,7 +311,7 @@ int main() {
 					                break;
 								case 10:
 					                // Lista de instrucciones de la opción 2                
-					                
+					                rutas.ConsultarPrecio(tipoTren);
 					                system("pause>nul"); // Pausa
 					                break;
 								case 11:
@@ -384,6 +389,6 @@ int main() {
                 system("pause>nul"); // Pausa
                 break;          
     	} 		
-	}while (opcion != 3);
+	}while (opcion != 3);*/
     	return 0;
 }

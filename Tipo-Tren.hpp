@@ -16,13 +16,13 @@ public:
         listaCodRutas = lista();
     }
 
-    nodoDobleT(int codigoc ,string cnombre, nodoDobleT* signodoDoble, nodoDobleT* sigantDoble,nodoDobleT* sigTren)
+    nodoDobleT(int codigoc ,string cnombre, nodoDobleT* signodoDoble, nodoDobleT* sigantDoble)
     {
     	codTren= codigoc;
         nombre= cnombre;
         siguiente = signodoDoble;
         anterior = sigantDoble;
-        tren = sigTren;
+        listaDeTrenes = listaTrenes();
     }
 public:
 	int codTren;
@@ -32,6 +32,7 @@ public:
     nodoDobleT* anterior;
     nodoDobleT* tren;
     listaTrenes listaDeTrenes;
+    
     friend class listaDT;
     friend class listaTrenes;
     friend class nodoSimpTrenes;
@@ -512,6 +513,5 @@ void listaDT:: ModificarTren(){
 			cout<<"El codigo del tipo de tren ingresado no existe"<<endl;
 		}
 	}
+}
 	
-
-

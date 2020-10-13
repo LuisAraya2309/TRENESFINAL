@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
-//TDA Tipo abstractos de Datos, no pertenece al lenguaje, sin embargo, cuando el programador lo define se puede empezar a utilizar
 #pragma once
+//TDA Tipo abstractos de Datos, no pertenece al lenguaje, sin embargo, cuando el programador lo define se puede empezar a utilizar
 class nodoSimpTrenes { //clase NODO
 
 public:

@@ -36,7 +36,7 @@ public:
         precio = precioc;
         siguiente = signodo;
     }
-
+    
 public:
     int codTipTren;
     int codTren;
@@ -73,6 +73,8 @@ public:
     void borrarPosicion(int pos);
     int largoLista();
     void llenarListaRutas(listaDC paises, listaDT tipoTrenes);
+    void ConsultarPrecio(listaDT tipoTrenes);
+    void InsertarRuta(listaDC paises, listaDT tipoTrenes);
 
 public:
     pnodoCir primero;
@@ -329,6 +331,8 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 			else{
 				buscarPais=buscarPais->siguiente;
 			}
+		}if(buscarPais->valor==codPais){
+			existePais=true;
 		}
 		if(existePais){
 			cout<<"Pase pais1"<<endl;
@@ -341,6 +345,8 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 				else{
 					buscarPais2=buscarPais2->siguiente;
 				}
+			}if(buscarPais2->valor==codPais2){
+				existePais2=true;
 			}
 			if(existePais2){
 				cout<<"Pase pais2"<<endl;
@@ -353,6 +359,8 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 					else{
 						buscarCiudad=buscarCiudad->ciudad;
 					}
+				}if(buscarCiudad->valor==codCiudad){
+					existeCiudad=true;
 				}
 				if(existeCiudad){
 					cout<<"Pase ciudad1"<<endl;
@@ -364,14 +372,17 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 						}
 						else{
 							buscarCiudad2=buscarCiudad2->ciudad;
-						}
-						
+						}	
+					}if(buscarCiudad2->valor==codCiudad2){
+						existeCiudad2=true;
 					}
 					if(existeCiudad2){
 						cout<<"Pase ciudad2"<<endl;
 						pnodoDobleT buscarTipTren = tipoTrenes.primero;bool existeTipTren = false;
 						while(buscarTipTren!=NULL){
 							if(buscarTipTren->codTren==codTipTren){
+								cout<<"MOSTRAR"<<endl;
+								buscarTipTren->listaDeTrenes.Mostrar();
 								existeTipTren=true;
 								break;
 							}
@@ -454,4 +465,218 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 		}
     }
     archivo2.close();
+}
+
+
+void listaC::ConsultarPrecio(listaDT tipoTrenes){
+	int codTipTren;
+	int codTren;
+	int codRuta;
+	cout<<"Ingrese el codigo de tipo de tren: "; cin>>codTipTren; cout<<endl;
+	cout<<"Ingrese el codigo de tren: "; cin>>codTren; cout<<endl;
+	cout<<"Ingrese el codigo de la ruta: "; cin>>codRuta; cout<<endl;
+	pnodoDobleT buscarTipTren = tipoTrenes.primero;bool existeTipTren = false;
+	while(buscarTipTren!=NULL){
+		if(buscarTipTren->codTren==codTipTren){
+			existeTipTren=true;
+			break;
+		}
+		else{
+			buscarTipTren=buscarTipTren->siguiente;
+		}
+	}
+	if(existeTipTren){
+		cout<<"Pase tipo de tren"<<endl;
+		pnodoSimpTrenes buscarCodTren = buscarTipTren->listaDeTrenes.primero;bool existeCodTren = false;
+		while(buscarCodTren!=NULL){
+			cout<<buscarCodTren->codTren<<"=="<<codTren<<endl;
+			if(buscarCodTren->codTren==codTren){
+				existeCodTren = true;
+				break;
+			}
+			else{
+				buscarCodTren=buscarCodTren->siguiente;
+			}
+		}
+		if(existeCodTren){
+			cout<<"Entre hasta el final"<<endl;
+			cout<<"else"<<endl;
+			pnodoCir buscarRepetidos = primero; bool repetido= false;
+			while(buscarRepetidos->siguiente!=primero){
+				if(buscarRepetidos->codRutas==codRuta){
+					repetido=true;
+					break;
+				}else{
+					buscarRepetidos=buscarRepetidos->siguiente;
+				}
+			}if(!repetido){
+				cout<<"El codigo de ruta no existe"<<endl;	
+			}else{
+				// por si esta repetido
+				cout<<"El precio de la ruta es "<<buscarRepetidos->precio<<endl;
+			}
+		}
+		else{
+			cout<<"No pase tren"<<endl;
+			//por si no existe el tren
+		}
+	}
+	else{
+		cout<<"NO Pase tipo de tren"<<endl;
+		// por si no existe el codTipotren
+	}
+}
+
+
+void listaC::InsertarRuta(listaDC paises, listaDT tipoTrenes){
+	int codPais;
+	int codPais2;
+	int codCiudad;
+	int codCiudad2;
+	int codPrecio;
+	int codTipTren;
+	int codTren;
+	int codRuta;
+	cout<<"Ingrese el codigo de tipo de tren: "; cin>>codTipTren; cout<<endl;
+	cout<<"Ingrese el codigo de tren: "; cin>>codTren; cout<<endl;
+	cout<<"Ingrese el codigo de la ruta: "; cin>>codRuta; cout<<endl;
+	cout<<"Ingrese el codigo del primer pais: "; cin>>codPais; cout<<endl;
+	cout<<"Ingrese el codigo de la primera ciudad: "; cin>>codCiudad; cout<<endl;
+	cout<<"Ingrese el codigo del segundo pais: "; cin>>codPais2; cout<<endl;
+	cout<<"Ingrese el codigo de la segunda ciudad: "; cin>>codCiudad2; cout<<endl;
+	cout<<"Ingrese el precio de la ruta: "; cin>>codPrecio; cout<<endl;
+	pnodo buscarPais = paises.primero; bool existePais = false;
+        while(buscarPais->siguiente!=paises.primero){
+        	cout<<buscarPais->valor<<"=="<<codPais<<endl;
+        	if(buscarPais->valor==codPais){
+        		existePais = true;
+        		break;
+			}
+			else{
+				buscarPais=buscarPais->siguiente;
+			}
+		}if(buscarPais->valor==codPais){
+			existePais=true;
+		}
+		if(existePais){
+			cout<<"Pase pais1"<<endl;
+			pnodo buscarPais2 = paises.primero; bool existePais2 = false;
+        	while(buscarPais2->siguiente!=paises.primero){	
+        		if(buscarPais2->valor==codPais2){
+        			existePais2 = true;
+        			break;
+				}
+				else{
+					buscarPais2=buscarPais2->siguiente;
+				}
+			}if(buscarPais2->valor==codPais2){
+				existePais2=true;
+			}
+			if(existePais2){
+				cout<<"Pase pais2"<<endl;
+				pnodo buscarCiudad = buscarPais->ciudad;bool existeCiudad = false;
+				while(buscarCiudad!=buscarPais){
+					if(buscarCiudad->valor==codCiudad){
+						existeCiudad = true;
+						break;
+					}
+					else{
+						buscarCiudad=buscarCiudad->ciudad;
+					}
+				}if(buscarCiudad->valor==codCiudad){
+					existeCiudad=true;
+				}
+				if(existeCiudad){
+					cout<<"Pase ciudad1"<<endl;
+					pnodo buscarCiudad2 = buscarPais2->ciudad;bool existeCiudad2 = false;
+					while(buscarCiudad2!=buscarPais2){
+						if(buscarCiudad2->valor==codCiudad2){
+							existeCiudad2 = true;
+							break;
+						}
+						else{
+							buscarCiudad2=buscarCiudad2->ciudad;
+						}	
+					}if(buscarCiudad2->valor==codCiudad2){
+						existeCiudad2=true;
+					}
+					if(existeCiudad2){
+						cout<<"Pase ciudad2"<<endl;
+						pnodoDobleT buscarTipTren = tipoTrenes.primero;bool existeTipTren = false;
+						while(buscarTipTren!=NULL){
+							cout<<buscarTipTren->codTren<<"=="<<codTipTren<<endl;
+							if(buscarTipTren->codTren==codTipTren){	
+								existeTipTren=true;
+								break;
+							}
+							else{
+								buscarTipTren=buscarTipTren->siguiente;
+							}
+						}
+						if(existeTipTren){
+							cout<<"Pase tipo de tren"<<endl;
+							pnodoSimpTrenes buscarCodTren = buscarTipTren->listaDeTrenes.primero;bool existeCodTren = false;
+							while(buscarCodTren!=NULL){
+								cout<<buscarCodTren->codTren<<"=="<<codTren<<endl;
+								if(buscarCodTren->codTren==codTren){
+									existeCodTren = true;
+									break;
+								}
+								else{
+									buscarCodTren=buscarCodTren->siguiente;
+								}
+							}
+							if(existeCodTren){
+								cout<<"Entre hasta el final"<<endl;
+								if(ListaVacia()){
+									cout<<"if"<<endl;
+									InsertarInicio(codTipTren, codTren, codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio);
+								}else{
+									cout<<"else"<<endl;
+									pnodoCir buscarRepetidos = primero; bool repetido= false;
+									while(buscarRepetidos->siguiente!=primero){
+										if(buscarRepetidos->codRutas==codRuta){
+											repetido=true;
+											break;
+										}else{
+											buscarRepetidos=buscarRepetidos->siguiente;
+										}
+									}if(!repetido){
+										InsertarFinal(codTipTren, codTren, codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio);	
+									}else{
+										cout<<"ESTOY repetido"<<endl;
+										// por si esta repetido
+									}
+								}
+							}
+							else{
+								cout<<"No pase tren"<<endl;
+								//por si no existe el tren
+							}
+						}
+						else{
+							cout<<"NO Pase tipo de tren"<<endl;
+							// por si no existe el codTipotren
+						}	
+					}
+					else{
+						cout<<"NO Pase ciudad2"<<endl;
+						// por si no existe la ciudad 2
+					
+					}		
+				}
+				else{
+					cout<<"NO Pase ciudad1"<<endl;
+					//por si no existe la ciudad 1
+				}
+			}
+			else{
+				cout<<"NO Pase pais2"<<endl;
+				//por si no existe el pais2
+			}
+		}
+		else{
+			cout<<"NO Pase pais1"<<endl;
+			// por si no existe el pais
+		}
 }
