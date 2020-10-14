@@ -70,6 +70,7 @@ public:
     void MostrarActP();
     void MostrarActC();
     void BorrarConexion();
+    bool VerificarCodPais(int codAux,int codCiudadAux);
 public:
     pnodo primero;
 
@@ -970,4 +971,43 @@ void listaDC::BorrarConexion(){
 	        cout << "El codigo del pais no existe" << endl;
 	    }
 }
+bool listaDC::VerificarCodPais(int codAux,int codCiudad){
+	pnodo buscar = primero;bool flag = false;
+	while(buscar->siguiente!=primero){
+		if(buscar->valor==codAux){
+			flag =  true;	
+		}
+		else{
+			buscar=buscar->siguiente;
+		}
+	}
+	if(buscar->valor==codAux){
+		flag = true;
+	}
+	if(flag){
+		pnodo ciudades = buscar->ciudad; bool flag2 = false;
+	        while (ciudades->ciudad != buscar) {
+	        	if(ciudades->valor==codCiudad){
+	        		flag2=true;
+	        		break;
+				}else{
+					ciudades = ciudades->ciudad;
+				}   
+	        }if(ciudades->valor==codCiudad){
+	        	flag2=true;
+	        }
+	        if(flag2){
+			return true;
+			}
+			else{
+				return false;
+			}
+		
+	}
+	else{
+		return false;
+	}
+	
+}
+
 

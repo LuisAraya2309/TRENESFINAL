@@ -47,8 +47,13 @@ int main() {
     paises.llenarListaConexiones(); 
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS 
     tipoTren.llenarListaTipotrenes(); 
-    tipoTren.llenarListaTrenes(); 
-     
+    tipoTren.llenarListaTrenes();
+    cout<<tipoTren.Verificar(423,234)<<endl;
+    cout<<tipoTren.Verificar(03,7777)<<endl;
+    rutas.llenarListaRutas(paises,tipoTren);
+    rutas.InsertarRuta(paises,tipoTren);
+    rutas.Mostrar();
+     /*
     //codigoRuta.llenarlistaCodigosR(); 
     //TERCERA USUARIO ADMINISTRADOR RUTAS 
 	usuario.llenarListaUsuario(paises); 
@@ -58,6 +63,7 @@ int main() {
     rutas.InsertarRuta(paises,tipoTren); 
     //rutas.Mostrar(); 
     //rutas.ConsultarPrecio(tipoTren); 
+    */
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais; 

@@ -59,6 +59,7 @@ public:
     void ModificarNumAsientos(); 
     void RegistrarTren(); 
     void ModificarTren(); 
+    bool Verificar(int codTipTren, int codTren);
     pnodoDobleT primero; 
  
 }; 
@@ -515,4 +516,33 @@ void listaDT:: ModificarTren(){
 	} 
 } 
 	 
-
+bool listaDT::Verificar(int codTipTren, int codTren){
+    pnodoDobleT buscarTipTren = primero;bool existeTipTren = false; 
+    while(buscarTipTren!=NULL){ 
+        if(buscarTipTren->codTren==codTipTren){  
+            existeTipTren=true; 
+            break; 
+        } 
+        else{ 
+            buscarTipTren=buscarTipTren->siguiente; 
+        } 
+    } 
+    if(existeTipTren){ 
+        pnodoSimpTrenes buscarCodTren = buscarTipTren->listaDeTrenes.primero;bool existeCodTren = false; 
+        while(buscarCodTren!=NULL){ 
+            if(buscarCodTren->codTren==codTren){ 
+                existeCodTren = true; 
+                break; 
+            } 
+            else{ 
+                buscarCodTren=buscarCodTren->siguiente; 
+            } 
+        } 
+        if(existeCodTren){
+            return true;
+        }
+        else{
+        	return false;
+		}
+    }
+}

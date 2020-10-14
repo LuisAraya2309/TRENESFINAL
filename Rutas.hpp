@@ -271,7 +271,7 @@ void listaC::Mostrar()
     cout << endl; 
 } 
  
-void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) { 
+void listaC::llenarListaRutas(listaDC paises,listaDT listaTrenes) { 
     ifstream archivo2; 
     string texto; 
     archivo2.open("Rutas.txt", ios::in); 
@@ -376,34 +376,12 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 					}if(buscarCiudad2->valor==codCiudad2){ 
 						existeCiudad2=true; 
 					} 
+					bool existeCodTren = false;
 					if(existeCiudad2){ 
-						cout<<"Pase ciudad2"<<endl; 
-						pnodoDobleT buscarTipTren = tipoTrenes.primero;bool existeTipTren = false; 
-						while(buscarTipTren!=NULL){ 
-							if(buscarTipTren->codTren==codTipTren){ 
-								cout<<"MOSTRAR"<<endl; 
-								buscarTipTren->listaDeTrenes.Mostrar(); 
-								existeTipTren=true; 
-								break; 
-							} 
-							else{ 
-								buscarTipTren=buscarTipTren->siguiente; 
-							} 
-						} 
-						if(existeTipTren){ 
-							cout<<"Pase tipo de tren"<<endl; 
-							pnodoSimpTrenes buscarCodTren = buscarTipTren->listaDeTrenes.primero;bool existeCodTren = false; 
-							while(buscarCodTren!=NULL){ 
-								cout<<buscarCodTren->codTren<<"=="<<codTren<<endl; 
-								if(buscarCodTren->codTren==codTren){ 
-									existeCodTren = true; 
-									break; 
-								} 
-								else{ 
-									buscarCodTren=buscarCodTren->siguiente; 
-								} 
-							} 
-							if(existeCodTren){ 
+						if(listaTrenes.Verificar(codTipTren,codTren)){
+							existeCodTren=true;
+						}
+						if(existeCodTren){ 
 								cout<<"Entre hasta el final"<<endl; 
 								if(ListaVacia()){ 
 									cout<<"if"<<endl; 
@@ -427,17 +405,6 @@ void listaC::llenarListaRutas(listaDC paises, listaDT tipoTrenes) {
 									} 
 								} 
 							} 
-							else{ 
-								cout<<"No pase tren"<<endl; 
-								//por si no existe el tren 
-								continue; 
-							} 
-						} 
-						else{ 
-							cout<<"NO Pase tipo de tren"<<endl; 
-							// por si no existe el codTipotren 
-							continue; 
-						} 
 						 
 					} 
 					else{ 
@@ -545,7 +512,8 @@ void listaC::InsertarRuta(listaDC paises, listaDT tipoTrenes){
 	cout<<"Ingrese el codigo del segundo pais: "; cin>>codPais2; cout<<endl; 
 	cout<<"Ingrese el codigo de la segunda ciudad: "; cin>>codCiudad2; cout<<endl; 
 	cout<<"Ingrese el precio de la ruta: "; cin>>codPrecio; cout<<endl; 
-	pnodo buscarPais = paises.primero; bool existePais = false; 
+	
+        pnodo buscarPais = paises.primero; bool existePais = false; 
         while(buscarPais->siguiente!=paises.primero){ 
         	cout<<buscarPais->valor<<"=="<<codPais<<endl; 
         	if(buscarPais->valor==codPais){ 
@@ -600,33 +568,12 @@ void listaC::InsertarRuta(listaDC paises, listaDT tipoTrenes){
 					}if(buscarCiudad2->valor==codCiudad2){ 
 						existeCiudad2=true; 
 					} 
+					bool existeCodTren = false;
 					if(existeCiudad2){ 
-						cout<<"Pase ciudad2"<<endl; 
-						pnodoDobleT buscarTipTren = tipoTrenes.primero;bool existeTipTren = false; 
-						while(buscarTipTren!=NULL){ 
-							cout<<buscarTipTren->codTren<<"=="<<codTipTren<<endl; 
-							if(buscarTipTren->codTren==codTipTren){	 
-								existeTipTren=true; 
-								break; 
-							} 
-							else{ 
-								buscarTipTren=buscarTipTren->siguiente; 
-							} 
-						} 
-						if(existeTipTren){ 
-							cout<<"Pase tipo de tren"<<endl; 
-							pnodoSimpTrenes buscarCodTren = buscarTipTren->listaDeTrenes.primero;bool existeCodTren = false; 
-							while(buscarCodTren!=NULL){ 
-								cout<<buscarCodTren->codTren<<"=="<<codTren<<endl; 
-								if(buscarCodTren->codTren==codTren){ 
-									existeCodTren = true; 
-									break; 
-								} 
-								else{ 
-									buscarCodTren=buscarCodTren->siguiente; 
-								} 
-							} 
-							if(existeCodTren){ 
+						if(tipoTrenes.Verificar(codTipTren,codTren)){
+							existeCodTren=true;
+						}
+						if(existeCodTren){ 
 								cout<<"Entre hasta el final"<<endl; 
 								if(ListaVacia()){ 
 									cout<<"if"<<endl; 
@@ -646,33 +593,28 @@ void listaC::InsertarRuta(listaDC paises, listaDT tipoTrenes){
 									}else{ 
 										cout<<"ESTOY repetido"<<endl; 
 										// por si esta repetido 
+									
 									} 
 								} 
 							} 
-							else{ 
-								cout<<"No pase tren"<<endl; 
-								//por si no existe el tren 
-							} 
-						} 
-						else{ 
-							cout<<"NO Pase tipo de tren"<<endl; 
-							// por si no existe el codTipotren 
-						}	 
+						 
 					} 
 					else{ 
 						cout<<"NO Pase ciudad2"<<endl; 
 						// por si no existe la ciudad 2 
-					 
+		 
 					}		 
 				} 
 				else{ 
 					cout<<"NO Pase ciudad1"<<endl; 
 					//por si no existe la ciudad 1 
+					
 				} 
 			} 
 			else{ 
 				cout<<"NO Pase pais2"<<endl; 
 				//por si no existe el pais2 
+			 
 			} 
 		} 
 		else{ 
