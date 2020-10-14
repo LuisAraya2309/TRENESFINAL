@@ -60,6 +60,7 @@ public:
     void RegistrarTren(); 
     void ModificarTren(); 
     bool Verificar(int codTipTren, int codTren);
+    void EliminarTren();
     pnodoDobleT primero; 
  
 }; 
@@ -545,4 +546,8 @@ bool listaDT::Verificar(int codTipTren, int codTren){
         	return false;
 		}
     }
+}
+
+void listaDT::EliminarTren(){
+	int codTipTren;
 }

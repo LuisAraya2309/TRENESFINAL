@@ -72,9 +72,12 @@ public:
     void BorrarInicio(); 
     void borrarPosicion(int pos); 
     int largoLista(); 
-    void llenarListaRutas(listaDC paises, listaDT tipoTrenes); 
+    void llenarListaRutas(listaDC& paises, listaDT& tipoTrenes); 
     void ConsultarPrecio(listaDT tipoTrenes); 
-    void InsertarRuta(listaDC paises, listaDT tipoTrenes); 
+    void InsertarRuta(listaDC& paises, listaDT& tipoTrenes); 
+    void ConsultarRuta();
+    void ModificarPrecio();
+    void ModificarRuta();
  
 public: 
     pnodoCir primero; 
@@ -271,7 +274,7 @@ void listaC::Mostrar()
     cout << endl; 
 } 
  
-void listaC::llenarListaRutas(listaDC paises,listaDT listaTrenes) { 
+void listaC::llenarListaRutas(listaDC& paises,listaDT& listaTrenes) { 
     ifstream archivo2; 
     string texto; 
     archivo2.open("Rutas.txt", ios::in); 
@@ -492,10 +495,88 @@ void listaC::ConsultarPrecio(listaDT tipoTrenes){
 		cout<<"NO Pase tipo de tren"<<endl; 
 		// por si no existe el codTipotren 
 	} 
-} 
+}
  
+void listaC::ConsultarRuta(){
+ 	int codTipTren; 
+	int codTren; 
+	bool bandera=false;
+	cout<<"Ingrese el codigo de tipo de tren: "; cin>>codTipTren; cout<<endl; 
+	cout<<"Ingrese el codigo de tren: "; cin>>codTren; cout<<endl; 
+	pnodoCir aux = primero; 
+    while (aux->siguiente != primero) { 
+    	if ((aux->codTipTren==codTipTren)&&(aux->codTren==codTren)){
+    		cout <<"Codigo de ruta: " << aux->codRutas << " Pais: " << aux->codPais1 << " Ciudad: "<< aux->codCiudad1 << " Pais destino: "<< aux->codPais2 << " Ciudad destino: "<< aux->codCiudad2 <<" Precio: "<< aux->precio <<endl; 
+        	cout << endl;
+        	bandera=true;
+			aux = aux->siguiente; 
+		}else{
+			aux = aux->siguiente; 
+		}  
+    }if(!bandera){
+    	cout<<"No se encontro el codigo ingresado, porfavor vuelva a intentarlo"<<endl;
+	}
+ }
  
-void listaC::InsertarRuta(listaDC paises, listaDT tipoTrenes){ 
+void listaC::ModificarPrecio(){
+	int codRuta; 
+	int nPrecio;
+	cout<<"Ingrese el codigo de la ruta: "; cin>>codRuta; cout<<endl;
+	cout<<"Ingrese el nuevo precio: "; cin>>nPrecio; cout<<endl;
+	pnodoCir buscarRepetidos = primero; bool repetido= false; 
+	while(buscarRepetidos->siguiente!=primero){ 
+		if(buscarRepetidos->codRutas==codRuta){ 
+			repetido=true; 
+			break; 
+		}else{ 
+			buscarRepetidos=buscarRepetidos->siguiente; 
+		} 
+	}if(!repetido){ 
+		cout<<"El codigo de ruta no existe"<<endl;	 
+	}else{ 
+		// por si esta repetido 
+		buscarRepetidos->precio=nPrecio;
+		cout<<"El nuevo precio de la ruta es "<<buscarRepetidos->precio<<endl; 
+	}
+}
+
+void listaC::ModificarRuta(){
+	int codRuta;
+	int codPais1;
+	int codPais2;
+	int codCiudad1;
+	int codCiudad2;
+	int nPrecio;
+	cout<<"Ingrese el codigo de la ruta: "; cin>>codRuta; cout<<endl;
+	cout<<"Ingrese el nuevo codigo de pais: "; cin>>codPais1; cout<<endl;
+	cout<<"Ingrese el nuevo codigo de ciudad: "; cin>>codCiudad1; cout<<endl;
+	cout<<"Ingrese el nuevo codigo de pais destino: "; cin>>codPais2; cout<<endl;
+	cout<<"Ingrese el nuevo codigo de ciudad destino: "; cin>>codCiudad2; cout<<endl;
+	cout<<"Ingrese el nuevo precio: "; cin>>nPrecio; cout<<endl;
+	pnodoCir buscarRepetidos = primero; bool repetido= false; 
+	while(buscarRepetidos->siguiente!=primero){ 
+		if(buscarRepetidos->codRutas==codRuta){ 
+			repetido=true; 
+			break; 
+		}else{ 
+			buscarRepetidos=buscarRepetidos->siguiente; 
+		} 
+	}if(!repetido){ 
+		cout<<"El codigo de ruta no existe"<<endl;	 
+	}else{ 
+		// por si esta repetido 
+		buscarRepetidos->precio=nPrecio;
+		buscarRepetidos->codPais1=codPais1;
+		buscarRepetidos->codPais2=codPais2;
+		buscarRepetidos->codCiudad1=codCiudad1;
+		buscarRepetidos->codCiudad2=codCiudad2;
+		cout<<"La ruta modificada es: "<<endl;
+		cout <<"Codigo de ruta: " << buscarRepetidos->codRutas << " Pais: " << buscarRepetidos->codPais1 << " Ciudad: "<< buscarRepetidos->codCiudad1 << " Pais destino: "<< buscarRepetidos->codPais2 << " Ciudad destino: "<< buscarRepetidos->codCiudad2 <<" Precio: "<< buscarRepetidos->precio <<endl; 
+		
+	}
+}
+
+void listaC::InsertarRuta(listaDC& paises, listaDT& tipoTrenes){ 
 	int codPais; 
 	int codPais2; 
 	int codCiudad; 
