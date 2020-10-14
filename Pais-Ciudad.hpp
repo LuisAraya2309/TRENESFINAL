@@ -60,7 +60,7 @@ public:
     void ConsultarPaises();
     void ConsultarCiudades();
     void ConsultarConexiones();
-    void InsertarPais(listaDC actividadInsertP);
+    void InsertarPais();
     void InsertarCiudades ();
     void InsertarConexion();
     void EliminarPais();
@@ -642,14 +642,13 @@ void listaDC::ConsultarConexiones(){
 	} 
 }
 	
-void listaDC::InsertarPais(listaDC actividadInsertP){
+void listaDC::InsertarPais(){
 	int codPais;
 	string nomPais;
 	cout<<"Digite el codigo del pais a ingresar: "; cin>> codPais;cout<<endl;
 	cout<<"Digite el nombre del pais a ingresar: "; cin>> nomPais;cout<<endl;
 	if (ListaVacia()) {
 	            InsertarFinal(codPais, nomPais);
-	            actividadInsertP.InsertarInicio(codPais, nomPais);
 	            cout<<"Pais ingresado con exito"<<endl;
 	        }
 	        else {
@@ -667,7 +666,6 @@ void listaDC::InsertarPais(listaDC actividadInsertP){
 	            }
 	            if (flag) {
 	                InsertarFinal(codPais, nomPais);
-	                actividadInsertP.InsertarInicio(codPais, nomPais);
 	                
 	               	cout<<"Pais ingresado con exito"<<endl;
 	           	}else{
