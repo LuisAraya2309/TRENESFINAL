@@ -59,7 +59,7 @@ int main() {
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
 	//Campo de testing
-	paises.BorrarPais(tipoTren,rutas);
+	rutas.BorrarPais(tipoTren,paises);
 	/*
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 

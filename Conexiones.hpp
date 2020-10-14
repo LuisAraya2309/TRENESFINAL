@@ -24,7 +24,7 @@ public:
         siguiente = signodoDoble;
         anterior = sigantDoble;
     }
-private:
+public:
     int codConexion;
     int codPais;
     int codCiudad;
