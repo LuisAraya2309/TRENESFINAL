@@ -79,7 +79,8 @@ public:
     void ModificarPrecio();
     void ModificarRuta();
  	void BorrarPais(listaDT& listaTrenes, listaDC& paises);
-public: 
+ 	void BorrarRuta(listaDT& listaTrenes);
+public:
     pnodoCir primero; 
  
 }; 
@@ -780,6 +781,49 @@ void listaC::BorrarPais(listaDT& listaTrenes, listaDC& paises){
 		cout<<"Error con el codigo de pais"<<endl;
 	}
 }
+
+void listaC::BorrarRuta(listaDT& listaTrenes){
+	int rutaBorrar;
+	cout<<"Ingrese el codigo de ruta que desea borrar: ";cin>>rutaBorrar;cout<<endl;
+	pnodoCir recorrerRutas = primero;bool flag = false;
+	int cont = 1;
+	while(recorrerRutas->siguiente!=primero){
+		if(recorrerRutas->codRutas==rutaBorrar){
+			flag = true;
+			break;
+		}
+		else{
+			recorrerRutas=recorrerRutas->siguiente;
+			cont++;
+		}
+	}if(recorrerRutas->codRutas==rutaBorrar){
+		flag = true;
+	}
+	if(flag){
+		borrarPosicion(cont);
+		pnodoDobleT recorrerTipTren = listaTrenes.primero;
+		while(recorrerTipTren!=NULL){
+			pnodoSimpTrenes recorrerTrenes = recorrerTipTren->listaDeTrenes.primero;
+			int contador = 1;
+			while(recorrerTrenes!=NULL){
+				if(recorrerTrenes->rutasP==rutaBorrar){
+					recorrerTipTren->listaDeTrenes.borrarPosicion(contador);
+					recorrerTrenes = recorrerTrenes->siguiente;
+				}
+				else{
+					recorrerTrenes = recorrerTrenes->siguiente;
+				}
+			}
+			cout<<"Conniooooo"<<endl;
+			recorrerTipTren = recorrerTipTren->siguiente;
+		}
+		cout<<"Ruta borrada con exito"<<endl;
+	}
+	else{
+		cout<<"Error, el codigo de ruta ingresado no existe"<<endl;
+	}
+}
+
 
 
 
