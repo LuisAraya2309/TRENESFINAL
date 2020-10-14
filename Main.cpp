@@ -14,15 +14,15 @@
 #include<stdlib.h> 
 #include<string.h> 
 #include<fstream> 
-using namespace std; 
-//Definicion de clases 
+using namespace std;
+//Definicion de clases
  
  
  
  
  
  
-//Definicion de Funciones 
+//Definicion de Funciones
  
  
  
@@ -30,27 +30,35 @@ using namespace std;
 //Funcion main 
  
 int main() { 
-	//------------------------------------------------------------Creaci?n de listas------------------------------------------- 
+	//------------------------------------------------------------Creacion de listas------------------------------------------- 
 	listaDC paises; 
 	listaDT tipoTren;
     listaC rutas; 
     listaC2 admin; 
 	listaDCUsuario usuario; 
 	listaTrenes trenes; 
-	lista codigoRuta; 
-	listaDC actividadInsertP;
+	lista codigoRuta;
+	string ultimoPais;
+	string ultimaCiudad;
+	int ultimaConexion;
+	string ultimoTipoTren;
+	string ultimoTrenEliminado;
+	string ultimaRutaEliminada;
 	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------ 
      
 	//PRIMERA ESTRUCTURA PAIS-CIUDAD-CONEXION 
 	paises.llenarListaPais(); 
-    paises.llenarListaCiudad(); 
-    paises.llenarListaConexiones(); 
+    paises.llenarListaCiudad();
+    paises.llenarListaConexiones();
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS 
     tipoTren.llenarListaTipotrenes(); 
     tipoTren.llenarListaTrenes();
+    tipoTren.InsertarTipoTren(ultimoTipoTren);
+    cout<<"LOCAAAAAAAAAAAAAAAAA"<<ultimoTipoTren<<endl;
+    //tipoTren.llenarListaCodRutas(rutas);
     //TERCERA USUARIO ADMINISTRADOR RUTAS 
-	usuario.llenarListaUsuario(paises); 
-	admin.llenarListaAdmin(); 
+	usuario.llenarListaUsuario(paises);
+	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 

@@ -1,7 +1,8 @@
-#include <iostream> 
+#include <iostream>
 using namespace std; 
 #pragma once 
 //TDA Tipo abstractos de Datos, no pertenece al lenguaje, sin embargo, cuando el programador lo define se puede empezar a utilizar 
+
 class nodoSimpTrenes { //clase NODO 
  
 public: 
@@ -12,7 +13,7 @@ public:
         numAsientos= cnumAsientos; 
         rutasP= crutasP; 
         siguiente = NULL; 
-        listaRutas= lista(); 
+        //listaRutas= lista(); 
     } 
  
     nodoSimpTrenes(int cTren, string cnomTren,int cnumAsientos, int crutasP, nodoSimpTrenes* signodo) // 2 dirprimero direccion de memoria 
@@ -29,12 +30,14 @@ public: // atributos
     string nombre; 
     int numAsientos; 
     int rutasP; 
-    lista listaRutas; 
+    //lista listaRutas; 
 	nodoSimpTrenes* siguiente; // tipo de la clase, clase autoreferencia. Direccion  
  
     friend class listaTrenes; // telefono, son amigas lista con la clase. Solo los metodos, constructores 
     friend class listaDT; 
     friend class nodoDobleT; 
+    friend class lista;
+    friend class nodoSimp;
  
 }; 
 typedef nodoSimpTrenes* pnodoSimpTrenes; //alias redefinir los punteros 
@@ -60,7 +63,11 @@ public:
     int largoLista(); 
  
 public: 
-    pnodoSimpTrenes primero; // nodo *primero; tipo nodo tiene derechoi direccionar un nodo 
+    pnodoSimpTrenes primero; // nodo *primero; tipo nodo tiene derechoi direccionar un nodo  
+    friend class listaDT; 
+    friend class nodoDobleT; 
+    friend class lista;
+    friend class nodoSimp;
  
 }; 
  

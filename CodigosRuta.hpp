@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include<string>
+#include "Trenes.hpp"
 using namespace std;
 //TDA Tipo abstractos de Datos, no pertenece al lenguaje, sin embargo, cuando el programador lo define se puede empezar a utilizar
 
@@ -30,7 +31,6 @@ public: // atributos
     friend class lista; // telefono, son amigas lista con la clase. Solo los metodos, constructores
     friend class listaDT;
     friend class nodoDobleT;
-    
 
 };
 typedef nodoSimp* pnodoSimp; //alias redefinir los punteros
@@ -240,5 +240,6 @@ void lista::Mostrar()
         cout << endl;
     }
 }
+
 
 

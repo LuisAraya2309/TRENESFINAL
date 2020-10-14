@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include<string>
+#include<sstream>
 #include "Conexiones.hpp"
 #pragma once
 using namespace std;
@@ -60,9 +61,9 @@ public:
     void ConsultarPaises();
     void ConsultarCiudades();
     void ConsultarConexiones();
-    void InsertarPais();
-    void InsertarCiudades ();
-    void InsertarConexion();
+    void InsertarPais(string& ultimoPais);
+    void InsertarCiudades (string& ultimaCiudad);
+    void InsertarConexion(int& ultimaConexion);
     void EliminarPais();
     void EliminarCiudad();
     void ModificarTiempo();
@@ -643,13 +644,17 @@ void listaDC::ConsultarConexiones(){
 	} 
 }
 	
-void listaDC::InsertarPais(){
+void listaDC::InsertarPais(string& ultimoPais){
 	int codPais;
 	string nomPais;
 	cout<<"Digite el codigo del pais a ingresar: "; cin>> codPais;cout<<endl;
 	cout<<"Digite el nombre del pais a ingresar: "; cin>> nomPais;cout<<endl;
 	if (ListaVacia()) {
 	            InsertarFinal(codPais, nomPais);
+	            stringstream ss;
+	            ss<<codPais;
+	            string codPaisS = ss.str();
+	            ultimoPais = ("Ultimo pais insertado: " + nomPais + "\n" + "Codigo: " + codPaisS);
 	            cout<<"Pais ingresado con exito"<<endl;
 	        }
 	        else {
@@ -667,6 +672,10 @@ void listaDC::InsertarPais(){
 	            }
 	            if (flag) {
 	                InsertarFinal(codPais, nomPais);
+	                stringstream ss;
+	            	ss<<codPais;
+	            	string codPaisS = ss.str();
+	            	ultimoPais = ("Ultimo pais insertado: " + nomPais + "\n" + "Codigo: " + codPaisS);
 	                
 	               	cout<<"Pais ingresado con exito"<<endl;
 	           	}else{
@@ -675,7 +684,7 @@ void listaDC::InsertarPais(){
 			}
 		}
 		    
-void listaDC::InsertarCiudades(){
+void listaDC::InsertarCiudades(string& ultimaCiudad){
 	int codPais;
 	int codCiudad;
 	string nomCiudad;
@@ -711,7 +720,11 @@ void listaDC::InsertarCiudades(){
                 auxiliar->ciudad = nuevo;
                 nuevo->anterior=auxiliar;
                 nuevo->ciudad=auxiliar;
-                cout<<"Ciudad ingresada con excito"<<endl;
+                cout<<"Ciudad ingresada con exito"<<endl;
+                stringstream ss;
+	            ss<<codCiudad;
+	            string codCiudadS = ss.str();
+                ultimaCiudad = ("Ultimo ciudad insertada: " + nomCiudad + "\n" + "Codigo: " + codCiudadS);
             }
             else {
             	bool bandera= false;
@@ -729,6 +742,10 @@ void listaDC::InsertarCiudades(){
 					nuevo->anterior=recorrer;
 					nuevo->ciudad=auxiliar;
 					cout<<"Ciudad ingresada con excito"<<endl;
+					stringstream ss;
+		            ss<<codCiudad;
+		            string codCiudadS = ss.str();
+	                ultimaCiudad = ("Ultimo ciudad insertada: " + nomCiudad + "\n" + "Codigo: " + codCiudadS);
 				}else{
 					cout<<"El codigo de la ciudad ya existe"<<endl;
 				}
@@ -738,7 +755,7 @@ void listaDC::InsertarCiudades(){
 	}
 }
 
-void listaDC::InsertarConexion(){
+void listaDC::InsertarConexion(int& ultimaConexion){
 			int codPais;
 			int codCiudad;
 			int codConexion;
@@ -826,7 +843,8 @@ void listaDC::InsertarConexion(){
 													}
 													if(!conexionRepetida){
 														buscarCiudad->listaConexiones.InsertarFinalD(codConexion,codPais2,codCiudad2,codTiempo);
-														cout<<"Conexion insertada con excito."<<endl;
+														ultimaConexion = (codConexion);
+														cout<<"Conexion insertada con exito."<<endl;
 														//return true;
 													}
 													else{

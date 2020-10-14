@@ -1,8 +1,8 @@
  
 #include <iostream> 
-#include "Trenes.hpp" 
+#include "Trenes.hpp"
 #pragma once 
-using namespace std; 
+using namespace std;
 class nodoDobleT { 
 public: 
     nodoDobleT(int codigoc, string cnombre) 
@@ -35,7 +35,9 @@ public:
      
     friend class listaDT; 
     friend class listaTrenes; 
-    friend class nodoSimpTrenes; 
+    friend class nodoSimpTrenes;
+	friend class listaC; 
+	friend class nodoCir;
 }; 
  
 typedef nodoDobleT* pnodoDobleT; 
@@ -52,16 +54,17 @@ public:
     int largoLista(); 
     void llenarListaTipotrenes(); 
     void llenarListaTrenes(); 
-    void llenarListaCodRutas(); 
-    void InsertarTipoTren(); 
+    //void llenarListaCodRutas(listaC& listaCodRutas); 
+    void InsertarTipoTren(string& ultimoTren); 
     void MostrarUnTipoDeTren(); 
     void ConsultarAsientos(); 
     void ModificarNumAsientos(); 
     void RegistrarTren(); 
-    void ModificarTren(); 
+    void ModificarTren();  
     bool Verificar(int codTipTren, int codTren);
     void EliminarTren();
     pnodoDobleT primero; 
+   
  
 }; 
  
@@ -264,31 +267,8 @@ void listaDT::llenarListaTrenes(){
 	} 
 	//llave del while del archivo 
 	archivoT.close(); 
-} 
-void listaDT::llenarListaCodRutas(){ 
-	ifstream archivoR; 
-    string texto; 
-    archivoR.open("Rutas.txt", ios::in); 
-    if (archivoR.fail()) { 
-        cout << "No se pudo abrir el archivo"; 
-        exit(1); 
-    } 
-    while (!archivoR.eof()) { 
-        getline(archivoR, texto); 
-         
-        int posPC = texto.find(";"); 
-        string Todo = texto.substr(posPC + 1, texto.length()); 
-        int posPC2 = Todo.find(";"); 
-        string Todo2 = Todo.substr(posPC2 + 1, Todo.length()); 
-        int posPC3 = Todo2.find(";"); 
-        int codRuta = atoi((Todo2.substr(0, posPC3).c_str())); 
-        cout << "Codigo Ruta: " << codRuta << endl; 
-         
-         
-	} 
-	archivoR.close(); 
-} 
-void listaDT::InsertarTipoTren(){ 
+}  
+void listaDT::InsertarTipoTren(string& ultimoTren){ 
 	int codNuevo;string nombreNuevo; 
 	cout<<"Ingrese el codigo del nuevo tipo de tren: "<<endl; 
 	cin>>codNuevo; 
@@ -306,6 +286,10 @@ void listaDT::InsertarTipoTren(){
 	} 
 	if(!codRepetido){ 
 		InsertarFinalDT(codNuevo,nombreNuevo); 
+		stringstream ss;
+	    ss<<codNuevo;
+	    string codNuevoS = ss.str();
+        ultimoTren = ("Ultimo tipo de tren ingresado : " + nombreNuevo + "\n" + "Codigo: " + codNuevoS);
 		cout<<"Nuevo tipo de tren agregado con exito."<<endl; 
 	} 
 	else{ 
@@ -547,7 +531,61 @@ bool listaDT::Verificar(int codTipTren, int codTren){
 		}
     }
 }
+/*
+void listaDT::llenarListaCodRutas(listaC& listaCodRutas){
+	pnodoCir buscarRuta = listaCodRutas.primero;
+	while(buscarRuta->siguiente!=listaCodRutas.primero){
+		codTipTrenX = buscarRuta->codTipTren;
+		codTrenX = buscarRuta->codTren;
+		codRutaX = buscarRuta->codRutas;
+		
+		pnodoDobleT posTipTren = primero;
+		while(posTipTren=NULL){
+			if(postTipTren->codTren==CodTipTrenX){
+				break;
+			}
+			else{
+				continue;
+			}
+		}
+		pnodoSimpTrenes buscarTren = posTipTren->listaDeTrenes;
+		while(buscarTren!=NULL){
+			if(buscarTren->codTren==codTrenX){
+				break;
+			}
+			else{
+				continue;
+			}
+		}
+		buscarTren->listaRutas.InsertarFinal(codRutaX);
+		
+	}
+	codTipTrenX = buscarRuta->codTipTren;
+	codTrenX = buscarRuta->codTren;
+	codRutaX = buscarRuta->codRutas;
+	
+	pnodoDobleT posTipTren = primero;
+	while(posTipTren=NULL){
+		if(postTipTren->codTren==CodTipTrenX){
+			break;
+		}
+		else{
+			continue;
+		}
+		}
+		pnodoSimpTrenes buscarTren = posTipTren->listaDeTrenes;
+		while(buscarTren!=NULL){
+			if(buscarTren->codTren==codTrenX){
+				break;
+			}
+			else{
+				continue;
+			}
+		}
+		buscarTren->listaRutas.InsertarFinal(codRutaX);
+} 
 
 void listaDT::EliminarTren(){
 	int codTipTren;
 }
+*/
