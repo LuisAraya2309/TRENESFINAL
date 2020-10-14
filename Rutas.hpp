@@ -2,11 +2,10 @@
 #include <iostream> 
 #include <stdlib.h> 
 #include<string> 
-#include "Pais-Ciudad.hpp" 
 #include "Tipo-Tren.hpp" 
 #include "Conexiones.hpp" 
 #include "Trenes.hpp" 
-# pragma once 
+#pragma once 
 using namespace std; 
  
 class nodoCir { 

@@ -1,6 +1,6 @@
 //Clase Main 
  
-//Incluimos todos los headers 
+//Incluimos todos los headers
  
 #include <iostream> 
 #include "CodigosRuta.hpp" 
@@ -58,7 +58,9 @@ int main() {
 	usuario.llenarListaUsuario(paises);
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
-	
+	//Campo de testing
+	paises.BorrarPais(tipoTren,rutas);
+	/*
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais; 
@@ -412,6 +414,7 @@ int main() {
                 break;           
     	} 		 
 	}while (opcion != 3);
+	*/
     	return 0; 
 } 
 

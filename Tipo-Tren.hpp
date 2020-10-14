@@ -1,4 +1,4 @@
- 
+#include<sstream>
 #include <iostream> 
 #include "Trenes.hpp"
 #pragma once 
