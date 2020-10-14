@@ -270,10 +270,12 @@ void listaDT::llenarListaTrenes(){
 }  
 void listaDT::InsertarTipoTren(string& ultimoTren){ 
 	int codNuevo;string nombreNuevo; 
-	cout<<"Ingrese el codigo del nuevo tipo de tren: "<<endl; 
+	cout<<"Ingrese el codigo del nuevo tipo de tren: "; 
 	cin>>codNuevo; 
-	cout<<"Ingrese el nombre del nuevo tipo de tren: "<<endl; 
+	cout<<endl;
+	cout<<"Ingrese el nombre del nuevo tipo de tren: "; 
 	cin>>nombreNuevo; 
+	cout<<endl;
 	pnodoDobleT verificar = primero;bool codRepetido = false; 
 	while(verificar!=NULL){ 
 		if(verificar->codTren==codNuevo){ 
@@ -299,8 +301,8 @@ void listaDT::InsertarTipoTren(string& ultimoTren){
 } 
 void listaDT::MostrarUnTipoDeTren(){ 
 	int codTipTren; 
-	cout<<"Ingrese el codigo del tipo de tren para mostrar todos los trenes de ese tipo."<<endl; 
-	cin>>codTipTren; 
+	cout<<"Ingrese el codigo del tipo de tren para mostrar todos los trenes de ese tipo: "; 
+	cin>>codTipTren;cout<<endl;
 	pnodoDobleT mostrar = primero;bool existeTipTren = false; 
 	while(mostrar!=NULL){ 
 		if(mostrar->codTren==codTipTren){ 

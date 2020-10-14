@@ -45,21 +45,20 @@ int main() {
 	string ultimoTrenEliminado;
 	string ultimaRutaEliminada;
 	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------ 
-     
 	//PRIMERA ESTRUCTURA PAIS-CIUDAD-CONEXION 
 	paises.llenarListaPais(); 
     paises.llenarListaCiudad();
     paises.llenarListaConexiones();
+    
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS 
     tipoTren.llenarListaTipotrenes(); 
     tipoTren.llenarListaTrenes();
-    tipoTren.InsertarTipoTren(ultimoTipoTren);
-    cout<<"LOCAAAAAAAAAAAAAAAAA"<<ultimoTipoTren<<endl;
-    //tipoTren.llenarListaCodRutas(rutas);
+    
     //TERCERA USUARIO ADMINISTRADOR RUTAS 
 	usuario.llenarListaUsuario(paises);
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
+	
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais; 
@@ -70,7 +69,8 @@ int main() {
 	int codPais2; 
 	int codCiudad2; 
 	int codTiempo; 
-/* 
+	int codUsuario;
+	bool bandera = false;
 	//---------------------------------------------------------Menu Principal------------------------------------------------- 
     do { 
         system("cls");      // Para limpiar la pantalla 
@@ -141,37 +141,46 @@ int main() {
 									        switch (opcion) { 
 									        	 
 									            case 1: 
-									            	 
-									            	paises.InsertarPais(); 
+									            	paises.InsertarPais(ultimoPais); 
 													system("pause>nul"); 
-													break; 
-													 
+													break;  
 									            case 2: 
-									            	 
-									            	paises.InsertarCiudades(); 
+									            	paises.InsertarCiudades(ultimaCiudad); 
 									            	system("pause>nul"); 
-									                break; 
-									                 
+									                break;    
 												case 3: 
-													 
-									                 
-									            	paises.InsertarConexion(); 
-									                 
+									            	paises.InsertarConexion(ultimaConexion); 
 									                system("pause>nul"); // Pausa 
-									                break;  
-													                    
+									                break;                 
 									    	 	case 4: 
-									    	 		tipoTren.InsertarTipoTren(); 
+									    	 		tipoTren.InsertarTipoTren(ultimoTipoTren); 
 									                system("pause>nul"); // Pausa 
-									                break; 
-									                 
+									                break;    
 									            case 5: 
-  
+  													rutas.InsertarRuta(paises,tipoTren);
 									                system("pause>nul"); // Pausa 
 									                break;  
-												 
 												case 6: 
-													paises.MostrarActP(); 
+													if(ultimoPais==""){
+														cout<<"No se ha insertado ningun pais"<<endl;
+													}else{
+														cout<<ultimoPais<<endl;
+													}
+													if(ultimaCiudad==""){
+														cout<<"No se ha insertado ninguna ciudad"<<endl;
+													}else{
+														cout<<ultimaCiudad<<endl;
+													}
+													if(ultimaConexion==0){
+														cout<<"No se ha insertado ninguna conexion"<<endl;
+													}else{
+														cout<<"La ultima conexion insertada es: "<<ultimaConexion<<endl;
+													}
+													if(ultimoTipoTren==""){
+														cout<<"No se ha insertado ningun tipo de tren"<<endl;
+													}else{
+														cout<<ultimoTipoTren<<endl;
+													}
 									                system("pause>nul"); // Pausa 
 									                break;         
 											} 
@@ -223,9 +232,18 @@ int main() {
   
 									                system("pause>nul"); // Pausa 
 									                break; 
-									                 
+									       
 												case 6: 
-  
+												if(ultimoTrenEliminado==""){
+														cout<<"No se ha eliminado ningun tren"<<endl;
+													}else{
+														cout<<ultimoTrenEliminado<<endl;
+													}
+													if(ultimaRutaEliminada==""){
+														cout<<"No se ha eliminado ninguna ruta"<<endl;
+													}else{
+														cout<<ultimaRutaEliminada<<endl;
+													}
 									                system("pause>nul"); // Pausa 
 									                break;          
 											} 
@@ -252,7 +270,7 @@ int main() {
 									         
 									        switch (opcion3) { 
 									            case 1: 
-									            	 
+									            	 rutas.ModificarPrecio();
 									                system("pause>nul"); // Pausa 
 									                break;									                 
 									            case 2: 
@@ -270,7 +288,7 @@ int main() {
 									                system("pause>nul"); // Pausa 
 									                break; 
 									            case 5: 
-  
+  													rutas.ModificarRuta();
 									                system("pause>nul"); // Pausa 
 									                break;       
 												case 6: 
@@ -283,7 +301,6 @@ int main() {
 									    break;                     
 					    	 	case 4: 
 					                paises.ConsultarPaises();            
-					                 
 					                system("pause>nul"); // Pausa 
 					                break; 
 								case 5: 
@@ -293,12 +310,11 @@ int main() {
 					                break; 
 								case 6: 
 					                paises.ConsultarCiudades();               
-					                 
 					                system("pause>nul"); // Pausa 
 					                break; 
 								case 7: 
 					                // Lista de instrucciones de la opci?n 2                 
-					                
+					                rutas.ConsultarRuta();
 					                system("pause>nul"); // Pausa 
 					                break; 
 								case 8: 
@@ -331,6 +347,12 @@ int main() {
                 system("pause>nul"); 
                 break;	 
             case 2: 
+            	cout<<"Ingrese la identificación de usuario"; cin>>codUsuario; cout<<endl;
+            	if(usuario.VerificarUsuario(codUsuario)){
+            		bandera=true;
+				}else{
+					
+				}
                 int opcion; 
 						do { 
 					        system("cls");      // Para limpiar la pantalla 
@@ -362,22 +384,20 @@ int main() {
 					                break; 
 								case 3: 
 					                // Lista de instrucciones de la opci?n 2                 
-					                 
+					                 paises.ConsultarConexiones();
 					                system("pause>nul"); // Pausa 
 					                break;                     
 					    	 	case 4: 
-					                paises.ConsultarPaises();           
-					                 
+					                rutas.ConsultarRuta();        
 					                system("pause>nul"); // Pausa 
 					                break; 
 								case 5: 
 					                // Lista de instrucciones de la opci?n 2                 
-					                 
+					                tipoTren.MostrarUnTipoDeTren();
 					                system("pause>nul"); // Pausa 
 					                break; 
 								case 6: 
-					                paises.ConsultarCiudades();               
-					                 
+					                rutas.ConsultarPrecio(tipoTren);             
 					                system("pause>nul"); // Pausa 
 					                break; 
 								case 7: 
@@ -391,7 +411,7 @@ int main() {
                 system("pause>nul"); // Pausa 
                 break;           
     	} 		 
-	}while (opcion != 3);*/ 
+	}while (opcion != 3);
     	return 0; 
 } 
 

@@ -56,6 +56,7 @@ public:
     void llenarListaUsuario(listaDC paises);
     bool VerificarUsuario(int codUsuario);
     void ModificarEstadoMigratorio();
+    
 
 private:
     pnodoUsuario primero;
