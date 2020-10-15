@@ -5,6 +5,7 @@
 #include<sstream>
 #include "Conexiones.hpp"
 #include "Tipo-Tren.hpp"
+#include "Ciudad.hpp"
 #pragma once
 using namespace std;
 
@@ -17,6 +18,7 @@ public:
         siguiente = NULL;
         anterior = NULL;
         ciudad = NULL;
+        listaCiudades= listaDCCiudad();
         listaConexiones = listaD();
         primeraConexion = listaConexiones.primero;
     }
@@ -36,10 +38,14 @@ public:
     nodo* siguiente;
     nodo* anterior;
     listaD listaConexiones;
+    listaDCCiudad listaCiudades;
     nodoDoble *primeraConexion;
+    
     friend class listaDC;
     friend class nodoDoble;
     friend class listaD;
+    friend class nodoCiudad;
+    friend class listaDCCiudad;
 };
 typedef nodo* pnodo;
 
@@ -370,32 +376,31 @@ void listaDC::llenarListaCiudad() {
                     auxiliar = auxiliar->siguiente;
                 }
             }
-            if ((auxiliar->ciudad==NULL)) {
-                pnodo nuevo = new nodo(codCiudad,nomCiudad);
-                auxiliar->ciudad = nuevo;
-                nuevo->anterior=auxiliar;
-                nuevo->ciudad=auxiliar;
+            if ((auxiliar->listaCiudades.ListaVacia())) {
+            	auxiliar->listaCiudades.InsertarFinal(codCiudad, nomCiudad);
             }
             else {
             	bool bandera= false;
-            	pnodo nuevo = new nodo(codCiudad,nomCiudad); 
-            	pnodo recorrer = auxiliar->ciudad;
-            	while(recorrer->ciudad!=auxiliar){
-            		if(recorrer->valor==codCiudad){
+            	pnodoCiudad recorrer = auxiliar->listaCiudades.primero;
+            	while(recorrer->siguiente!=auxiliar->listaCiudades.primero){
+            		if(recorrer->codCiudad==codCiudad){
             			bandera=true;
             			break;
 					}else{
-						recorrer=recorrer->ciudad;
+						recorrer=recorrer->siguiente;
 					}
-				}if(!bandera){
-					recorrer->ciudad=nuevo;
-					nuevo->anterior=recorrer;
-					nuevo->ciudad=auxiliar;
+				}if(recorrer->codCiudad==codCiudad){
+            			bandera=true;
+            	}
+				if(!bandera){
+					auxiliar->listaCiudades.InsertarFinal(codCiudad, nomCiudad);
 				}
 			}
-        }	
+        }else{
+		}	
     }
 }
+
 void listaDC::llenarListaConexiones() {
     ifstream archivo;
     string texto;
@@ -426,16 +431,16 @@ void listaDC::llenarListaConexiones() {
 			            int posPC2 = ConexionTotal.find(";");
 			            int codCiudad = atoi((ConexionTotal.substr(0, posPC2).c_str()));
 			
-			            pnodo ciudades = puntero->ciudad; bool flag2=false; 
-			            while (ciudades!= puntero) {
-			                if (ciudades->valor == codCiudad) {
+			            pnodoCiudad ciudades = puntero->listaCiudades.primero; bool flag2=false; 
+			            while (ciudades->siguiente!= puntero->listaCiudades.primero) {
+			                if (ciudades->codCiudad == codCiudad) {
 			                    flag2 = true;
 			                    break;
 			                }
 			                else {
 			                    ciudades = ciudades->siguiente;
 			                }
-			            }if(ciudades->valor==codCiudad){
+			            }if(ciudades->codCiudad==codCiudad){
 			            	flag2=true;
 			            	if (flag2) {
 				                string Conexion = ConexionTotal.substr(posPC2 + 1, ConexionTotal.length());
@@ -453,12 +458,12 @@ void listaDC::llenarListaConexiones() {
 				                string Tiempo = ConexionCiudad.substr(posPC5 + 1, ConexionCiudad.length());
 				                int posPC6 = Tiempo.find(";");
 				                int codTiempo = atoi((Tiempo.substr(0, posPC6).c_str()));
-				                
+				                /*
 				                cout << "Codigo conexion: "<<codConexionAux << endl;
 				                cout << "Codigo de Pais: "<<codPais << endl;
 				                cout << "Codigo Ciudad: "<<codCiudad << endl;
 				                cout << "Tiempo: "<<codTiempo << endl;
-				                
+				                */
 				                //Vamos a verificar de que exista el pais
 				                pnodo buscarPais = primero->siguiente;bool existePais = false;
 				                while(buscarPais!=primero){
@@ -472,24 +477,24 @@ void listaDC::llenarListaConexiones() {
 								}if(buscarPais->valor==codPais){
 									existePais=true;
 									if(existePais){
-										pnodo buscarCiudad = buscarPais->ciudad; bool existeCiudad = false;
-										while(buscarCiudad!=buscarPais){
-											if(buscarCiudad->valor==codCiudad){
+										pnodoCiudad buscarCiudad = buscarPais->listaCiudades.primero; bool existeCiudad = false;
+										while(buscarCiudad->siguiente!=buscarPais->listaCiudades.primero){
+											if(buscarCiudad->codCiudad==codCiudad){
 												existeCiudad = true;
 												break;
 											}
 											else{
-												buscarCiudad=buscarCiudad->ciudad;
+												buscarCiudad=buscarCiudad->siguiente;
 											}
-										}if(buscarCiudad->valor==codCiudad){
+										}if(buscarCiudad->codCiudad==codCiudad){
 											existeCiudad=true;
 											if(existeCiudad){
 												//Ahora vamos a ver que no se repita la conexionS
 												bool conexionRepetida = false;
 												pnodo paisesG = primero->siguiente;
 												while(paisesG!=primero){
-													pnodo ciudadesG = paisesG->ciudad;
-													while(ciudadesG!=paisesG){
+													pnodoCiudad ciudadesG = paisesG->listaCiudades.primero;
+													while(ciudadesG->siguiente!=paisesG->listaCiudades.primero){
 														pnodoDoble conexionG = ciudadesG->listaConexiones.primero;
 														while(conexionG!=NULL){
 															if(conexionG->codConexion==codConexionAux){
@@ -500,22 +505,17 @@ void listaDC::llenarListaConexiones() {
 																conexionG = conexionG->siguiente;
 															}
 														}
-														ciudadesG = ciudadesG->ciudad;
+														ciudadesG = ciudadesG->siguiente;
 													}
 													paisesG=paisesG->siguiente;
 												}
 												if(!conexionRepetida){
+													cout<<"Entre"<<endl;
 													ciudades->listaConexiones.InsertarFinalD(codConexionAux,codPais,codCiudad,codTiempo);
-													cout<<"Lista Conexiones: "<<endl;
-													ciudades->listaConexiones.Mostrar();
-													cout<<endl;
 													continue;
 												}
 												else{
 													// por si la conexion estaba repetida
-													cout<<"Lista Conexiones: "<<endl;
-													ciudades->listaConexiones.Mostrar();
-													cout<<endl;
 													continue;
 												}
 											}else{
@@ -542,11 +542,10 @@ void listaDC::llenarListaConexiones() {
 						}
 			            
 			    	}else{
-			    		//Paso el pais
+			    		//cout<<"Paso el pais"
 					}
 		}else{
 			//Verificar ultimo
-			cout<<"Pase el pais"<<endl;
 		}
 	}
 }
@@ -584,12 +583,12 @@ void listaDC::ConsultarCiudades() {
 	}
     //cout <<"Pais: "<<puntero->pais<< endl;
     if (flag) {
-        pnodo ciudades = puntero->ciudad; bool flag2 = false;
-        while (ciudades->ciudad != puntero) {
-            cout << ciudades->pais << "  Codigo: " << ciudades->valor << endl;
-            ciudades = ciudades->ciudad;
+        pnodoCiudad ciudades = puntero->listaCiudades.primero; bool flag2 = false;
+        while (ciudades->siguiente != puntero->listaCiudades.primero) {
+            cout << ciudades->ciudad << "  Codigo: " << ciudades->codCiudad << endl;
+            ciudades = ciudades->siguiente;
         }
-        cout << ciudades->pais << "  Codigo: " << ciudades->valor << endl;
+        cout << ciudades->ciudad << "  Codigo: " << ciudades->codCiudad << endl;
         cout << endl;
     }
     else {
@@ -619,15 +618,15 @@ void listaDC::ConsultarConexiones(){
     if(puntero->valor==codPais){
     	flag=true;
     	if (flag) {
-	        pnodo ciudades = puntero->ciudad; bool flag2 = false;
-	        while (ciudades->ciudad != puntero) {
-	        	if(ciudades->valor==codCiudad){
+	        pnodoCiudad ciudades = puntero->listaCiudades.primero; bool flag2 = false;
+	        while (ciudades->siguiente != puntero->listaCiudades.primero) {
+	        	if(ciudades->codCiudad ==codCiudad){
 	        		flag2=true;
 	        		break;
 				}else{
-					ciudades = ciudades->ciudad;
+					ciudades = ciudades->siguiente;
 				}   
-	        }if(ciudades->valor==codCiudad){
+	        }if(ciudades->codCiudad==codCiudad){
 	        	flag2=true;
 	        	if(flag){
 	        		pnodoDoble conexionG = ciudades->listaConexiones.primero;

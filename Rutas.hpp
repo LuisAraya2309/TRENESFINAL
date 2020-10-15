@@ -357,30 +357,30 @@ void listaC::llenarListaRutas(listaDC& paises,listaDT& listaTrenes) {
 			} 
 			if(existePais2){ 
 				//cout<<"Pase pais2"<<endl; 
-				pnodo buscarCiudad = buscarPais->ciudad;bool existeCiudad = false; 
-				while(buscarCiudad!=buscarPais){ 
-					if(buscarCiudad->valor==codCiudad){ 
+				pnodoCiudad buscarCiudad = buscarPais->listaCiudades.primero;bool existeCiudad = false; 
+				while(buscarCiudad->siguiente!=buscarPais->listaCiudades.primero){ 
+					if(buscarCiudad->codCiudad==codCiudad){ 
 						existeCiudad = true; 
 						break; 
 					} 
 					else{ 
-						buscarCiudad=buscarCiudad->ciudad; 
+						buscarCiudad=buscarCiudad->siguiente; 
 					} 
-				}if(buscarCiudad->valor==codCiudad){ 
+				}if(buscarCiudad->codCiudad==codCiudad){ 
 					existeCiudad=true; 
 				} 
 				if(existeCiudad){ 
 					//cout<<"Pase ciudad1"<<endl; 
-					pnodo buscarCiudad2 = buscarPais2->ciudad;bool existeCiudad2 = false; 
-					while(buscarCiudad2!=buscarPais2){ 
-						if(buscarCiudad2->valor==codCiudad2){ 
+					pnodoCiudad buscarCiudad2 = buscarPais2->listaCiudades.primero;bool existeCiudad2 = false; 
+					while(buscarCiudad2->siguiente!=buscarPais2->listaCiudades.primero){ 
+						if(buscarCiudad2->codCiudad==codCiudad2){ 
 							existeCiudad2 = true; 
 							break; 
 						} 
 						else{ 
-							buscarCiudad2=buscarCiudad2->ciudad; 
+							buscarCiudad2=buscarCiudad2->siguiente; 
 						}	 
-					}if(buscarCiudad2->valor==codCiudad2){ 
+					}if(buscarCiudad2->codCiudad==codCiudad2){ 
 						existeCiudad2=true; 
 					} 
 					bool existeCodTren = false;
@@ -605,7 +605,7 @@ void listaC::InsertarRuta(listaDC& paises, listaDT& tipoTrenes){
 	
         pnodo buscarPais = paises.primero; bool existePais = false; 
         while(buscarPais->siguiente!=paises.primero){ 
-        	cout<<buscarPais->valor<<"=="<<codPais<<endl; 
+        	//cout<<buscarPais->valor<<"=="<<codPais<<endl; 
         	if(buscarPais->valor==codPais){ 
         		existePais = true; 
         		break; 
@@ -617,7 +617,7 @@ void listaC::InsertarRuta(listaDC& paises, listaDT& tipoTrenes){
 			existePais=true; 
 		} 
 		if(existePais){ 
-			cout<<"Pase pais1"<<endl; 
+			//cout<<"Pase pais1"<<endl; 
 			pnodo buscarPais2 = paises.primero; bool existePais2 = false; 
         	while(buscarPais2->siguiente!=paises.primero){	 
         		if(buscarPais2->valor==codPais2){ 
@@ -631,31 +631,31 @@ void listaC::InsertarRuta(listaDC& paises, listaDT& tipoTrenes){
 				existePais2=true; 
 			} 
 			if(existePais2){ 
-				cout<<"Pase pais2"<<endl; 
-				pnodo buscarCiudad = buscarPais->ciudad;bool existeCiudad = false; 
-				while(buscarCiudad!=buscarPais){ 
-					if(buscarCiudad->valor==codCiudad){ 
+				//cout<<"Pase pais2"<<endl; 
+				pnodoCiudad buscarCiudad = buscarPais->listaCiudades.primero;bool existeCiudad = false; 
+				while(buscarCiudad->siguiente!=buscarPais->listaCiudades.primero){ 
+					if(buscarCiudad->codCiudad==codCiudad){ 
 						existeCiudad = true; 
 						break; 
 					} 
 					else{ 
-						buscarCiudad=buscarCiudad->ciudad; 
+						buscarCiudad=buscarCiudad->siguiente; 
 					} 
-				}if(buscarCiudad->valor==codCiudad){ 
+				}if(buscarCiudad->codCiudad==codCiudad){ 
 					existeCiudad=true; 
 				} 
 				if(existeCiudad){ 
-					cout<<"Pase ciudad1"<<endl; 
-					pnodo buscarCiudad2 = buscarPais2->ciudad;bool existeCiudad2 = false; 
-					while(buscarCiudad2!=buscarPais2){ 
-						if(buscarCiudad2->valor==codCiudad2){ 
+					//cout<<"Pase ciudad1"<<endl; 
+					pnodoCiudad buscarCiudad2 = buscarPais2->listaCiudades.primero;bool existeCiudad2 = false; 
+					while(buscarCiudad2->siguiente!=buscarPais2->listaCiudades.primero){ 
+						if(buscarCiudad2->codCiudad==codCiudad2){ 
 							existeCiudad2 = true; 
 							break; 
 						} 
 						else{ 
-							buscarCiudad2=buscarCiudad2->ciudad; 
+							buscarCiudad2=buscarCiudad2->siguiente; 
 						}	 
-					}if(buscarCiudad2->valor==codCiudad2){ 
+					}if(buscarCiudad2->codCiudad==codCiudad2){ 
 						existeCiudad2=true; 
 					} 
 					bool existeCodTren = false;
@@ -664,12 +664,12 @@ void listaC::InsertarRuta(listaDC& paises, listaDT& tipoTrenes){
 							existeCodTren=true;
 						}
 						if(existeCodTren){ 
-								cout<<"Entre hasta el final"<<endl; 
+								//cout<<"Entre hasta el final"<<endl; 
 								if(ListaVacia()){ 
-									cout<<"if"<<endl; 
+									//cout<<"if"<<endl; 
 									InsertarInicio(codTipTren, codTren, codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio); 
 								}else{ 
-									cout<<"else"<<endl; 
+									//cout<<"else"<<endl; 
 									pnodoCir buscarRepetidos = primero; bool repetido= false; 
 									while(buscarRepetidos->siguiente!=primero){ 
 										if(buscarRepetidos->codRutas==codRuta){ 
@@ -681,36 +681,36 @@ void listaC::InsertarRuta(listaDC& paises, listaDT& tipoTrenes){
 									}if(!repetido){ 
 										InsertarFinal(codTipTren, codTren, codRuta,codPais,codCiudad,codPais2,codCiudad2,codPrecio);	 
 									}else{ 
-										cout<<"ESTOY repetido"<<endl; 
+										//cout<<"ESTOY repetido"<<endl; 
 										// por si esta repetido 
-									
 									} 
 								} 
-							} 
+							}  
 						 
 					} 
 					else{ 
-						cout<<"NO Pase ciudad2"<<endl; 
+						cout<<"El codigo de ciudad destino no existe"<<endl; 
 						// por si no existe la ciudad 2 
-		 
+						
 					}		 
 				} 
 				else{ 
-					cout<<"NO Pase ciudad1"<<endl; 
+					cout<<"El codigo de ciudad origen no existe"<<endl; 
 					//por si no existe la ciudad 1 
 					
 				} 
 			} 
 			else{ 
-				cout<<"NO Pase pais2"<<endl; 
+				cout<<"El codigo de pais destino no existe"<<endl; 
 				//por si no existe el pais2 
-			 
+				 
 			} 
 		} 
 		else{ 
-			cout<<"NO Pase pais1"<<endl; 
+			cout<<"El codigo de pais origen no existe"<<endl; 
 			// por si no existe el pais 
-		} 
+			 
+		}  
 } 
 
 
@@ -722,8 +722,8 @@ void listaC::BorrarCiudades(listaDT& listaTrenes, listaDC& paises,listaDCUsuario
 	//ELIMINA LAS CONEXIONES QUE TIENEN EL CODCIUDAD
 	pnodo recorrerPais = paises.primero;
 	while(recorrerPais->siguiente!=paises.primero){
-		pnodo recorrerCiudad = recorrerPais->ciudad;
-		while(recorrerCiudad->ciudad!=recorrerPais){
+		pnodoCiudad recorrerCiudad = recorrerPais->listaCiudades.primero;
+		while(recorrerCiudad->siguiente!=recorrerPais->listaCiudades.primero){
 			pnodoDoble recorrerConexion = recorrerCiudad->listaConexiones.primero;
 			int cont = 1;
 			while(recorrerConexion!=NULL){
@@ -736,7 +736,7 @@ void listaC::BorrarCiudades(listaDT& listaTrenes, listaDC& paises,listaDCUsuario
 					cont++;
 				}
 			}
-			recorrerCiudad = recorrerCiudad->ciudad;
+			recorrerCiudad = recorrerCiudad->siguiente;
 		}
 		recorrerPais = recorrerPais->siguiente; 
 	}
@@ -755,14 +755,14 @@ void listaC::BorrarCiudades(listaDT& listaTrenes, listaDC& paises,listaDCUsuario
 		existePais = true;
 	}
 	if(existePais){
-		pnodo auxCiudad = auxPais->ciudad;
-		while(auxCiudad->ciudad!=auxPais){
-			if(auxCiudad->valor==codBorrar){
+		pnodoCiudad auxCiudad = auxPais->listaCiudades.primero;
+		while(auxCiudad->siguiente!=auxPais->listaCiudades.primero){
+			if(auxCiudad->codCiudad==codBorrar){
 				auxCiudad->listaConexiones.~listaD();
 				break;
 			}
 			else{
-				auxCiudad = auxCiudad->ciudad;
+				auxCiudad = auxCiudad->siguiente;
 			}
 		}
 	}
@@ -808,17 +808,21 @@ void listaC::BorrarCiudades(listaDT& listaTrenes, listaDC& paises,listaDCUsuario
 		existePais2 = true;
 		
 	}if(existePais2){
-		pnodo recorrerCiudad2 = recorrerPais2->ciudad; int contCiudad = 1;
-		while(recorrerCiudad2->ciudad!=recorrerPais2){
-			if(recorrerCiudad2->valor==codBorrar){
-				cout<<"Encontre la ciudad: "<<recorrerCiudad2->valor<<endl;
+		pnodoCiudad recorrerCiudad2 = recorrerPais2->listaCiudades.primero; int contCiudad = 1;
+		while(recorrerCiudad2->siguiente!=recorrerPais2->listaCiudades.primero){
+			if(recorrerCiudad2->codCiudad==codBorrar){
+				cout<<"Encontre la ciudad: "<<recorrerCiudad2->codCiudad<<endl;
+				recorrerPais2->listaCiudades.BorrarPosicion(contCiudad);
 				break;
 				
 			}else{
 				recorrerCiudad2 = recorrerCiudad2->siguiente;
 				contCiudad++;
 			}
-		}
+		}if(recorrerCiudad2->codCiudad==codBorrar){
+				cout<<"Encontre la ciudad: "<<recorrerCiudad2->codCiudad<<endl;
+				recorrerPais2->listaCiudades.BorrarPosicion(contCiudad);
+			}
 	}
 }
 

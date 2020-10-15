@@ -5,7 +5,8 @@
 #include <iostream> 
 #include "CodigosRuta.hpp" 
 #include "Rutas.hpp" 
-#include "Pais-Ciudad.hpp" 
+#include "Pais-Ciudad.hpp"
+#include "Ciudad.hpp" 
 #include "Conexiones.hpp" 
 #include "Admin.hpp" 
 #include "Usuario.hpp" 
@@ -36,7 +37,7 @@ int main() {
     listaC rutas; 
     listaC2 admin; 
 	listaDCUsuario usuario; 
-	listaTrenes trenes; 
+	listaTrenes trenes;
 	lista codigoRuta;
 	string ultimoPais;
 	string ultimaCiudad;
@@ -55,11 +56,17 @@ int main() {
     tipoTren.llenarListaTrenes();
     tipoTren.llenarListaCodRutas();
     //TERCERA USUARIO ADMINISTRADOR RUTAS 
-	usuario.llenarListaUsuario(paises);
+    
+	usuario.llenarListaUsuario(paises);	
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
 	//Campo de testing
 	rutas.BorrarCiudades(tipoTren,paises,usuario);
+	paises.ConsultarCiudades();
+	paises.ConsultarConexiones();
+	paises.ConsultarConexiones();
+	usuario.Mostrar();
+	rutas.ConsultarRuta();
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais;

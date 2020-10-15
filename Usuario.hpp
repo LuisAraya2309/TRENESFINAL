@@ -299,20 +299,26 @@ void listaDCUsuario::llenarListaUsuario(listaDC& paises){
 			else{
 				buscarPais=buscarPais->siguiente;
 			}
-		}
+		}if(buscarPais->valor==codPais){
+        		//cout<<"Pais encontrado: "<<buscarPais->pais<<endl;
+        		banderaPais=true;
+        	}
 		if(banderaPais){
 		//Encontramos la ciudad que exista
-			pnodo buscarCiudad = buscarPais->ciudad;bool banderaCiudad = false;
-			while(buscarCiudad->ciudad!=buscarPais){
-				if(buscarCiudad->valor==codCiudad){
+			pnodoCiudad buscarCiudad = buscarPais->listaCiudades.primero;bool banderaCiudad = false;
+			while(buscarCiudad->siguiente!=buscarPais->listaCiudades.primero){
+				if(buscarCiudad->codCiudad==codCiudad){
 					//cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
 					banderaCiudad=true;
 					break;
 				}
 				else{
-					buscarCiudad=buscarCiudad->ciudad;
+					buscarCiudad=buscarCiudad->siguiente;
 				}
-			}
+			}if(buscarCiudad->codCiudad==codCiudad){
+				//cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
+				banderaCiudad=true;
+				}
 			if(banderaCiudad){
 				if((estMigracion==1)||(estMigracion==0)){
 					if(ListaVacia()){
@@ -421,20 +427,26 @@ void listaDCUsuario::RegistrarUsuario(listaDC& paises){
 			else{
 				buscarPais=buscarPais->siguiente;
 			}
-		}
+		}if(buscarPais->valor==codPais){
+        		//cout<<"Pais encontrado: "<<buscarPais->pais<<endl;
+        		banderaPais=true;
+        	}
 		if(banderaPais){
 		//Encontramos la ciudad que exista
-			pnodo buscarCiudad = buscarPais->ciudad;bool banderaCiudad = false;
-			while(buscarCiudad->ciudad!=buscarPais){
-				if(buscarCiudad->valor==codCiudad){
+			pnodoCiudad buscarCiudad = buscarPais->listaCiudades.primero;bool banderaCiudad = false;
+			while(buscarCiudad->siguiente!=buscarPais->listaCiudades.primero){
+				if(buscarCiudad->codCiudad==codCiudad){
 					//cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
 					banderaCiudad=true;
 					break;
 				}
 				else{
-					buscarCiudad=buscarCiudad->ciudad;
+					buscarCiudad=buscarCiudad->siguiente;
 				}
-			}
+			}if(buscarCiudad->codCiudad==codCiudad){
+					//cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
+					banderaCiudad=true;
+				}
 			if(banderaCiudad){
 				if((estMigracion==1)||(estMigracion==0)){
 					if(ListaVacia()){
