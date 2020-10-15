@@ -251,9 +251,9 @@ void listaC2::llenarListaAdmin() {
 	    	int posC= texto.find(";");
 	    	int codAdmin=atoi(texto.substr(0, posC).c_str());
 	    	string nombreAdmin= texto.substr(posC+1, texto.length());
-	    	cout<<codAdmin;cout<<nombreAdmin<<endl;
+	    	//cout<<codAdmin;cout<<nombreAdmin<<endl;
 	    	if (primero==NULL){
-	    		cout<<"La lista esta vacia"<<endl; 
+	    		//cout<<"La lista esta vacia"<<endl; 
 	    		//InsertarInicio(codAdmin,nombreAdmin);
 	    		primero= new nodoCir2(codAdmin,nombreAdmin);
 	    		primero->siguiente=primero;
@@ -261,7 +261,7 @@ void listaC2::llenarListaAdmin() {
 				pnodoCir2 recorrer=primero; bool bandera=true;
 				while(recorrer->siguiente!=primero){
 					if (recorrer->valor==codAdmin){
-						cout<<"Encontre un repetido"<<recorrer->nombre<<endl;
+						//cout<<"Encontre un repetido"<<recorrer->nombre<<endl;
 						bandera=false;
 						break;
 					}else{
@@ -269,7 +269,7 @@ void listaC2::llenarListaAdmin() {
 					}
 				}if (bandera){
 					if(recorrer->valor!=codAdmin){
-						cout<<"No estoy repetido voy a entrar"<<endl;
+						//cout<<"No estoy repetido voy a entrar"<<endl;
 						InsertarFinal(codAdmin,nombreAdmin);
 					}
 				}else{

@@ -2,7 +2,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include<string>
-#include "Trenes.hpp"
+#pragma once
 using namespace std;
 //TDA Tipo abstractos de Datos, no pertenece al lenguaje, sin embargo, cuando el programador lo define se puede empezar a utilizar
 
@@ -54,7 +54,7 @@ public:
     void BorrarInicio();
     void borrarPosicion(int pos);
     int largoLista();
-private:
+public:
     pnodoSimp primero; // nodo *primero; tipo nodo tiene derechoi direccionar un nodo
 
 };
@@ -229,8 +229,6 @@ void lista::Mostrar()
         cout << "No hay elementos";
     else
     {
-
-
         aux = primero;
         while (aux)
         {

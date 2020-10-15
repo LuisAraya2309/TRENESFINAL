@@ -53,20 +53,12 @@ int main() {
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS 
     tipoTren.llenarListaTipotrenes(); 
     tipoTren.llenarListaTrenes();
-    
+    tipoTren.llenarListaCodRutas();
     //TERCERA USUARIO ADMINISTRADOR RUTAS 
 	usuario.llenarListaUsuario(paises);
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
 	//Campo de testing
-	rutas.Mostrar();
-	tipoTren.MostrarUnTipoDeTren();
-	rutas.BorrarRuta(tipoTren);
-	rutas.Mostrar();
-	tipoTren.MostrarUnTipoDeTren();
-	tipoTren.MostrarUnTipoDeTren();
-	tipoTren.MostrarUnTipoDeTren();
-	/*
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais; 
@@ -78,7 +70,7 @@ int main() {
 	int codCiudad2; 
 	int codTiempo; 
 	int codUsuario;
-	bool bandera = false;
+	int registrar;
 	//---------------------------------------------------------Menu Principal------------------------------------------------- 
     do { 
         system("cls");      // Para limpiar la pantalla 
@@ -237,7 +229,7 @@ int main() {
 									                break; 
 									                 
 									            case 5: 
-  
+									            	rutas.BorrarRuta();
 									                system("pause>nul"); // Pausa 
 									                break; 
 									       
@@ -354,73 +346,77 @@ int main() {
 				} 
                 system("pause>nul"); 
                 break;	 
-            case 2: 
-            	cout<<"Ingrese la identificación de usuario"; cin>>codUsuario; cout<<endl;
-            	if(usuario.VerificarUsuario(codUsuario)){
-            		bandera=true;
+            case 2:
+            	cout<<"Si desea iniciar sesion digite 1 o si desea registrarse como usuario digite 2"<<endl;cin>>registrar;cout<<endl;
+            	if(registrar==1){
+            		cout<<"Ingrese la identificacion de usuario: "; cin>>codUsuario; cout<<endl;
+	            	if(usuario.VerificarUsuario(codUsuario)){
+		                int opcion; 
+								do { 
+							        system("cls");      // Para limpiar la pantalla 
+							        cout << "\n\nSistema de Trenes" << endl; 
+							        cout << "\n\nMenu de Usuario" << endl; 
+							        cout << "1. Consultar paises" << endl; 
+							        cout << "2. Consultar ciudades de un pais" << endl; 
+							        cout << "3. Consultar conexiones de un pais" << endl; 
+							        cout << "4. Consultar rutas " << endl; 
+							        cout << "5. Consultar trenes" << endl; 
+							        cout << "6. Consultar Precio" << endl; 
+							        cout << "7. Numero de asientos disponibles" << endl; 
+							        cout << "8. Salir" << endl; 
+							        cout << "\nIngrese una opcion: "; 
+							        cin >> opcion; 
+							        cout<<endl; 
+							         
+							        switch (opcion) { 
+							            case 1: 
+							            	paises.ConsultarPaises(); 
+							                system("pause>nul"); // Pausa 
+							                break; 
+							                 
+							            case 2: 
+							                // Lista de instrucciones de la opci?n 2                 
+							                paises.ConsultarCiudades(); 
+							                system("pause>nul"); // Pausa 
+							                break; 
+										case 3: 
+							                // Lista de instrucciones de la opci?n 2                 
+							                 paises.ConsultarConexiones();
+							                system("pause>nul"); // Pausa 
+							                break;                     
+							    	 	case 4: 
+							                rutas.ConsultarRuta();        
+							                system("pause>nul"); // Pausa 
+							                break; 
+										case 5: 
+							                // Lista de instrucciones de la opci?n 2                 
+							                tipoTren.MostrarUnTipoDeTren();
+							                system("pause>nul"); // Pausa 
+							                break; 
+										case 6: 
+							                rutas.ConsultarPrecio(tipoTren);             
+							                system("pause>nul"); // Pausa 
+							                break; 
+										case 7: 
+							                // Lista de instrucciones de la opci?n 2                 
+							                 
+							                system("pause>nul"); // Pausa 
+							                break;      
+								} 
+							}while (opcion != 8); 
+					}else{
+						cout<<"La identificacion del usuario no es valida"<<endl<<endl;
+						cout<<"Si desea registrarse ingrese 1 de lo contrario ingrese 2 para regresar: ";cin>>registrar;cout<<endl;
+						if(registrar==1){
+							usuario.RegistrarUsuario(paises);
+						}
+					}  
 				}else{
-					
-				}
-                int opcion; 
-						do { 
-					        system("cls");      // Para limpiar la pantalla 
-					     
-					        cout << "\n\nSistema de Trenes" << endl; 
-					        cout << "\n\nMenu de Usuario" << endl; 
-					        cout << "1. Consultar paises" << endl; 
-					        cout << "2. Consultar ciudades de un pais" << endl; 
-					        cout << "3. Consultar conexiones de un pais" << endl; 
-					        cout << "4. Consultar rutas " << endl; 
-					        cout << "5. Consultar trenes" << endl; 
-					        cout << "6. Consultar Precio" << endl; 
-					        cout << "7. Numero de asientos disponibles" << endl; 
-					        cout << "8. Salir" << endl; 
-					        cout << "\nIngrese una opcion: "; 
-					        cin >> opcion; 
-					        cout<<endl; 
-					         
-					        switch (opcion) { 
-					            case 1: 
-					            	paises.ConsultarPaises(); 
-					                system("pause>nul"); // Pausa 
-					                break; 
-					                 
-					            case 2: 
-					                // Lista de instrucciones de la opci?n 2                 
-					                paises.ConsultarCiudades(); 
-					                system("pause>nul"); // Pausa 
-					                break; 
-								case 3: 
-					                // Lista de instrucciones de la opci?n 2                 
-					                 paises.ConsultarConexiones();
-					                system("pause>nul"); // Pausa 
-					                break;                     
-					    	 	case 4: 
-					                rutas.ConsultarRuta();        
-					                system("pause>nul"); // Pausa 
-					                break; 
-								case 5: 
-					                // Lista de instrucciones de la opci?n 2                 
-					                tipoTren.MostrarUnTipoDeTren();
-					                system("pause>nul"); // Pausa 
-					                break; 
-								case 6: 
-					                rutas.ConsultarPrecio(tipoTren);             
-					                system("pause>nul"); // Pausa 
-					                break; 
-								case 7: 
-					                // Lista de instrucciones de la opci?n 2                 
-					                 
-					                system("pause>nul"); // Pausa 
-					                break;      
-						} 
-				}while (opcion != 8); 
-				                
-                system("pause>nul"); // Pausa 
-                break;           
+					usuario.RegistrarUsuario(paises);	
+					}         
+	                system("pause>nul"); // Pausa 
+	                break;           
     	} 		 
 	}while (opcion != 3);
-	*/
     	return 0; 
-} 
-
+}

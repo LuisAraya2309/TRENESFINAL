@@ -28,7 +28,7 @@ public:
         anterior = anteriornodo;
     }
 
-private:
+public:
     int codPais;
     int codCiudad;
     int usuario;
@@ -53,9 +53,10 @@ public:
     void BorrarInicio();
     void BorrarPosicion(int pos);
     int largoLista();
-    void llenarListaUsuario(listaDC paises);
+    void llenarListaUsuario(listaDC& paises);
     bool VerificarUsuario(int codUsuario);
     void ModificarEstadoMigratorio();
+    void RegistrarUsuario(listaDC& paises);
     
 
 private:
@@ -239,10 +240,18 @@ void listaDCUsuario::BorrarPosicion(int pos)
 
 void listaDCUsuario::Mostrar()
 {
- 
+  	pnodoUsuario aux = primero;
+    while (aux->siguiente != primero)
+    {
+
+        cout << aux->codPais << "-" << aux->codCiudad <<"-" << aux->usuario <<"-" << aux->nombre <<"-" << aux->migracion << "->";
+        aux = aux->siguiente;
+    }
+    cout << aux->codPais << "-" << aux->codCiudad <<"-" << aux->usuario <<"-" << aux->nombre <<"-" << aux->migracion << "->";
+    cout << endl;
 }
 
-void listaDCUsuario::llenarListaUsuario(listaDC paises){
+void listaDCUsuario::llenarListaUsuario(listaDC& paises){
     ifstream archivo2;
     string texto;
     archivo2.open("Usuarios.txt", ios::in);
@@ -255,33 +264,33 @@ void listaDCUsuario::llenarListaUsuario(listaDC paises){
 
         int posPC = texto.find(";");
         int codPais = atoi(texto.substr(0, posPC).c_str());
-        cout << "Pais: " << codPais << endl;
+        //cout << "Pais: " << codPais << endl;
 
         string Todo = texto.substr(posPC + 1, texto.length());
         int posPC2 = Todo.find(";");
         int codCiudad = atoi(Todo.substr(0, posPC2).c_str());
-        cout << "Ciudad: " << codCiudad << endl;
+        //cout << "Ciudad: " << codCiudad << endl;
 
         string Todo2 = Todo.substr(posPC2 + 1, Todo.length());
         int posPC3 = Todo2.find(";");
         int codPasaporte = atoi((Todo2.substr(0, posPC3).c_str()));
-        cout << "Pasaporte: " << codPasaporte << endl;
+        //cout << "Pasaporte: " << codPasaporte << endl;
 
         string Todo3 = Todo2.substr(posPC3 + 1, Todo2.length());
         int posPC4 = Todo3.find(";");
         string nombre = (Todo3.substr(0, posPC4));
-        cout << "Nombre: " << nombre << endl;
+        //cout << "Nombre: " << nombre << endl;
 
         string Todo4 = Todo3.substr(posPC4 + 1, Todo3.length());
         int posPC5 = Todo4.find(";");
         int estMigracion = atoi((Todo4.substr(0, posPC5).c_str()));
-        cout << "Migración: " << estMigracion << endl;
+        //cout << "Migración: " << estMigracion << endl;
         
         //Encontramos que el pais exista
         pnodo buscarPais = paises.primero;bool banderaPais = false;
         while(buscarPais->siguiente!=paises.primero){
         	if(buscarPais->valor==codPais){
-        		cout<<"Pais encontrado: "<<buscarPais->pais<<endl;
+        		//cout<<"Pais encontrado: "<<buscarPais->pais<<endl;
         		banderaPais=true;
         		break;
 			}
@@ -294,7 +303,7 @@ void listaDCUsuario::llenarListaUsuario(listaDC paises){
 			pnodo buscarCiudad = buscarPais->ciudad;bool banderaCiudad = false;
 			while(buscarCiudad->ciudad!=buscarPais){
 				if(buscarCiudad->valor==codCiudad){
-					cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
+					//cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
 					banderaCiudad=true;
 					break;
 				}
@@ -303,18 +312,41 @@ void listaDCUsuario::llenarListaUsuario(listaDC paises){
 				}
 			}
 			if(banderaCiudad){
-				InsertarFinal(codPais,codCiudad,codPasaporte,nombre,estMigracion);
-				cout<<"Insertado"<<endl;
+				if((estMigracion==1)||(estMigracion==0)){
+					if(ListaVacia()){
+						InsertarFinal(codPais,codCiudad,codPasaporte,nombre,estMigracion);
+						//cout<<"Insertado con exito"<<endl;
+					}else{
+						pnodoUsuario puntero=primero; bool flag= false;
+						while(puntero->siguiente!=primero){
+							if (puntero->usuario==codPasaporte){
+								flag=true;
+								break;
+							}else{
+								puntero= puntero->siguiente;
+							}
+						}if(puntero->usuario==codPasaporte){
+							flag=true;
+						}
+						if(!flag){
+							InsertarFinal(codPais,codCiudad,codPasaporte,nombre,estMigracion);
+							
+						}else{
+							//cout<<"La identificacion de usuario ya existe"<<endl;
+						}
+					}
+				}
+				else{
+					//cout<<"Su estado de migracion solo se puede representar en un 1 o un 0"<< endl;
+				}	
 			}
 			else{
-				cout<<"La ciudad no existe"<<endl;
+				//cout<<"La ciudad no existe"<<endl;
 			}
 		}
 		else{
-			cout<<"El pais no existe"<<endl;
-		}
-		cout<<"Completado"<<endl;
-		cout<<endl;
+			//cout<<"El pais no existe"<<endl;
+		}		
     }
     archivo2.close();
 }
@@ -362,3 +394,79 @@ void listaDCUsuario::ModificarEstadoMigratorio(){
 		}	
 	}	
 }
+
+void listaDCUsuario::RegistrarUsuario(listaDC& paises){
+	int codPasaporte;
+	string nombre;
+	int codPais;
+	int codCiudad;
+	int estMigracion;
+	cout<<endl;
+	cout<<"Para registrarse en el sistema debe de llenar la siguiente informacion:"<<endl<<endl;
+	cout<<"Ingrese su identificacion: ";cin>>codPasaporte;cout<<endl;
+	cout<<"Ingrese su nombre: ";cin>>nombre;cout<<endl;
+	cout<<"Ingrese su pais de procedencia: ";cin>>codPais;cout<<endl;
+	cout<<"Ingrese su ciudad de procedencia: ";cin>>codCiudad;cout<<endl;
+	cout<<"Ingrese su estado migratorio: ";cin>>estMigracion;cout<<endl;
+	pnodo buscarPais = paises.primero;bool banderaPais = false;
+        while(buscarPais->siguiente!=paises.primero){
+        	if(buscarPais->valor==codPais){
+        		//cout<<"Pais encontrado: "<<buscarPais->pais<<endl;
+        		banderaPais=true;
+        		break;
+			}
+			else{
+				buscarPais=buscarPais->siguiente;
+			}
+		}
+		if(banderaPais){
+		//Encontramos la ciudad que exista
+			pnodo buscarCiudad = buscarPais->ciudad;bool banderaCiudad = false;
+			while(buscarCiudad->ciudad!=buscarPais){
+				if(buscarCiudad->valor==codCiudad){
+					//cout<<"Ciudad encontrada: "<<buscarCiudad->pais<<endl;
+					banderaCiudad=true;
+					break;
+				}
+				else{
+					buscarCiudad=buscarCiudad->ciudad;
+				}
+			}
+			if(banderaCiudad){
+				if((estMigracion==1)||(estMigracion==0)){
+					if(ListaVacia()){
+						InsertarFinal(codPais,codCiudad,codPasaporte,nombre,estMigracion);
+						cout<<"Insertado con exito"<<endl;
+					}else{
+						pnodoUsuario puntero=primero; bool flag= false;
+						while(puntero->siguiente!=primero){
+							if (puntero->usuario==codPasaporte){
+								flag=true;
+								break;
+							}else{
+								puntero= puntero->siguiente;
+							}
+						}if(puntero->usuario==codPasaporte){
+							flag=true;
+						}
+						if(!flag){
+							InsertarFinal(codPais,codCiudad,codPasaporte,nombre,estMigracion);
+							cout<<"Insertado con exito"<<endl;
+						}else{
+							cout<<"Ha sido registrado con exito, ya puede iniciar sesion y observar el menu de usuario"<<endl;
+						}
+					}
+				}
+				else{
+					cout<<"Su estado de migracion solo se puede representar en un 1 o un 0"<< endl;
+				}	
+			}
+			else{
+				cout<<"La ciudad no existe"<<endl;
+			}
+		}
+		else{
+			cout<<"El pais no existe"<<endl;
+		}	
+	}
+

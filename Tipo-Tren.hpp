@@ -54,7 +54,7 @@ public:
     int largoLista(); 
     void llenarListaTipotrenes(); 
     void llenarListaTrenes(); 
-    //void llenarListaCodRutas(listaC& listaCodRutas); 
+    void llenarListaCodRutas(); 
     void InsertarTipoTren(string& ultimoTren); 
     void MostrarUnTipoDeTren(); 
     void ConsultarAsientos(); 
@@ -229,7 +229,7 @@ void listaDT::llenarListaTrenes(){
 		} 
 		if(existeTipoTren){ 
 			if(tiposTrenes->listaDeTrenes.primero==NULL){ 
-				tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos,ruta); 
+				tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos); 
 				cout<<"Lista de Trenes1: "<<endl; 
 				tiposTrenes->listaDeTrenes.Mostrar(); 
 				cout<<endl; 
@@ -247,7 +247,7 @@ void listaDT::llenarListaTrenes(){
 					} 
 				} 
 				if(!codRepetido){ 
-					tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos,ruta); 
+					tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos); 
 					cout<<"Lista de Trenes2: "<<endl; 
 					tiposTrenes->listaDeTrenes.Mostrar(); 
 					cout<<endl; 
@@ -430,7 +430,7 @@ void listaDT::RegistrarTren(){
 		} 
 		if(existeTipoTren){ 
 			if(tiposTrenes->listaDeTrenes.primero==NULL){ 
-				tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos,ruta); 
+				tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos); 
 				cout<<"La lista de Trenes fue registrada con exito "<<endl; 
 				cout<<endl; 
 			} 
@@ -446,7 +446,7 @@ void listaDT::RegistrarTren(){
 					} 
 				} 
 				if(!codRepetido){ 
-					tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos,ruta); 
+					tiposTrenes->listaDeTrenes.InsertarFinal(codTren,nomTren,numAsientos); 
 					cout<<"La lista de Trenes fue registrada con exito "<<endl; 
 					cout<<endl; 
 				} 
@@ -492,7 +492,6 @@ void listaDT:: ModificarTren(){
 				if(codRepetido){ 
 					 buscarCod->nombre=nuevoNomTren; 
 					 buscarCod->numAsientos= nuevoAsientos; 
-					 buscarCod->rutasP= rutas; 
 					 cout<<"El tren fue modificado correctamente"<<endl;	 
 				}else{ 
 					cout<<"El codigo de tren no existe"<<endl; 
@@ -533,61 +532,94 @@ bool listaDT::Verificar(int codTipTren, int codTren){
 		}
     }
 }
-/*
-void listaDT::llenarListaCodRutas(listaC& listaCodRutas){
-	pnodoCir buscarRuta = listaCodRutas.primero;
-	while(buscarRuta->siguiente!=listaCodRutas.primero){
-		codTipTrenX = buscarRuta->codTipTren;
-		codTrenX = buscarRuta->codTren;
-		codRutaX = buscarRuta->codRutas;
-		
-		pnodoDobleT posTipTren = primero;
-		while(posTipTren=NULL){
-			if(postTipTren->codTren==CodTipTrenX){
-				break;
+
+void listaDT::llenarListaCodRutas(){
+	ifstream archivoTR; 
+    string texto; 
+    archivoTR.open("Trenes.txt", ios::in); 
+    if (archivoTR.fail()) { 
+        cout << "No se pudo abrir el archivo"; 
+        exit(1); 
+    } 
+    while (!archivoTR.eof()) { 
+        getline(archivoTR, texto); 
+         
+        int posPC = texto.find(";"); 
+        int codTipTren = atoi(texto.substr(0, posPC).c_str()); 
+        cout << "Tipo Tren: " << codTipTren << endl; 
+         
+        string Todo = texto.substr(posPC + 1, texto.length()); 
+        int posPC2 = Todo.find(";"); 
+        int codTren = atoi(Todo.substr(0, posPC2).c_str()); 
+        cout << "Codigo Tren: " << codTren << endl; 
+ 
+        string Todo2 = Todo.substr(posPC2 + 1, Todo.length()); 
+        int posPC3 = Todo2.find(";"); 
+        string nomTren = (Todo2.substr(0, posPC3)); 
+         
+        string Todo3 = Todo2.substr(posPC3 + 1, Todo2.length()); 
+        int posPC4 = Todo3.find(";"); 
+        int numAsientos = atoi((Todo3.substr(0, posPC4).c_str())); 
+         
+        string Todo4 = Todo3.substr(posPC4 + 1, Todo3.length()); 
+        int posPC5 = Todo4.find(";"); 
+        int codRuta = atoi((Todo4.substr(0, posPC5).c_str())); 
+        cout << "Rutas:  " << codRuta << endl;
+        
+        pnodoDobleT tipoTren= primero; bool flag=false;
+        while(tipoTren!=NULL){
+        	if (tipoTren->codTren==codTipTren){
+        		flag=true;
+        		break;
+			}else{
+				tipoTren=tipoTren->siguiente;
 			}
-			else{
+		}if(flag){
+			pnodoSimpTrenes tren= tipoTren->listaDeTrenes.primero; bool flagT = false;
+			while(tren!=NULL){
+				if(tren->codTren==codTren){
+					flagT=true;
+					break;
+				}else{
+					tren=tren->siguiente;
+				}
+			}if (flagT){
+				if(tren->listaDeCodRutas.primero==NULL){
+					//La lista esta vacía se inserta sin validar
+					tren->listaDeCodRutas.InsertarFinal(codRuta);
+					//tren->listaDeCodRutas.Mostrar();cout<<endl;cout<<endl;
+				}else{
+					pnodoSimp buscarCod = tren->listaDeCodRutas.primero;bool codRepetido = false; 
+					while(buscarCod!=NULL){ 
+						if(buscarCod->valor==codRuta){ 
+							codRepetido = true; 
+							break; 
+						} 
+						else{ 
+							buscarCod=buscarCod->siguiente; 
+						} 
+					}if (!codRepetido){
+						tren->listaDeCodRutas.InsertarFinal(codRuta);
+						//tren->listaDeCodRutas.Mostrar();cout<<endl;cout<<endl;
+					}else{
+						//El codigo de ruta esta repetido
+						continue;
+					}
+				}
+			}else{
+				//cout<<"El codigo de tren no existe"<<endl;cout<<endl;cout<<endl;
+				//El codigo de tren no existe
 				continue;
 			}
-		}
-		pnodoSimpTrenes buscarTren = posTipTren->listaDeTrenes;
-		while(buscarTren!=NULL){
-			if(buscarTren->codTren==codTrenX){
-				break;
-			}
-			else{
-				continue;
-			}
-		}
-		buscarTren->listaRutas.InsertarFinal(codRutaX);
-		
-	}
-	codTipTrenX = buscarRuta->codTipTren;
-	codTrenX = buscarRuta->codTren;
-	codRutaX = buscarRuta->codRutas;
-	
-	pnodoDobleT posTipTren = primero;
-	while(posTipTren=NULL){
-		if(postTipTren->codTren==CodTipTrenX){
-			break;
-		}
-		else{
+		}else{
+			//cout<<"El codigo de tipo tren no existe"<<endl;cout<<endl;cout<<endl;
+			//El codigo del tipo tren no existe
 			continue;
 		}
-		}
-		pnodoSimpTrenes buscarTren = posTipTren->listaDeTrenes;
-		while(buscarTren!=NULL){
-			if(buscarTren->codTren==codTrenX){
-				break;
-			}
-			else{
-				continue;
-			}
-		}
-		buscarTren->listaRutas.InsertarFinal(codRutaX);
-} 
+	}archivoTR.close();
+}
 
 void listaDT::EliminarTren(){
 	int codTipTren;
 }
-*/
+

@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 #pragma once
@@ -13,6 +12,7 @@ public:
         tiempo = tiempoc;
         siguiente = NULL;
         anterior = NULL;
+        
     }
 
     nodoDoble(int Conexionc, int Paisc, int Ciudadc, int tiempoc, nodoDoble* signodoDoble, nodoDoble* sigantDoble)
