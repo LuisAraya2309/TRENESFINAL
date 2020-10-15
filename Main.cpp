@@ -59,6 +59,9 @@ int main() {
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
 	//Campo de testing
+	tipoTren.EliminarTren();
+	cout<<"Mostrar"<<endl;
+	tipoTren.MostrarUnTipoDeTren();
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais; 

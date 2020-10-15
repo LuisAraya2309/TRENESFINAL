@@ -663,5 +663,44 @@ void listaDT::llenarListaCodRutas(){
 
 void listaDT::EliminarTren(){
 	int codTipTren;
+	int codTren;
+	cout<<"Ingrese el codigo del tipo de tren que desea eliminar: ";cin>>codTipTren;cout<<endl;
+	cout<<"Ingrese el codigo del tren que desea eliminar: ";cin>>codTren;cout<<endl;
+	pnodoDobleT buscarTipTren = primero; bool existeTipTren = false;
+	while(buscarTipTren!=NULL){
+		if(buscarTipTren->codTren==codTipTren){
+			existeTipTren = true;
+			break;
+		}
+		else{
+			buscarTipTren=buscarTipTren->siguiente;
+		}
+	}
+	if(existeTipTren){
+		pnodoSimpTrenes buscarTren = buscarTipTren->listaDeTrenes.primero;bool borrado = false;
+		int cont = 1;
+		while(buscarTren!=NULL){
+			if(buscarTren->codTren==codTren){
+				buscarTipTren->listaDeTrenes.borrarPosicion(cont);
+				buscarTren->listaDeCodRutas.~lista();
+				borrado = true;
+				break;
+			}
+			else{
+				buscarTren = buscarTren->siguiente;
+				cont++;
+			}
+		}
+		if(borrado){
+			cout<<"Tren borrado con exito."<<endl;
+		}
+		else{
+			cout<<"Error, el codigo del tren es invalido."<<endl;
+		}
+	}
+	else{
+		cout<<"Error, el codigo del tipo de tren es invalido."<<endl;
+	}
+	
 }
 
