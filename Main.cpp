@@ -58,8 +58,10 @@ int main() {
 	usuario.llenarListaUsuario(paises);
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
+	usuario.Mostrar();
 	//Campo de testing
-	tipoTren.MostrarUnTipoDeTren();
+	rutas.BorrarCiudades(tipoTren,paises,usuario);
+	usuario.Mostrar();
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais; 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include<string>
+#pragma once
 using namespace std;
 
 class nodoUsuario {
@@ -59,7 +60,7 @@ public:
     void RegistrarUsuario(listaDC& paises);
     
 
-private:
+public:
     pnodoUsuario primero;
 
 };

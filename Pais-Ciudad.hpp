@@ -631,10 +631,16 @@ void listaDC::ConsultarConexiones(){
 	        	flag2=true;
 	        	if(flag){
 	        		pnodoDoble conexionG = ciudades->listaConexiones.primero;
-					while(conexionG!=NULL){
-						cout<<"Codigo de conexion: "<<conexionG->codConexion <<" Codigo del pais: "<<conexionG->codPais <<" Codigo de la ciudad: "<<conexionG->codCiudad<<" Duracion: "<<conexionG->tiempo<<" horas"<<endl;
-						conexionG=conexionG->siguiente;
+	        		if(ciudades->listaConexiones.ListaVacia()){
+	        			cout<<"La ciudad no tiene conexiones."<<endl;
 					}
+					else{
+						while(conexionG!=NULL){
+							cout<<"Codigo de conexion: "<<conexionG->codConexion <<" Codigo del pais: "<<conexionG->codPais <<" Codigo de la ciudad: "<<conexionG->codCiudad<<" Duracion: "<<conexionG->tiempo<<" horas"<<endl;
+							conexionG=conexionG->siguiente;
+						}
+					}
+					
 				}else {
 				cout<<"El codigo de ciudad no existe"<<endl;
 				}

@@ -6,6 +6,7 @@
 #include "Tipo-Tren.hpp" 
 #include "Conexiones.hpp" 
 #include "Trenes.hpp" 
+#include "Usuario.hpp"
 #pragma once 
 using namespace std; 
  
@@ -53,7 +54,9 @@ public:
     friend class listaDC; 
     friend class listaDT; 
     friend class nodoDobleT; 
-    friend class nodo; 
+    friend class nodo;
+	friend class nodoUsuario;
+	friend class listaDCUsuario; 
 }; 
  
 typedef nodoCir* pnodoCir; 
@@ -78,7 +81,7 @@ public:
     void ConsultarRuta();
     void ModificarPrecio();
     void ModificarRuta();
- 	void BorrarPais(listaDT& listaTrenes, listaDC& paises);
+ 	void BorrarCiudades(listaDT& listaTrenes, listaDC& paises,listaDCUsuario& usuarios);
  	void BorrarRuta();
 public:
     pnodoCir primero; 
@@ -706,80 +709,75 @@ void listaC::InsertarRuta(listaDC& paises, listaDT& tipoTrenes){
 } 
 
 
-void listaC::BorrarPais(listaDT& listaTrenes, listaDC& paises){
-	/*
-	Borrar un Pais:
-	Borra todas las ciudades del pais
-	Al borrar todas las ciudades, borra las conexiones de esa ciudad
-	Borra las rutas que involucren ese pais
-	Borrar los usuarios que tengan que ver con ese pais
-	*/
+void listaC::BorrarCiudades(listaDT& listaTrenes, listaDC& paises,listaDCUsuario& usuarios){
+	int codPais;
 	int codBorrar;
-	cout<<"Ingrese el codigo del pais que desea borrar: ";cin>>codBorrar;cout<<endl;
-	pnodo paisBorrar = paises.primero;bool existePais = false;
-	while(paisBorrar->siguiente!=paises.primero){
-		if(paisBorrar->valor==codBorrar){
-			existePais = true;
-			break;
-		}else{
-			paisBorrar = paisBorrar->siguiente;
-		}
-	}
-	if(paisBorrar->valor==codBorrar){
-	existePais = true;
-	}
-	if(existePais){
-	pnodo recorrerCiudad = paisBorrar->ciudad;
-	while(recorrerCiudad->ciudad!=paisBorrar){
-		pnodoDoble borrarConexion = recorrerCiudad->listaConexiones.primero;
-		//borrado de conexiones
-		while(borrarConexion!=NULL){
-			cout<<"Ciclado borrando conexiones"<<endl;
-			pnodoDoble aux = borrarConexion;
-			borrarConexion = borrarConexion->siguiente;
-			delete aux;
-		}recorrerCiudad=recorrerCiudad->siguiente;
-	}
-	pnodo borrandoCiudades = paisBorrar->ciudad;
-	//borrado de ciudades
-	while(borrandoCiudades!=paisBorrar){
-		cout<<"Ciclado borrando ciudad"<<endl;
-		pnodo aux = borrandoCiudades;
-		borrandoCiudades = borrandoCiudades->ciudad;
-		delete aux;
-	}
-	//Ahora borro el pais
-	pnodo auxiliar = paisBorrar;
-	paisBorrar = paisBorrar->siguiente;
-	delete auxiliar;
+	cout<<"Ingrese el codigo del pais por borrar: ";cin>>codPais;cout<<endl;
+	cout<<"Ingrese el codigo de la ciudad por borrar: ";cin>>codBorrar;cout<<endl;
 	
-	//Borrado de rutas
-	pnodoCir recorrerRutas = primero;bool existeRuta = false;
-	while(recorrerRutas!=primero){
-		if((recorrerRutas->codPais1==codBorrar)||(recorrerRutas->codPais2==codBorrar)){
-			existeRuta = true;
+	pnodo recorrerPais = paises.primero;
+	while(recorrerPais->siguiente!=paises.primero){
+		pnodo recorrerCiudad = recorrerPais->ciudad;
+		while(recorrerCiudad->ciudad!=recorrerPais){
+			pnodoDoble recorrerConexion = recorrerCiudad->listaConexiones.primero;
+			int cont = 1;
+			while(recorrerConexion!=NULL){
+				if(recorrerConexion->codCiudad==codBorrar){
+					recorrerCiudad->listaConexiones.BorrarPosicion(cont);
+					recorrerConexion = recorrerConexion->siguiente;
+				}
+				else{
+					recorrerConexion = recorrerConexion->siguiente;
+					cont++;
+				}
+			}
+			recorrerCiudad = recorrerCiudad->ciudad;
+		}
+		recorrerPais = recorrerPais->siguiente; 
+	}
+	
+	pnodo auxPais = paises.primero;bool existePais = false;
+	while(auxPais->siguiente!=paises.primero){
+		if(auxPais->valor==codPais){
+			existePais=true;
 			break;
 		}
 		else{
-			recorrerRutas=recorrerRutas->siguiente;
+			auxPais = auxPais->siguiente;
 		}
 	}
-	if((recorrerRutas->codPais1==codBorrar)||(recorrerRutas->codPais2==codBorrar)){
-		existeRuta = true;
+	if(auxPais->valor==codPais){
+		existePais = true;
 	}
-	if(existeRuta){
-		pnodoCir auxiliar = recorrerRutas;
-		recorrerRutas = recorrerRutas->siguiente;
-		delete auxiliar;
+	if(existePais){
+		pnodo auxCiudad = auxPais->ciudad;
+		while(auxCiudad->ciudad!=auxPais){
+			if(auxCiudad->valor==codBorrar){
+				auxCiudad->listaConexiones.~listaD();
+				break;
+			}
+			else{
+				auxCiudad = auxCiudad->ciudad;
+			}
+		}
 	}
-	//Aqui va el codigo de los trenes.
-	else{
+	pnodoUsuario auxUsuario = usuarios.primero;
+	int contador = 1;
+	cout<<"Largo"<<usuarios.largoLista();
+	while(auxUsuario->siguiente!=usuarios.primero){
+		if(auxUsuario->codCiudad==codBorrar){
+			usuarios.BorrarPosicion(contador);
+			auxUsuario=auxUsuario->siguiente;
+		}
+		else{
+			auxUsuario=auxUsuario->siguiente;
+			contador++;
+		}
 	}
-	}
-	else{
-		// si hay error en el pais
-		cout<<"Error con el codigo de pais"<<endl;
-	}
+	
+	
+	
+	
 }
 
 void listaC::BorrarRuta(){
