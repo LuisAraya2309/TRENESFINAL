@@ -56,6 +56,7 @@ public:
     int largoLista();
     void llenarListaUsuario(listaDC& paises);
     bool VerificarUsuario(int codUsuario);
+    bool VerificarCodUsuario(int codCiudad);
     void ModificarEstadoMigratorio();
     void RegistrarUsuario(listaDC& paises);
     
@@ -76,7 +77,7 @@ int listaDCUsuario::largoLista()
     }
     else
     {
-        while (aux != primero)
+        while (aux->siguiente != primero)
         {
             aux = aux->siguiente;
             cont++;
@@ -245,11 +246,11 @@ void listaDCUsuario::Mostrar()
     while (aux->siguiente != primero)
     {
 
-        cout << aux->codPais << "-" << aux->codCiudad <<"-" << aux->usuario <<"-" << aux->nombre <<"-" << aux->migracion << "->";
+        cout << aux->codPais << "-" << aux->codCiudad <<"-" << aux->usuario <<"-" << aux->nombre <<"-" << aux->migracion << "->"<<endl;
         aux = aux->siguiente;
     }
-    cout << aux->codPais << "-" << aux->codCiudad <<"-" << aux->usuario <<"-" << aux->nombre <<"-" << aux->migracion << "->";
-    cout << endl;
+    cout << aux->codPais << "-" << aux->codCiudad <<"-" << aux->usuario <<"-" << aux->nombre <<"-" << aux->migracion << "->"<<endl;
+    
 }
 
 void listaDCUsuario::llenarListaUsuario(listaDC& paises){
@@ -366,6 +367,7 @@ bool listaDCUsuario::VerificarUsuario(int codUsuario){
 		return false;
 	}
 }
+
 
 void listaDCUsuario::ModificarEstadoMigratorio(){
 	int codUsuario;

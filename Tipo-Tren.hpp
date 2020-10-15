@@ -63,6 +63,7 @@ public:
     void ModificarTren();  
     bool Verificar(int codTipTren, int codTren);
     void EliminarTren();
+    void MostrarCodigos();
     pnodoDobleT primero; 
    
  
@@ -318,7 +319,7 @@ void listaDT::MostrarUnTipoDeTren(){
 			cout<<"No hay trenes registrados de ese tipo."<<endl; 
 		} 
 		else{ 
-			mostrar->listaDeTrenes.Mostrar(); 
+			mostrar->listaDeTrenes.Mostrar();
 		} 
 	} 
 	else{ 
@@ -703,3 +704,46 @@ void listaDT::EliminarTren(){
 	}
 }
 
+
+void listaDT::MostrarCodigos(){ 
+	int codTipTren; 
+	cout<<"Ingrese el codigo del tipo de tren para mostrar todos los trenes de ese tipo: "; 
+	cin>>codTipTren;cout<<endl;
+	int codTren; 
+	cout<<"Ingrese el codigo de tren para mostrar todos los codigos de ruta: "; 
+	cin>>codTren;cout<<endl;
+	pnodoDobleT mostrar = primero;bool existeTipTren = false; 
+	while(mostrar!=NULL){ 
+		if(mostrar->codTren==codTipTren){ 
+			existeTipTren = true; 
+			break; 
+		} 
+		else{ 
+			mostrar=mostrar->siguiente; 
+		} 
+	} 
+	if(existeTipTren){ 
+		pnodoSimpTrenes mostrarTren = mostrar->listaDeTrenes.primero; bool existeTren = false;
+		while(mostrarTren->siguiente != NULL){
+			if(mostrarTren->codTren==codTren){ 
+			
+				existeTren = true; 
+				break; 
+			}	 
+			else{ 
+				mostrarTren = mostrarTren->siguiente;
+			} 
+		}if(existeTren){
+			if(mostrarTren->listaDeCodRutas.ListaVacia()){
+				cout<<"No hay ningun codigo de ruta"<<endl;
+			}else{
+				mostrarTren->listaDeCodRutas.Mostrar();
+			}
+		}else{
+			cout<<"El codigo de tren no existe"<<endl;
+		}
+	} 
+	else{ 
+		cout<<"El codigo ingresado no corresponde a ningun tipo de tren."<<endl; 
+	} 
+} 
