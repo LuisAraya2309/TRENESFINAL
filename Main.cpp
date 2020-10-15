@@ -46,7 +46,7 @@ int main() {
 	string ultimaRutaEliminada;
 	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------ 
 	//PRIMERA ESTRUCTURA PAIS-CIUDAD-CONEXION 
-	paises.llenarListaPais(); 
+	paises.llenarListaPais();
     paises.llenarListaCiudad();
     paises.llenarListaConexiones();
     
@@ -59,8 +59,6 @@ int main() {
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
 	//Campo de testing
-	tipoTren.EliminarTren();
-	cout<<"Mostrar"<<endl;
 	tipoTren.MostrarUnTipoDeTren();
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 

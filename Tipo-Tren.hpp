@@ -701,6 +701,5 @@ void listaDT::EliminarTren(){
 	else{
 		cout<<"Error, el codigo del tipo de tren es invalido."<<endl;
 	}
-	
 }
 

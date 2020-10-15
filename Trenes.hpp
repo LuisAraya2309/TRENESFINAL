@@ -245,7 +245,7 @@ void listaTrenes::Mostrar()
     { 
         aux = primero; 
         while (aux){ 
-			cout<<aux->codTren<<"-"<<aux->nombre<<"-"<<aux->numAsientos<<"->"; 
+			cout<<"Codigo de tren: "<<aux->codTren<<" Nombre del tren: "<<aux->nombre<<" Numero de asientos: "<<aux->numAsientos<<endl; 
             aux = aux->siguiente; 
         } 
     } 
