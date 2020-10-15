@@ -44,6 +44,7 @@ typedef nodoCiudad* pnodoCiudad;
 class listaDCCiudad {
 public:
     listaDCCiudad() { primero = NULL; }
+    ~listaDCCiudad();
 
     void InsertarInicio(int codCiudad, string ciudad);
     void InsertarFinal(int codCiudad, string ciudad);
@@ -79,6 +80,22 @@ int listaDCCiudad::largoLista()
         return cont;
     }
 
+}
+listaDCCiudad::~listaDCCiudad()
+{
+   pnodoCiudad aux;
+   int largo = largoLista();
+
+   
+   while(largo!=0) {
+      aux = primero;
+      primero = primero->siguiente;
+      primero->anterior=aux->anterior;
+      aux->anterior->siguiente=primero;
+      largo--;
+      delete aux;
+   }
+   
 }
 
 void listaDCCiudad::InsertarInicio(int codCiudad, string ciudad)

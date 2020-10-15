@@ -61,12 +61,8 @@ int main() {
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
 	//Campo de testing
-	rutas.BorrarCiudades(tipoTren,paises,usuario);
-	paises.ConsultarCiudades();
-	paises.ConsultarConexiones();
-	paises.ConsultarConexiones();
-	usuario.Mostrar();
-	rutas.ConsultarRuta();
+	rutas.BorrarPais(paises,usuario);
+	paises.ConsultarPaises();
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais;

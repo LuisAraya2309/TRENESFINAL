@@ -82,6 +82,7 @@ public:
     void ModificarPrecio();
     void ModificarRuta();
  	void BorrarCiudades(listaDT& listaTrenes, listaDC& paises,listaDCUsuario& usuarios);
+ 	void BorrarPais(listaDC& paises,listaDCUsuario& usuarios);
  	void BorrarRuta();
 public:
     pnodoCir primero; 
@@ -850,6 +851,98 @@ void listaC::BorrarRuta(){
 	else{
 		cout<<"Error, el codigo de ruta ingresado no existe"<<endl;
 	}
+}
+void listaC::BorrarPais(listaDC& paises,listaDCUsuario& usuarios){
+	int codPais;
+	cout<<"Ingrese el codigo del pais por borrar: ";cin>>codPais;cout<<endl;
+	//ELIMINA LAS CONEXIONES QUE TIENEN EL CODCIUDAD
+	pnodo recorrerPais = paises.primero;
+	while(recorrerPais->siguiente!=paises.primero){
+		pnodoCiudad recorrerCiudad = recorrerPais->listaCiudades.primero;
+		while(recorrerCiudad->siguiente!=recorrerPais->listaCiudades.primero){
+			pnodoDoble recorrerConexion = recorrerCiudad->listaConexiones.primero;
+			int cont = 1;
+			while(recorrerConexion!=NULL){
+				if(recorrerConexion->codPais==codPais){
+					recorrerCiudad->listaConexiones.BorrarPosicion(cont);
+					recorrerConexion = recorrerConexion->siguiente;
+				}
+				else{
+					recorrerConexion = recorrerConexion->siguiente;
+					cont++;
+				}
+			}
+			recorrerCiudad = recorrerCiudad->siguiente;
+		}
+		recorrerPais = recorrerPais->siguiente; 
+	}
+	//Borra conexiones de las conexiones de esa ciudad.
+	pnodo auxPais = paises.primero;bool existePais = false;
+	while(auxPais->siguiente!=paises.primero){
+		if(auxPais->valor==codPais){
+			existePais=true;
+			break;
+		}
+		else{
+			auxPais = auxPais->siguiente;
+		}
+	}
+	if(auxPais->valor==codPais){
+		existePais = true;
+	}
+	if(existePais){
+		pnodoCiudad auxCiudad = auxPais->listaCiudades.primero;
+		while(auxCiudad->siguiente!=auxPais->listaCiudades.primero){
+			auxCiudad->listaConexiones.~listaD();
+			auxCiudad=auxCiudad->siguiente;
+		}
+		auxCiudad->listaConexiones.~listaD();
+		auxPais->listaCiudades.~listaDCCiudad();
+		auxPais->listaCiudades.BorrarFinal();
+	}
+	pnodoUsuario auxUsuario = usuarios.primero;
+	int contador = 1;
+	while(auxUsuario->siguiente!=usuarios.primero){
+		if(auxUsuario->codPais==codPais){
+			usuarios.BorrarPosicion(contador);
+			auxUsuario=auxUsuario->siguiente;
+		}
+		else{
+			auxUsuario=auxUsuario->siguiente;
+			contador++;
+		}
+	}if(auxUsuario->codPais==codPais){
+		usuarios.BorrarFinal();
+	}
+	pnodoCir auxRuta= primero; int contRuta = 1;
+	while(auxRuta->siguiente != primero){
+		if((auxRuta->codPais1==codPais)||(auxRuta->codPais2==codPais)){
+			borrarPosicion(contRuta);
+			auxRuta=auxRuta->siguiente;
+		}
+		else{
+			auxRuta=auxRuta->siguiente;
+			contRuta++;
+		}
+	}if((auxRuta->codPais1==codPais)||(auxRuta->codPais2==codPais)){
+		BorrarFinal();
+	}
+	pnodo finalBorrar = paises.primero; int cantidad = 1;
+	while(finalBorrar->siguiente!=paises.primero){
+		if(finalBorrar->valor==codPais){
+			paises.BorrarPosicion(cantidad);
+			break;
+		}
+		else{
+			finalBorrar=finalBorrar->siguiente;
+			cantidad++;
+		}
+	}
+	if(finalBorrar->valor = codPais){
+		paises.BorrarFinal();
+	}
+	
+	
 }
 
 

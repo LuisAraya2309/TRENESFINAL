@@ -105,7 +105,7 @@ int listaDC::largoLista()
     }
     else
     {
-        while (aux != primero)
+        while (aux->siguiente!= primero)
         {
             aux = aux->siguiente;
             cont++;
@@ -584,12 +584,18 @@ void listaDC::ConsultarCiudades() {
     //cout <<"Pais: "<<puntero->pais<< endl;
     if (flag) {
         pnodoCiudad ciudades = puntero->listaCiudades.primero; bool flag2 = false;
-        while (ciudades->siguiente != puntero->listaCiudades.primero) {
+        if(puntero->listaCiudades.ListaVacia()){
+        	cout<<"El pais no posee ciudades."<<endl;
+		}
+		else{
+			while (ciudades->siguiente != puntero->listaCiudades.primero) {
             cout << ciudades->ciudad << "  Codigo: " << ciudades->codCiudad << endl;
             ciudades = ciudades->siguiente;
-        }
-        cout << ciudades->ciudad << "  Codigo: " << ciudades->codCiudad << endl;
-        cout << endl;
+        	}
+        	cout << ciudades->ciudad << "  Codigo: " << ciudades->codCiudad << endl;
+        	cout << endl;
+		}
+        
     }
     else {
         cout << "El codigo ingresado no existe" << endl;
