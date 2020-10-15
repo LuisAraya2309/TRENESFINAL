@@ -65,10 +65,10 @@ int main() {
 	string nomPais; 
 	int codCiudad; 
 	string nomCiudad; 
-	int codConexion; 
+	int codConexion;
 	int codPais2; 
-	int codCiudad2; 
-	int codTiempo; 
+	int codCiudad2;
+	int codTiempo;
 	int codUsuario;
 	int registrar;
 	//---------------------------------------------------------Menu Principal------------------------------------------------- 

@@ -532,6 +532,19 @@ bool listaDT::Verificar(int codTipTren, int codTren){
 		}
     }
 }
+int contarPuntos(string prueba){
+	int cantidad = 0, largo = prueba.length();
+	for(int y = 0;y<=largo-1;y++){
+		if(prueba.at(y)==';'){
+			cantidad++;
+		}
+		else{
+			continue;
+		}
+	}
+	return cantidad;
+	
+}
 
 void listaDT::llenarListaCodRutas(){
 	ifstream archivoTR; 
@@ -546,12 +559,12 @@ void listaDT::llenarListaCodRutas(){
          
         int posPC = texto.find(";"); 
         int codTipTren = atoi(texto.substr(0, posPC).c_str()); 
-        cout << "Tipo Tren: " << codTipTren << endl; 
+        //cout << "Tipo Tren: " << codTipTren << endl; 
          
         string Todo = texto.substr(posPC + 1, texto.length()); 
         int posPC2 = Todo.find(";"); 
         int codTren = atoi(Todo.substr(0, posPC2).c_str()); 
-        cout << "Codigo Tren: " << codTren << endl; 
+        //cout << "Codigo Tren: " << codTren << endl; 
  
         string Todo2 = Todo.substr(posPC2 + 1, Todo.length()); 
         int posPC3 = Todo2.find(";"); 
@@ -563,8 +576,20 @@ void listaDT::llenarListaCodRutas(){
          
         string Todo4 = Todo3.substr(posPC4 + 1, Todo3.length()); 
         int posPC5 = Todo4.find(";"); 
-        int codRuta = atoi((Todo4.substr(0, posPC5).c_str())); 
-        cout << "Rutas:  " << codRuta << endl;
+        int codRuta = atoi((Todo4.substr(0, posPC5).c_str()));
+		int cantidadPts = contarPuntos(Todo4);
+		int arrayRutas[cantidadPts+1];
+		int e = 0;
+		int a = cantidadPts+1;
+		int z = cantidadPts+1;
+		while(a!=0){
+			int posAux = Todo4.find(";");
+			int agregar = atoi(Todo4.substr(0,posAux).c_str());
+			arrayRutas[e]= agregar;
+			e++;
+			Todo4 = Todo4.substr(posAux+1,Todo4.length());
+			a--;
+		}
         
         pnodoDobleT tipoTren= primero; bool flag=false;
         while(tipoTren!=NULL){
@@ -586,9 +611,24 @@ void listaDT::llenarListaCodRutas(){
 			}if (flagT){
 				if(tren->listaDeCodRutas.primero==NULL){
 					//La lista esta vacía se inserta sin validar
-					tren->listaDeCodRutas.InsertarFinal(codRuta);
-					//tren->listaDeCodRutas.Mostrar();cout<<endl;cout<<endl;
+					int posicion = 0;
+					while(z!=0){
+						tren->listaDeCodRutas.InsertarFinal(arrayRutas[posicion]);
+						tren->listaDeCodRutas.Mostrar();
+						posicion++;
+						z--;
+					}
+					
+					//tren->listaDeCodRutas.Mostrar();cout<<endl;cout<<endl;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 				}else{
+					int posicion = 0;
+					while(z!=0){
+						tren->listaDeCodRutas.InsertarFinal(arrayRutas[posicion]);
+						tren->listaDeCodRutas.Mostrar();
+						posicion++;
+						z--;
+					}
+					/*
 					pnodoSimp buscarCod = tren->listaDeCodRutas.primero;bool codRepetido = false; 
 					while(buscarCod!=NULL){ 
 						if(buscarCod->valor==codRuta){ 
@@ -599,12 +639,14 @@ void listaDT::llenarListaCodRutas(){
 							buscarCod=buscarCod->siguiente; 
 						} 
 					}if (!codRepetido){
+						
 						tren->listaDeCodRutas.InsertarFinal(codRuta);
-						//tren->listaDeCodRutas.Mostrar();cout<<endl;cout<<endl;
+						//tren->listaDeCodRutas.Mostrar();cout<<endl;cout<<endl;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 					}else{
 						//El codigo de ruta esta repetido
 						continue;
 					}
+					*/
 				}
 			}else{
 				//cout<<"El codigo de tren no existe"<<endl;cout<<endl;cout<<endl;
