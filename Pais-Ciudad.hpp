@@ -970,18 +970,21 @@ void listaDC::BorrarConexion(){
 	        }
 	        	if(flag2){
 	        		pnodoDoble conexionG = ciudades->listaConexiones.primero; bool flag=false;
+	        		int cont = 1;
 					while(conexionG!=NULL){
 						if(conexionG->codConexion==codConexion){
-							pnodoDoble temp = conexionG->siguiente;
-			                conexionG->siguiente = conexionG->siguiente->siguiente;
-			                delete temp->siguiente;
 							flag=true;
 							break;
 						}else{
+							cont++;
 							conexionG=conexionG->siguiente;
 						}	
 					}if(!flag){
 						cout<<"El codigo de conexion es incorrecto"<<endl;
+					}
+					else{
+						ciudades->listaConexiones.BorrarPosicion(cont);
+						
 					}
 				}else {
 				cout<<"El codigo de ciudad no existe"<<endl;

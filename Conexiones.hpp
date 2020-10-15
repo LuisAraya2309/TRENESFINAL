@@ -48,6 +48,9 @@ public:
     bool ListaVacia() { return primero == NULL; }
     void Mostrar();
     int largoLista();
+    void BorrarInicio();
+    void BorrarFinal();
+    void BorrarPosicion(int pos);
     
 public:
     pnodoDoble primero;
@@ -128,5 +131,91 @@ void listaD::Mostrar()
     }
     cout << endl;
 }
+void listaD:: BorrarPosicion(int pos)
+{
+     if(ListaVacia())
+     {
+              cout << "Lista vacia" <<endl;
+     }
+     else
+     {
+        if((pos>largoLista())||(pos<0))
+        {
+        cout << "Error en posicion" << endl;
+        }
+        else
+        {
+        if(pos==1)
+           BorrarInicio();
+        else
+        {
+          if (pos == largoLista())   
+             BorrarFinal();
+          else
+          {   
+            int cont=2;
+            pnodoDoble aux=  primero;
+            while(cont<pos)
+            {
+             aux=aux->siguiente;
+             cont++;
+            }
+            pnodoDoble temp=aux->siguiente;
+            aux->siguiente=aux->siguiente->siguiente;
+            aux->siguiente->anterior=aux;
+            delete temp;
+          }//else
+        }//else
+      }//else
+    }//else
+}
 
+void listaD::BorrarInicio()
+{
+    if (ListaVacia()){
+     cout << "No hay elementos en la lista:" << endl;
+    
+   }else{
+        if (primero->siguiente == NULL) {
+            pnodoDoble temp=primero;
+            primero= NULL;
+            delete temp;
+            } 
+			else
+			{
+
+                pnodoDoble aux = primero;
+                primero=primero->siguiente;                
+                delete aux;
+            }
+        }
+}
+void listaD::BorrarFinal()
+{
+    if (ListaVacia()){
+     cout << "No hay elementos en la lista:" << endl;
+    
+   }else{
+        if (primero->siguiente == NULL)
+		 {
+        	pnodoDoble temp=primero;
+            primero= NULL;
+            delete temp;
+            } 
+			else 
+			{
+
+                pnodoDoble aux = primero;
+                while (aux->siguiente->siguiente != NULL) 
+                {
+                    aux = aux->siguiente;
+                }
+                
+              pnodoDoble temp = aux->siguiente;
+              aux->siguiente= NULL;
+                      
+                delete temp;
+            }
+        }
+}
 

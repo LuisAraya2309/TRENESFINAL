@@ -72,6 +72,7 @@ int main() {
 	int codUsuario;
 	int registrar;
 	//---------------------------------------------------------Menu Principal------------------------------------------------- 
+	/*
     do { 
         system("cls");      // Para limpiar la pantalla 
          
@@ -418,5 +419,6 @@ int main() {
 	                break;           
     	} 		 
 	}while (opcion != 3);
+	*/
     	return 0; 
 }
