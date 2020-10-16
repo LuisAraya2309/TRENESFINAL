@@ -35,7 +35,7 @@ int main() {
 	listaDC paises; 
 	listaDT tipoTren;
     listaC rutas; 
-    listaC2 admin; 
+    listaC2 admin;
 	listaDCUsuario usuario; 
 	listaTrenes trenes;
 	lista codigoRuta;
@@ -44,25 +44,22 @@ int main() {
 	int ultimaConexion;
 	string ultimoTipoTren;
 	string ultimoTrenEliminado;
-	string ultimaRutaEliminada;
+	int ultimaRutaEliminada;
 	//-----------------------------------------------------Llamar a las funciones de crear la estructura------------------------ 
 	//PRIMERA ESTRUCTURA PAIS-CIUDAD-CONEXION 
 	paises.llenarListaPais();
     paises.llenarListaCiudad();
     paises.llenarListaConexiones();
-    
+
     //SEGUNDA ESTRUCTURA TIPO DE TRENES TRENES CODIGOS DE RUTAS 
-    tipoTren.llenarListaTipotrenes(); 
+    tipoTren.llenarListaTipotrenes();
     tipoTren.llenarListaTrenes();
     tipoTren.llenarListaCodRutas();
-    //TERCERA USUARIO ADMINISTRADOR RUTAS 
-    
+    //TERCERA USUARIO ADMINISTRADOR RUTAS  
 	usuario.llenarListaUsuario(paises);	
 	admin.llenarListaAdmin();
 	rutas.llenarListaRutas(paises,tipoTren);
 	//Campo de testing
-	rutas.BorrarPais(paises,usuario);
-	paises.ConsultarPaises();
     //------------------------------------------------------Inicializar Variables---------------------------------------------- 
 	int opcion; 
 	int codPais;
@@ -76,7 +73,6 @@ int main() {
 	int codUsuario;
 	int registrar;
 	//---------------------------------------------------------Menu Principal------------------------------------------------- 
-	/*
     do { 
         system("cls");      // Para limpiar la pantalla 
          
@@ -208,33 +204,33 @@ int main() {
 									        cout << "7. Salir" << endl; 
 									        cout << "\nIngrese una opcion: "; 
 									        cin >> opcion2; 
-									        cout<<endl; 
+									        cout<<endl;
 									         
 									        switch (opcion2) { 
 									            case 1: 
-									            	cout<<"Digite el codigo del pais que desea eliminar: "; cin>> codPais; cout<<endl; 
+									            	rutas.BorrarPais(paises,usuario);
 									                system("pause>nul"); // Pausa 
 									                break; 
 									                 
 									            case 2: 
 									                // Lista de instrucciones de la opci?n 2                 
-									                 
+									                 rutas.BorrarCiudades(tipoTren,paises,usuario);
 									                system("pause>nul"); // Pausa 
 									                break; 
 									                 
 												case 3: 
 									                // Lista de instrucciones de la opci?n 2                 
-									                 
+									                 paises.BorrarConexion();
 									                system("pause>nul"); // Pausa 
 									                break;   
 													                   
 									    	 	case 4: 
-  
+									    	 		rutas.EliminarTren(ultimoTrenEliminado, tipoTren);
 									                system("pause>nul"); // Pausa 
-									                break; 
+									                break;
 									                 
 									            case 5: 
-									            	rutas.BorrarRuta();
+									            	rutas.BorrarRuta(ultimaRutaEliminada);
 									                system("pause>nul"); // Pausa 
 									                break; 
 									       
@@ -244,10 +240,10 @@ int main() {
 													}else{
 														cout<<ultimoTrenEliminado<<endl;
 													}
-													if(ultimaRutaEliminada==""){
+													if(ultimaRutaEliminada==0){
 														cout<<"No se ha eliminado ninguna ruta"<<endl;
 													}else{
-														cout<<ultimaRutaEliminada<<endl;
+														cout<<"La ultima ruta elimianda es la "<<ultimaRutaEliminada<<endl;
 													}
 									                system("pause>nul"); // Pausa 
 									                break;          
@@ -293,7 +289,7 @@ int main() {
 									                system("pause>nul"); // Pausa 
 									                break; 
 									            case 5: 
-  													rutas.ModificarRuta();
+  													rutas.ModificarRuta(paises);
 									                system("pause>nul"); // Pausa 
 									                break;       
 												case 6: 
@@ -340,7 +336,6 @@ int main() {
 								case 11: 
 									tipoTren.ConsultarAsientos(); 
 					                // Lista de instrucciones de la opci?n 2                 
-					                 
 					                system("pause>nul"); // Pausa 
 					                break;                       
 						} 
@@ -404,7 +399,7 @@ int main() {
 							                break; 
 										case 7: 
 							                // Lista de instrucciones de la opci?n 2                 
-							                 
+							                tipoTren.ConsultarAsientos();
 							                system("pause>nul"); // Pausa 
 							                break;      
 								} 
@@ -423,6 +418,5 @@ int main() {
 	                break;           
     	} 		 
 	}while (opcion != 3);
-	*/
     	return 0; 
 }

@@ -390,7 +390,7 @@ void listaDC::llenarListaCiudad() {
 						recorrer=recorrer->siguiente;
 					}
 				}if(recorrer->codCiudad==codCiudad){
-            			bandera=true;
+            		bandera=true;
             	}
 				if(!bandera){
 					auxiliar->listaCiudades.InsertarFinal(codCiudad, nomCiudad);
@@ -611,8 +611,8 @@ void listaDC::ConsultarConexiones(){
     cout << "Ingrese el codigo de la ciudad: ";
     cin >> codCiudad;
     cout<<endl;
-    pnodo puntero = primero->siguiente; bool flag = false;
-    while (puntero!= primero) {
+    pnodo puntero = primero; bool flag = false;
+    while (puntero->siguiente!= primero) {
         if (puntero->valor == codPais) {
             flag = true;
             break;
@@ -623,6 +623,7 @@ void listaDC::ConsultarConexiones(){
     }
     if(puntero->valor==codPais){
     	flag=true;
+    }
     	if (flag) {
 	        pnodoCiudad ciudades = puntero->listaCiudades.primero; bool flag2 = false;
 	        while (ciudades->siguiente != puntero->listaCiudades.primero) {
@@ -634,7 +635,8 @@ void listaDC::ConsultarConexiones(){
 				}   
 	        }if(ciudades->codCiudad==codCiudad){
 	        	flag2=true;
-	        	if(flag){
+	        }
+	        	if(flag2){
 	        		pnodoDoble conexionG = ciudades->listaConexiones.primero;
 	        		if(ciudades->listaConexiones.ListaVacia()){
 	        			cout<<"La ciudad no tiene conexiones."<<endl;
@@ -645,16 +647,13 @@ void listaDC::ConsultarConexiones(){
 							conexionG=conexionG->siguiente;
 						}
 					}
-					
 				}else {
 				cout<<"El codigo de ciudad no existe"<<endl;
 				}
-			}
 	    }
 	    else {
 	        cout << "El codigo del pais no existe" << endl;
 	    }
-	} 
 }
 	
 void listaDC::InsertarPais(string& ultimoPais){
@@ -728,11 +727,8 @@ void listaDC::InsertarCiudades(string& ultimaCiudad){
                     auxiliar = auxiliar->siguiente;
                 }
             }
-            if ((auxiliar->ciudad==NULL)) {
-                pnodo nuevo = new nodo(codCiudad,nomCiudad);
-                auxiliar->ciudad = nuevo;
-                nuevo->anterior=auxiliar;
-                nuevo->ciudad=auxiliar;
+            if ((auxiliar->listaCiudades.primero==NULL)) {
+            	auxiliar->listaCiudades.InsertarFinal(codCiudad,nomCiudad);
                 cout<<"Ciudad ingresada con exito"<<endl;
                 stringstream ss;
 	            ss<<codCiudad;
@@ -741,20 +737,20 @@ void listaDC::InsertarCiudades(string& ultimaCiudad){
             }
             else {
             	bool bandera= false;
-            	pnodo nuevo = new nodo(codCiudad,nomCiudad); 
-            	pnodo recorrer = auxiliar->ciudad;
-            	while(recorrer->ciudad!=auxiliar){
-            		if(recorrer->valor==codCiudad){
+            	pnodoCiudad recorrer = auxiliar->listaCiudades.primero;
+            	while(recorrer->siguiente!=auxiliar->listaCiudades.primero){
+            		if(recorrer->codCiudad==codCiudad){
             			bandera=true;
             			break;
 					}else{
-						recorrer=recorrer->ciudad;
+						recorrer=recorrer->siguiente;
 					}
-				}if(!bandera){
-					recorrer->ciudad=nuevo;
-					nuevo->anterior=recorrer;
-					nuevo->ciudad=auxiliar;
-					cout<<"Ciudad ingresada con excito"<<endl;
+				}if(recorrer->codCiudad==codCiudad){
+            			bandera=true;
+            		}
+				if(!bandera){
+					auxiliar->listaCiudades.InsertarFinal(codCiudad,nomCiudad);
+					cout<<"Ciudad ingresada con exito"<<endl;
 					stringstream ss;
 		            ss<<codCiudad;
 		            string codCiudadS = ss.str();
@@ -808,29 +804,29 @@ void listaDC::InsertarConexion(int& ultimaConexion){
 								existePais2=true;
 							}
 								if(existePais2){
-									pnodo buscarCiudad = buscarPais->ciudad; bool existeCiudad = false;
-									while(buscarCiudad!=buscarPais){
-										if(buscarCiudad->valor==codCiudad){
+									pnodoCiudad buscarCiudad = buscarPais->listaCiudades.primero; bool existeCiudad = false;
+									while(buscarCiudad->siguiente!=buscarPais->listaCiudades.primero){
+										if(buscarCiudad->codCiudad==codCiudad){
 											existeCiudad = true;
 											break;
 										}
 										else{
-											buscarCiudad=buscarCiudad->ciudad;
+											buscarCiudad=buscarCiudad->siguiente;
 										}
-									}if(buscarCiudad->valor==codCiudad){
+									}if(buscarCiudad->codCiudad==codCiudad){
 										existeCiudad== true;
 									}
 										if(existeCiudad){
-											pnodo buscarCiudad2 = buscarPais2->ciudad; bool existeCiudad2 = false;
-											while(buscarCiudad2!=buscarPais2){
-												if(buscarCiudad2->valor==codCiudad2){
+											pnodoCiudad buscarCiudad2 = buscarPais2->listaCiudades.primero; bool existeCiudad2 = false;
+											while(buscarCiudad2->siguiente!=buscarPais2->listaCiudades.primero){
+												if(buscarCiudad2->codCiudad==codCiudad2){
 													existeCiudad2 = true;
 													break;
 												}
 												else{
-													buscarCiudad2=buscarCiudad2->ciudad;
+													buscarCiudad2=buscarCiudad2->siguiente;
 												}
-											}if(buscarCiudad2->valor==codCiudad2){
+											}if(buscarCiudad2->codCiudad==codCiudad2){
 												existeCiudad2=true;
 											}
 												if(existeCiudad2){
@@ -838,8 +834,8 @@ void listaDC::InsertarConexion(int& ultimaConexion){
 													bool conexionRepetida = false;
 													pnodo paisesG = primero->siguiente;
 													while(paisesG!=primero){
-														pnodo ciudadesG = paisesG->ciudad;
-														while(ciudadesG!=paisesG){
+														pnodoCiudad ciudadesG = paisesG->listaCiudades.primero;
+														while(ciudadesG->siguiente!=paisesG->listaCiudades.primero){
 															pnodoDoble conexionG = ciudadesG->listaConexiones.primero;
 															while(conexionG!=NULL){
 																if(conexionG->codConexion==codConexion){
@@ -850,7 +846,7 @@ void listaDC::InsertarConexion(int& ultimaConexion){
 																	conexionG = conexionG->siguiente;
 																}
 															}
-															ciudadesG = ciudadesG->ciudad;
+															ciudadesG = ciudadesG->siguiente;
 														}
 														paisesG=paisesG->siguiente;
 													}
@@ -909,15 +905,15 @@ void listaDC::ModificarTiempo(){
     	flag=true;
 	}
     	if (flag) {
-	        pnodo ciudades = puntero->ciudad; bool flag2 = false;
-	        while (ciudades->ciudad != puntero) {
-	        	if(ciudades->valor==codCiudad){
+	        pnodoCiudad ciudades = puntero->listaCiudades.primero; bool flag2 = false;
+	        while (ciudades->siguiente != puntero->listaCiudades.primero) {
+	        	if(ciudades->codCiudad==codCiudad){
 	        		flag2=true;
 	        		break;
 				}else{
-					ciudades = ciudades->ciudad;
+					ciudades = ciudades->siguiente;
 				}   
-	        }if(ciudades->valor==codCiudad){
+	        }if(ciudades->codCiudad==codCiudad){
 	        	flag2=true;
 	        }
 	        	if(flag2){
@@ -968,15 +964,15 @@ void listaDC::BorrarConexion(){
     	flag=true;
 	}
     	if (flag) {
-	        pnodo ciudades = puntero->ciudad; bool flag2 = false;
-	        while (ciudades->ciudad != puntero) {
-	        	if(ciudades->valor==codCiudad){
+	        pnodoCiudad ciudades = puntero->listaCiudades.primero; bool flag2 = false;
+	        while (ciudades->siguiente != puntero->listaCiudades.primero) {
+	        	if(ciudades->codCiudad==codCiudad){
 	        		flag2=true;
 	        		break;
 				}else{
-					ciudades = ciudades->ciudad;
+					ciudades = ciudades->siguiente;
 				}   
-	        }if(ciudades->valor==codCiudad){
+	        }if(ciudades->codCiudad==codCiudad){
 	        	flag2=true;
 	        }
 	        	if(flag2){
@@ -995,6 +991,7 @@ void listaDC::BorrarConexion(){
 					}
 					else{
 						ciudades->listaConexiones.BorrarPosicion(cont);
+						cout<<"La conexion se elimino con exito"<<endl;
 						
 					}
 				}else {
@@ -1019,15 +1016,15 @@ bool listaDC::VerificarCodPais(int codAux,int codCiudad){
 		flag = true;
 	}
 	if(flag){
-		pnodo ciudades = buscar->ciudad; bool flag2 = false;
-	        while (ciudades->ciudad != buscar) {
-	        	if(ciudades->valor==codCiudad){
+		pnodoCiudad ciudades = buscar->listaCiudades.primero; bool flag2 = false;
+	        while (ciudades->siguiente != buscar->listaCiudades.primero) {
+	        	if(ciudades->codCiudad==codCiudad){
 	        		flag2=true;
 	        		break;
 				}else{
-					ciudades = ciudades->ciudad;
+					ciudades = ciudades->siguiente;
 				}   
-	        }if(ciudades->valor==codCiudad){
+	        }if(ciudades->codCiudad==codCiudad){
 	        	flag2=true;
 	        }
 	        if(flag2){
@@ -1036,7 +1033,6 @@ bool listaDC::VerificarCodPais(int codAux,int codCiudad){
 			else{
 				return false;
 			}
-		
 	}
 	else{
 		return false;

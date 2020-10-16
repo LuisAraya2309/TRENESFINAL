@@ -62,7 +62,7 @@ public:
     void RegistrarTren(); 
     void ModificarTren();  
     bool Verificar(int codTipTren, int codTren);
-    void EliminarTren();
+    void EliminarTren(string& ultimoTrenEliminado);
     void MostrarCodigos();
     pnodoDobleT primero; 
    
@@ -330,10 +330,10 @@ void listaDT::MostrarUnTipoDeTren(){
 void listaDT::ConsultarAsientos(){ 
 	int codTipTren; 
 	int codTren; 
-	cout<<"Ingrese el codigo del tipo de tren para mostrar los trenes de ese tipo."<<endl; 
-	cin>>codTipTren; 
-	cout<<"Ingrese el codigo del tren para mostrar los asientos disponibles."<<endl; 
-	cin>>codTren; 
+	cout<<"Ingrese el codigo del tipo de tren para mostrar los trenes de ese tipo: "; 
+	cin>>codTipTren; cout<<endl; 
+	cout<<"Ingrese el codigo del tren para mostrar los asientos disponibles: "; 
+	cin>>codTren; cout<<endl; 
 	pnodoDobleT mostrar = primero;bool existeTipTren = false; 
 	while(mostrar!=NULL){ 
 		if(mostrar->codTren==codTipTren){ 
@@ -367,12 +367,12 @@ void listaDT::ModificarNumAsientos(){
 		int codTipTren; 
 		int codTren; 
 		int numAsientos; 
-		cout<<"Ingrese el codigo del tipo de tren ."<<endl; 
-		cin>>codTipTren; 
-		cout<<"Ingrese el codigo de tren."<<endl; 
-		cin>>codTren; 
-		cout<<"Ingrese la nueva cantidad de asientos disponibles."<<endl; 
-		cin>>numAsientos; 
+		cout<<"Ingrese el codigo del tipo de tren: "; 
+		cin>>codTipTren; cout<<endl;
+		cout<<"Ingrese el codigo de tren: "; 
+		cin>>codTren; cout<<endl;
+		cout<<"Ingrese la nueva cantidad de asientos disponibles: "; 
+		cin>>numAsientos; cout<<endl;
 		pnodoDobleT mostrar = primero;bool existeTipTren = false; 
 		while(mostrar!=NULL){ 
 			if(mostrar->codTren==codTipTren){ 
@@ -388,7 +388,7 @@ void listaDT::ModificarNumAsientos(){
 			while(buscarCod!=NULL){ 
 				if(buscarCod->codTren==codTren){ 
 					buscarCod->numAsientos=numAsientos; 
-					cout<<"Se actualizaron la cantidad de trenes a "<<buscarCod->numAsientos<<" asientos disponibles."<<endl; 
+					cout<<"Se actualizaron la cantidad de asientos a "<<buscarCod->numAsientos<<" espacios disponibles."<<endl; 
 					codRepetido=true; 
 					break; 
 				} 
@@ -611,7 +611,6 @@ void listaDT::llenarListaCodRutas(){
 				}
 			}if (flagT){
 				if(tren->listaDeCodRutas.primero==NULL){
-					//La lista esta vacía se inserta sin validar
 					int posicion = 0;
 					while(z!=0){
 						tren->listaDeCodRutas.InsertarFinal(arrayRutas[posicion]);
@@ -620,7 +619,6 @@ void listaDT::llenarListaCodRutas(){
 						z--;
 					}
 					
-					//tren->listaDeCodRutas.Mostrar();cout<<endl;cout<<endl;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 				}else{
 					int posicion = 0;
 					while(z!=0){
@@ -662,7 +660,7 @@ void listaDT::llenarListaCodRutas(){
 	}archivoTR.close();
 }
 
-void listaDT::EliminarTren(){
+void listaDT::EliminarTren(string& ultimoTrenEliminado){
 	int codTipTren;
 	int codTren;
 	cout<<"Ingrese el codigo del tipo de tren que desea eliminar: ";cin>>codTipTren;cout<<endl;
@@ -682,6 +680,7 @@ void listaDT::EliminarTren(){
 		int cont = 1;
 		while(buscarTren!=NULL){
 			if(buscarTren->codTren==codTren){
+				ultimoTrenEliminado = ("Ultimo tren eliminado: " + (buscarTren->nombre) + "\n");
 				buscarTipTren->listaDeTrenes.borrarPosicion(cont);
 				buscarTren->listaDeCodRutas.~lista();
 				borrado = true;
